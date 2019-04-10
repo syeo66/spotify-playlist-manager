@@ -1,28 +1,32 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+import reducers from './reducers';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
+
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
+import Signin from './components/Signin';
+import Header from './components/Header';
+
+const initialState = {
+  auth: false,
+};
+
+const store = createStore(reducers, initialState, applyMiddleware(reduxThunk));
+
+const App = () => {
+  return (
+    <Provider store={store}>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <BrowserRouter>
+          <Header />
+          <Route exact path="/" component={Signin} />
+        </BrowserRouter>
       </div>
-    );
-  }
-}
+    </Provider>
+  );
+};
 
 export default App;
