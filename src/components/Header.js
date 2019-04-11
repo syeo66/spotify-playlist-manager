@@ -5,6 +5,7 @@ import { faSpotify } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { fetchUser, doLogin } from '../actions';
+import breakpoints from '../styles/breakpoints';
 
 import Signout from './Signout';
 
@@ -17,6 +18,7 @@ const StyledHeader = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Title = styled.h1`
@@ -24,6 +26,12 @@ const Title = styled.h1`
   padding: 0;
   color: #eee;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.9);
+  font-size: 1.1rem;
+  white-space: nowrap;
+
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    font-size: 2rem;
+  }
 `;
 
 const Header = props => {

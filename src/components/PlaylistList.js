@@ -10,7 +10,7 @@ const PlaylistContainer = styled.ul`
   border: 1px solid ${black};
   border-radius: 0.5rem;
   box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
-  margin: 0;
+  margin: 0 0 1rem;
   list-style-type: none;
   display: flex;
   flex-direction: column;
