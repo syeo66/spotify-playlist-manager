@@ -3,6 +3,23 @@ import { connect } from 'react-redux';
 import { signInWithSpotify, doLogin } from '../actions';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import styled from 'styled-components';
+
+import { black } from '../styles/colors';
+import { Button } from '../styles/components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpotify } from '@fortawesome/free-brands-svg-icons';
+
+const SigninBox = styled.section`
+  border: 1px solid ${black};
+  padding: 5rem 0.5rem;
+  border-radius: 1rem;
+  width: 20rem;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+  margin: 25vh auto 0;
+`;
 
 const Signin = props => {
   useEffect(() => {
@@ -21,14 +38,12 @@ const Signin = props => {
   }, [props.auth]);
 
   return (
-    <div className="row justify-content-center py-5">
-      <div className="col-auto py-5 shadow border rounded">
-        <button className="btn btn-success" onClick={props.signInWithSpotify}>
-          <i className="fab fa-spotify" />
-          &nbsp;Sign In With Spotify
-        </button>
-      </div>
-    </div>
+    <SigninBox>
+      <Button onClick={props.signInWithSpotify}>
+        <FontAwesomeIcon icon={faSpotify} />
+        &nbsp;Sign In With Spotify
+      </Button>
+    </SigninBox>
   );
 };
 

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 
+import { Button } from '../styles/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,11 +16,16 @@ const Signout = props => {
     }
   }, [props.auth]);
 
+  const handleClick = event => {
+    props.signOut(event);
+    props.history.push('/');
+  };
+
   return (
-    <button onClick={props.signOut}>
+    <Button onClick={handleClick}>
       <FontAwesomeIcon icon={faSignOutAlt} />
       &nbsp;Signout
-    </button>
+    </Button>
   );
 };
 
