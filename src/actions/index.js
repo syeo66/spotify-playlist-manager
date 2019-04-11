@@ -1,4 +1,4 @@
-import { RETRIEVE_AUTH_TOKEN } from './types';
+import { RETRIEVE_AUTH_TOKEN, APPEND_PLAYLISTS, FETCH_PLAYLISTS } from './types';
 
 export const fetchUser = () => dispatch => {
   for (const entry of window.location.hash.substr(1).split('&')) {
@@ -57,4 +57,27 @@ const doSignOut = dispatch => {
     type: RETRIEVE_AUTH_TOKEN,
     payload: null,
   });
+};
+
+export const retrievePlaylists = (
+  authenticated,
+  url = 'https://api.spotify.com/v1/me/playlists?limit=50',
+  append = false
+) => dispatch => {
+  fetch(url, {
+    method: 'get',
+    headers: new Headers({
+      Authorization: 'Bearer ' + authenticated,
+    }),
+  })
+    .then(response => response.json())
+    .then(response => {
+      if (response.next && response.total > response.offset + response.limit) {
+        retrievePlaylists(authenticated, response.next, true)(dispatch);
+      }
+      dispatch({
+        type: append ? APPEND_PLAYLISTS : FETCH_PLAYLISTS,
+        payload: response,
+      });
+    });
 };

@@ -9,3 +9,10 @@ export const red = 'rgba(232, 72, 85, 1)';
 export const lightGreen = Color(green)
   .lighten(0.2)
   .hex();
+
+export const lightBlack = Color(black)
+  .lighten(0.2)
+  .hex();
+export const darkBlack = Color(black)
+  .darken(0.2)
+  .hex();

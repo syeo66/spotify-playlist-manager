@@ -8,10 +8,12 @@ import { fetchUser, doLogin } from '../actions';
 
 import Signout from './Signout';
 
+import { black } from '../styles/colors';
+
 const StyledHeader = styled.header`
   margin: 0;
   padding: 1rem;
-  background: linear-gradient(to bottom, #666 0%, #000 100%);
+  background: linear-gradient(to bottom, ${black} 0%, #000 100%);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
