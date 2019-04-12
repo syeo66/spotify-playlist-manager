@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { connect } from 'react-redux';
 import { signOut } from '../actions';
 import PropTypes from 'prop-types';
@@ -10,12 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Signout = props => {
-  useEffect(() => {
-    if (props.auth) {
-      props.history.push('/app');
-    }
-  }, [props.auth]);
-
   const handleClick = event => {
     props.signOut(event);
     props.history.push('/');
@@ -35,9 +29,9 @@ Signout.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
 };
 
-function mapStateToProps({ auth }) {
+const mapStateToProps = ({ auth }) => {
   return { auth };
-}
+};
 
 export default withRouter(
   connect(

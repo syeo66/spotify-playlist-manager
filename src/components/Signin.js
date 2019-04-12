@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { signInWithSpotify, doLogin } from '../actions';
+import { signInWithSpotify } from '../actions';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 
 import { black } from '../styles/colors';
@@ -22,21 +21,6 @@ const SigninBox = styled.section`
 `;
 
 const Signin = props => {
-  useEffect(() => {
-    if (typeof Storage !== 'undefined') {
-      const access_token = window.localStorage.getItem('access_token');
-      if (access_token) {
-        props.doLogin(access_token);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (props.auth) {
-      props.history.push('/app');
-    }
-  }, [props.auth]);
-
   return (
     <SigninBox>
       <Button onClick={props.signInWithSpotify}>
@@ -48,17 +32,15 @@ const Signin = props => {
 };
 
 Signin.propTypes = {
-  doLogin: PropTypes.func.isRequired,
   signInWithSpotify: PropTypes.func.isRequired,
-  history: ReactRouterPropTypes.history.isRequired,
   auth: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
 };
 
-function mapStateToProps({ auth }) {
+const mapStateToProps = ({ auth }) => {
   return { auth };
-}
+};
 
 export default connect(
   mapStateToProps,
-  { signInWithSpotify, doLogin }
+  { signInWithSpotify }
 )(Signin);

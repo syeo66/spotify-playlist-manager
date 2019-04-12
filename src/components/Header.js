@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpotify } from '@fortawesome/free-brands-svg-icons';
@@ -35,19 +35,6 @@ const Title = styled.h1`
 `;
 
 const Header = props => {
-  useEffect(() => {
-    const onMessage = message => {
-      if (message.data.type && message.data.type === 'access_token') {
-        props.doLogin(message.data.token);
-      }
-    };
-
-    window.addEventListener('message', onMessage);
-    props.fetchUser();
-
-    return () => window.removeEventListener('message', onMessage);
-  }, []);
-
   return (
     <StyledHeader>
       <Title>

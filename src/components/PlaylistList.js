@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { retrievePlaylists } from '../actions';
 import PropTypes from 'prop-types';
@@ -22,13 +23,12 @@ const ListEntry = styled.li`
   padding: 0 1rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: background-color 300ms, color 300ms;
-  color: white;
-  background-color: ${green};
-  cursor: pointer;
+  background-color: ${({ active }) => (active ? yellow : green)};
+  color: ${({ active }) => (active ? green : 'white')};
+  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
 
   &:first-of-type {
     border-radius: 0.5rem 0.5rem 0 0;
@@ -39,8 +39,19 @@ const ListEntry = styled.li`
   }
 
   :hover {
-    background-color: ${lightGreen};
+    background-color: ${({ active }) => (active ? yellow : lightGreen)};
   }
+`;
+
+const ListEntryLink = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
 `;
 
 const EntryTitle = styled.span`
@@ -50,8 +61,8 @@ const EntryTitle = styled.span`
 `;
 
 const EntryCount = styled.span`
-  background-color: ${yellow};
-  color: ${green};
+  background-color: ${({ active }) => (active ? green : yellow)};
+  color: ${({ active }) => (active ? yellow : green)};
   font-weight: bold;
   font-size: 0.9rem;
   padding: 0 0.3rem;
@@ -70,10 +81,13 @@ const PlaylistList = props => {
       return a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1;
     })
     .map(entry => {
+      const isActive = entry.id === props.id;
       return (
-        <ListEntry key={entry.id}>
-          <EntryTitle>{entry.name}</EntryTitle>
-          <EntryCount>{entry.tracks.total}</EntryCount>
+        <ListEntry key={entry.id} active={isActive}>
+          <ListEntryLink to={'/' + entry.id}>
+            <EntryTitle>{entry.name}</EntryTitle>
+            <EntryCount active={isActive}>{entry.tracks.total}</EntryCount>
+          </ListEntryLink>
         </ListEntry>
       );
     });
@@ -82,6 +96,7 @@ const PlaylistList = props => {
 };
 
 PlaylistList.propTypes = {
+  id: PropTypes.string,
   authenticated: PropTypes.string,
   playlists: PropTypes.array.isRequired,
   userId: PropTypes.string,
