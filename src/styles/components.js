@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { green, lightGreen } from './colors';
+import { green, lightGreen, yellow } from './colors';
 import breakpoints from '../styles/breakpoints';
 
 export const Button = styled.button`
@@ -26,4 +26,13 @@ export const Button = styled.button`
   :hover {
     background-color: ${lightGreen};
   }
+`;
+
+export const Pill = styled.span`
+  background-color: ${({ active, backgroundColor }) => (backgroundColor ? backgroundColor : active ? green : yellow)};
+  color: ${({ active, color }) => (color ? color : active ? yellow : green)};
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 0 0.3rem;
+  border-radius: 0.5em;
 `;

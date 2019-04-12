@@ -7,6 +7,8 @@ import styled from 'styled-components';
 
 import { black, green, lightGreen, yellow } from '../styles/colors';
 
+import { Pill } from '../styles/components';
+
 const PlaylistContainer = styled.ul`
   border: 1px solid ${black};
   border-radius: 0.5rem;
@@ -60,15 +62,6 @@ const EntryTitle = styled.span`
   text-overflow: ellipsis;
 `;
 
-const EntryCount = styled.span`
-  background-color: ${({ active }) => (active ? green : yellow)};
-  color: ${({ active }) => (active ? yellow : green)};
-  font-weight: bold;
-  font-size: 0.9rem;
-  padding: 0 0.3rem;
-  border-radius: 0.5em;
-`;
-
 const PlaylistList = props => {
   useEffect(() => {
     props.retrievePlaylists(props.authenticated);
@@ -86,7 +79,7 @@ const PlaylistList = props => {
         <ListEntry key={entry.id} active={isActive}>
           <ListEntryLink to={'/' + entry.id}>
             <EntryTitle>{entry.name}</EntryTitle>
-            <EntryCount active={isActive}>{entry.tracks.total}</EntryCount>
+            <Pill active={isActive}>{entry.tracks.total}</Pill>
           </ListEntryLink>
         </ListEntry>
       );
@@ -103,13 +96,13 @@ PlaylistList.propTypes = {
   retrievePlaylists: PropTypes.func.isRequired,
 };
 
-function mapStateToProps({ auth, data }) {
+const mapStateToProps = ({ auth, data }) => {
   return {
     authenticated: auth,
     playlists: data.playlists ? data.playlists : [],
     userId: data.user ? data.user.id : null,
   };
-}
+};
 
 export default connect(
   mapStateToProps,
