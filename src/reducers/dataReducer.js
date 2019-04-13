@@ -1,4 +1,4 @@
-import { FETCH_PLAYLISTS, APPEND_PLAYLISTS } from '../actions/types';
+import { FETCH_PLAYLISTS, APPEND_PLAYLISTS, FETCH_TRACKS } from '../actions/types';
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -10,11 +10,18 @@ export default (state = {}, action) => {
         playlistsSize: action.payload.total,
       };
     }
+
     case FETCH_PLAYLISTS:
       return {
         ...state,
         playlists: action.payload.items,
         playlistsSize: action.payload.total,
+      };
+
+    case FETCH_TRACKS:
+      return {
+        ...state,
+        tracks: action.payload,
       };
 
     default:

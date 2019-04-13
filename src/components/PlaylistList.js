@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { retrievePlaylists } from '../actions';
 import PropTypes from 'prop-types';
+import Color from 'color';
 import styled from 'styled-components';
+
+import { retrievePlaylists } from '../actions';
 
 import { black, green, lightGreen, yellow } from '../styles/colors';
 
 import { Pill } from '../styles/components';
 
 const PlaylistContainer = styled.ul`
-  border: 1px solid ${black};
+  border: 1px solid ${green};
   border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.2rem 0.5rem
+    ${Color(black)
+      .alpha(0.2)
+      .string()};
   margin: 0 0 1rem;
   list-style-type: none;
   display: flex;
@@ -33,11 +38,11 @@ const ListEntry = styled.li`
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
 
   &:first-of-type {
-    border-radius: 0.5rem 0.5rem 0 0;
+    border-radius: 0.4rem 0.4rem 0 0;
   }
 
   &:last-of-type {
-    border-radius: 0 0 0.5rem 0.5rem;
+    border-radius: 0 0 0.4rem 0.4rem;
   }
 
   :hover {

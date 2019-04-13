@@ -13,6 +13,7 @@ const initialState = {
   data: {
     playlists: [],
     playlistsSize: 0,
+    tracks: {},
   },
 };
 

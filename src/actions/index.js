@@ -1,4 +1,4 @@
-import { RETRIEVE_AUTH_TOKEN, APPEND_PLAYLISTS, FETCH_PLAYLISTS } from './types';
+import { RETRIEVE_AUTH_TOKEN, APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS } from './types';
 
 export const fetchUser = () => dispatch => {
   for (const entry of window.location.hash.substr(1).split('&')) {
@@ -77,6 +77,26 @@ export const retrievePlaylists = (
       }
       dispatch({
         type: append ? APPEND_PLAYLISTS : FETCH_PLAYLISTS,
+        payload: response,
+      });
+    });
+};
+
+export const retrievePlaylistAlbums = (authenticated, url) => dispatch => {
+  dispatch({
+    type: FETCH_TRACKS,
+    payload: null,
+  });
+  fetch(url, {
+    method: 'get',
+    headers: new Headers({
+      Authorization: 'Bearer ' + authenticated,
+    }),
+  })
+    .then(response => response.json())
+    .then(response => {
+      dispatch({
+        type: FETCH_TRACKS,
         payload: response,
       });
     });
