@@ -8,6 +8,8 @@ import Header from './Header';
 import Authenticated from './auth/Authenticated';
 
 const PlaylistEditor = lazy(() => import('./PlaylistEditor'));
+const PlaylistBrowser = lazy(() => import('./PlaylistBrowser'));
+const FindDuplicates = lazy(() => import('./FindDuplicates'));
 
 const Main = props => {
   useEffect(() => {
@@ -41,7 +43,18 @@ const Main = props => {
         render={props => (
           <Authenticated>
             <Suspense fallback={<div />}>
-              <PlaylistEditor {...props} />
+              <PlaylistEditor {...props} component={PlaylistBrowser} />
+            </Suspense>
+          </Authenticated>
+        )}
+      />
+      <Route
+        path="/:id/duplicates"
+        exact
+        render={props => (
+          <Authenticated>
+            <Suspense fallback={<div />}>
+              <PlaylistEditor {...props} component={FindDuplicates} />
             </Suspense>
           </Authenticated>
         )}

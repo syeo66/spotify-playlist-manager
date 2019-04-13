@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PlaylistList from './PlaylistList';
 import { Row, Column } from '../styles/grid';
+import PropTypes from 'prop-types';
 import breakpoints from '../styles/breakpoints';
-
-import PlaylistBrowser from './PlaylistBrowser';
 
 const MainContainer = styled(Row)`
   padding: 2rem 1rem;
@@ -17,17 +16,22 @@ const ContentContainer = styled(Column)`
   }
 `;
 
-const PlaylistEditor = ({ match }) => {
+const PlaylistEditor = ({ match, component: ToolComponent }) => {
   return (
     <MainContainer>
       <SideContiner sm="2" md="1" lg="2">
         <PlaylistList id={match.params.id} />
       </SideContiner>
       <ContentContainer sm="3" md="2" lg="5">
-        <PlaylistBrowser id={match.params.id} />
+        <ToolComponent id={match.params.id} />
       </ContentContainer>
     </MainContainer>
   );
+};
+
+PlaylistEditor.propTypes = {
+  match: PropTypes.object,
+  component: PropTypes.object.isRequired,
 };
 
 export default PlaylistEditor;

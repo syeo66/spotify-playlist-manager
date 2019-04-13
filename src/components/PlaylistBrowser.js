@@ -1,16 +1,15 @@
 import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Color from 'color';
 
 import { retrievePlaylistAlbums } from '../actions';
 
-import { black, orange } from '../styles/colors';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faGlobe, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Pill, Button } from '../styles/components';
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { Button, GenericContainer } from '../styles/components';
+import PlaylistHeader from './PlaylistHeader';
 
 const Track = styled.div`
   min-height: 1.7rem;
@@ -35,32 +34,6 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const GenericContainer = styled.div`
-  padding: 0 1rem;
-  border-bottom: 1px solid
-    ${({ color }) =>
-      Color(color || black)
-        .alpha(0.2)
-        .string()};
-  min-height: 2.2rem;
-  margin-bottom: 1rem;
-  color: ${black};
-  border-radius: 0.5em;
-  display: flex;
-  box-shadow: 0 0.2rem 0.5rem
-    ${({ color }) =>
-      Color(color || black)
-        .alpha(0.2)
-        .string()};
-`;
-
-const PlaylistHeader = styled(GenericContainer)`
-  height: 2.2rem;
-  line-height: 2.2rem;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const PlaylistContainer = styled(GenericContainer)`
@@ -111,21 +84,12 @@ const PlaylistBrowser = ({ authenticated, id, retrievePlaylistAlbums, playlists,
     ''
   ) : (
     <React.Fragment>
-      <PlaylistHeader>
-        <div>
-          {playlist.public ? (
-            <FontAwesomeIcon title="Public" icon={faGlobe} />
-          ) : (
-            <FontAwesomeIcon title="Private" icon={faLock} />
-          )}
-          &nbsp;«{playlist.name}» by {playlist.owner.display_name}&nbsp;
-        </div>
-        <div>
-          <Pill color="#fff" backgroundColor={orange}>
-            {playlist.tracks.total} Tracks
-          </Pill>
-        </div>
-      </PlaylistHeader>
+      <PlaylistHeader playlist={playlist} />
+      <ButtonContainer>
+        <Link to={'/' + id + '/duplicates'}>
+          <Button>Find Duplicates</Button>
+        </Link>
+      </ButtonContainer>
       {tracks.items ? (
         <React.Fragment>
           {pagination}

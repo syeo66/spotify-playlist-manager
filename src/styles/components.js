@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { green, lightGreen, yellow } from './colors';
+import { green, lightGreen, yellow, black, orange } from './colors';
 import breakpoints from '../styles/breakpoints';
+import Color from 'color';
 
 export const Button = styled.button`
   border: 0 transparent none;
@@ -35,4 +36,38 @@ export const Pill = styled.span`
   font-size: 0.9rem;
   padding: 0 0.3rem;
   border-radius: 0.5em;
+`;
+
+export const GenericContainer = styled.div`
+  padding: 0 1rem;
+  border-bottom: 1px solid
+    ${({ color }) =>
+      Color(color || black)
+        .alpha(0.2)
+        .string()};
+  min-height: 2.2rem;
+  margin-bottom: 1rem;
+  color: ${black};
+  border-radius: 0.5em;
+  display: flex;
+  box-shadow: 0 0.2rem 0.5rem
+    ${({ color }) =>
+      Color(color || black)
+        .alpha(0.2)
+        .string()};
+`;
+
+export const PlaylistHeaderContainer = styled(GenericContainer)`
+  height: 2.2rem;
+  line-height: 2.2rem;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ToolHeading = styled.h3`
+  margin: 0 0 1rem;
+  color: ${orange};
+  line-height: 2.2rem;
+  height: 2.2rem;
+  border-bottom: 1px solid ${orange};
 `;
