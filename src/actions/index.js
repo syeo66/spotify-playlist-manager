@@ -70,7 +70,14 @@ export const retrievePlaylists = (
       Authorization: 'Bearer ' + authenticated,
     }),
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          doSignOut(dispatch);
+        }
+      }
+      return response.json();
+    })
     .then(response => {
       if (response.next && response.total > response.offset + response.limit) {
         retrievePlaylists(authenticated, response.next, true)(dispatch);

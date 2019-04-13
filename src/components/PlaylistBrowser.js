@@ -19,6 +19,9 @@ const Track = styled.div`
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  &:last-of-type {
+    border-radius: 0 0 0.4rem 0.4rem;
+  }
 `;
 
 const RowItem = styled.div`
