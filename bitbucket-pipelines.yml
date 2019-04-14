@@ -16,6 +16,6 @@ pipelines:
           script:
             - apt-get update && apt-get install -y unzip rsync ssh
             - npm install
-            - echo "CLIENT_ID=$CLIENT_ID" > .env
+            - echo "REACT_APP_CLIENT_ID=$CLIENT_ID" > .env
             - npm run build
             - rsync -az --exclude .git --exclude .env --exclude node_modules --delete $BITBUCKET_CLONE_DIR/build/ $PUBLISHING_TARGET
