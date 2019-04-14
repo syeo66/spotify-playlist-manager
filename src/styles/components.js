@@ -36,6 +36,7 @@ export const Pill = styled.span`
   font-size: 0.9rem;
   padding: 0 0.3rem;
   border-radius: 0.5em;
+  white-space: nowrap;
 `;
 
 export const GenericContainer = styled.div`
