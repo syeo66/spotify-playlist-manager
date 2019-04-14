@@ -8,20 +8,13 @@ import { retrievePlaylistAlbums } from '../actions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Button, PlaylistContainer, Track } from '../styles/components';
+import { Button, PlaylistContainer, Track, ButtonContainer } from '../styles/components';
 import PlaylistHeader from './PlaylistHeader';
 
 const RowItem = styled.div`
   width: 0;
   display: flex;
   align-items: center;
-`;
-
-const ButtonContainer = styled.div`
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 `;
 
 const PlaylistBrowser = ({ authenticated, id, retrievePlaylistAlbums, playlists, tracks }) => {

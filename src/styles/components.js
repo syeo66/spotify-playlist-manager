@@ -88,3 +88,10 @@ export const Track = styled.div`
     border-radius: 0 0 0.4rem 0.4rem;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;

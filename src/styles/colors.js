@@ -6,6 +6,8 @@ export const yellow = 'rgba(255, 253, 130, 1)';
 export const orange = 'rgba(255, 155, 113, 1)';
 export const red = 'rgba(232, 72, 85, 1)';
 
+export const white = '#fff';
+
 export const lightGreen = Color(green)
   .lighten(0.2)
   .string();

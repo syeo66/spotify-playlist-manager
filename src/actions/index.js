@@ -32,7 +32,7 @@ export const signInWithSpotify = e => dispatch => {
   e.preventDefault();
   const appUrl = encodeURIComponent(window.location.href.split('#')[0]);
   const scopes =
-    'user-library-read playlist-read-private playlist-modify-private user-modify-playback-state user-read-playback-state';
+    'user-library-read playlist-read-private playlist-modify-private playlist-modify-public user-modify-playback-state user-read-playback-state';
   const url =
     'https://accounts.spotify.com/authorize?client_id=' +
     process.env.REACT_APP_CLIENT_ID +
