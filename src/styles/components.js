@@ -71,3 +71,20 @@ export const ToolHeading = styled.h3`
   height: 2.2rem;
   border-bottom: 1px solid ${orange};
 `;
+
+export const PlaylistContainer = styled(GenericContainer)`
+  flex-direction: column;
+  padding: 0;
+`;
+
+export const Track = styled.div`
+  min-height: 1.7rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  &:last-of-type {
+    border-radius: 0 0 0.4rem 0.4rem;
+  }
+`;

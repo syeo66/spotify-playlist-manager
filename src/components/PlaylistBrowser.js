@@ -8,20 +8,8 @@ import { retrievePlaylistAlbums } from '../actions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Button, GenericContainer } from '../styles/components';
+import { Button, PlaylistContainer, Track } from '../styles/components';
 import PlaylistHeader from './PlaylistHeader';
-
-const Track = styled.div`
-  min-height: 1.7rem;
-  padding: 0.5rem 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  &:last-of-type {
-    border-radius: 0 0 0.4rem 0.4rem;
-  }
-`;
 
 const RowItem = styled.div`
   width: 0;
@@ -34,11 +22,6 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const PlaylistContainer = styled(GenericContainer)`
-  flex-direction: column;
-  padding: 0;
 `;
 
 const PlaylistBrowser = ({ authenticated, id, retrievePlaylistAlbums, playlists, tracks }) => {
