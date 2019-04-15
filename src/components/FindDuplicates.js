@@ -8,6 +8,28 @@ import { Button, ToolHeading, PlaylistContainer, Track, Pill, ButtonContainer } 
 import PlaylistHeader from './PlaylistHeader';
 import Progress from './Progress';
 
+const removeDuplicates = (duplicates, authenticated, playlist) => {
+  const duplicatesToApiTracksMapper = item => ({ uri: item.track.uri, positions: item.indexes });
+  const toDelete = duplicates.map(duplicatesToApiTracksMapper);
+  return remove100PlaylistTracks(authenticated, playlist, toDelete);
+};
+
+const remove100PlaylistTracks = (auth, playlist, trackUris = []) => {
+  const deleteChunks = trackUris.splice(0, 100);
+  const playlistId = playlist.id;
+  const url = 'https://api.spotify.com/v1/playlists/' + playlistId + '/tracks';
+
+  return fetch(url, {
+    method: 'delete',
+    headers: new Headers({
+      Authorization: 'Bearer ' + auth,
+    }),
+    body: JSON.stringify({
+      tracks: deleteChunks,
+    }),
+  }).then(response => response.json());
+};
+
 const FindDuplicates = ({ id, playlists, authenticated }) => {
   const [duplicates, setDuplicates] = useState([]);
   const [progress, setProgress] = useState(null);
@@ -21,13 +43,15 @@ const FindDuplicates = ({ id, playlists, authenticated }) => {
       return;
     }
     if (isPurging) {
-      removeDuplicates();
+      removeDuplicates(duplicates, authenticated, playlist).then(refetchDuplicates);
     }
   }, [isPurging]);
 
   useEffect(() => {
     findDuplicates(authenticated, id);
   }, [authenticated, id, testPlaylist]);
+
+  const refetchDuplicates = () => findDuplicates(authenticated, id).then(() => setIsPurging(prev => prev + 1));
 
   // this is quite a bit complex. Might need some refactoring
   const findDuplicates = (authenticated, id) => {
@@ -37,29 +61,26 @@ const FindDuplicates = ({ id, playlists, authenticated }) => {
         return;
       }
 
-      const fetchPlaylist = (url, itemList = []) => {
-        return new Promise(resolve => {
-          fetch(url, {
-            method: 'get',
-            headers: new Headers({
-              Authorization: 'Bearer ' + authenticated,
-            }),
-          })
-            .then(response => response.json())
-            .then(response => {
-              const items = itemList.concat(response.items);
-              setProgress((100 * (response.items.length + response.offset)) / response.total);
-              if (response.next) {
-                // if we have more pages to load, append them to items
-                fetchPlaylist(response.next, items).then(localResponse => resolve(localResponse));
-                return;
-              }
-              resolve(items);
-            });
-        });
+      const fetchPlaylist = (authenticated, url, itemList = []) => {
+        return fetch(url, {
+          method: 'get',
+          headers: new Headers({
+            Authorization: 'Bearer ' + authenticated,
+          }),
+        })
+          .then(response => response.json())
+          .then(response => {
+            const items = itemList.concat(response.items);
+            setProgress((100 * (response.items.length + response.offset)) / response.total);
+            if (response.next) {
+              // if we have more pages to load, append them to items
+              return fetchPlaylist(authenticated, response.next, items);
+            }
+            return itemList;
+          });
       };
 
-      fetchPlaylist(playlist.tracks.href).then(items =>
+      fetchPlaylist(authenticated, playlist.tracks.href).then(items =>
         setDuplicates(() => {
           outerResolve();
           return items.reduce(
@@ -90,43 +111,6 @@ const FindDuplicates = ({ id, playlists, authenticated }) => {
           );
         })
       );
-    });
-  };
-
-  const removeDuplicates = () => {
-    const removePlaylistTracks = (auth, playlist, trackUris) => {
-      return new Promise(resolve => {
-        if (!trackUris || trackUris.length === 0) {
-          resolve();
-          return;
-        }
-
-        const deleteChunks = trackUris.splice(0, 100);
-        const playlistId = playlist.id;
-        const url = 'https://api.spotify.com/v1/playlists/' + playlistId + '/tracks';
-
-        fetch(url, {
-          method: 'delete',
-          headers: new Headers({
-            Authorization: 'Bearer ' + auth,
-          }),
-          body: JSON.stringify({
-            tracks: deleteChunks,
-          }),
-        })
-          .then(response => response.json())
-          .then(() => {
-            resolve();
-          });
-      });
-    };
-
-    if (!duplicates || !duplicates.length) {
-      return;
-    }
-    const toDelete = duplicates.map(item => ({ uri: item.track.uri, positions: item.indexes }));
-    removePlaylistTracks(authenticated, playlist, toDelete).then(() => {
-      findDuplicates(authenticated, id).then(() => setIsPurging(prev => prev + 1));
     });
   };
 
