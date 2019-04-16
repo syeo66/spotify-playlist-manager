@@ -90,10 +90,6 @@ export const retrievePlaylists = (
 };
 
 export const retrievePlaylistAlbums = (authenticated, url) => dispatch => {
-  dispatch({
-    type: FETCH_TRACKS,
-    payload: null,
-  });
   fetch(url, {
     method: 'get',
     headers: new Headers({

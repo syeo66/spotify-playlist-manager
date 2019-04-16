@@ -70,8 +70,8 @@ const PlaylistBrowser = ({ authenticated, id, retrievePlaylistAlbums, playlists,
         <React.Fragment>
           {pagination}
           <PlaylistContainer>
-            {tracks.items.map(item => (
-              <Track key={item.track.id + item.added_at}>
+            {tracks.items.map((item, index) => (
+              <Track key={item.track.id + '-' + index}>
                 {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}
               </Track>
             ))}
