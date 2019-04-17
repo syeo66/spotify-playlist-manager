@@ -1,10 +1,15 @@
 import { RETRIEVE_AUTH_TOKEN, APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS } from './types';
 
 export const fetchUser = () => dispatch => {
-  for (const entry of window.location.hash.substr(1).split('&')) {
-    const splitEntry = entry.split('=');
-    if (splitEntry[0] === 'access_token') {
-      if (window.opener) {
+  if (!window.opener) {
+    return;
+  }
+  window.location.hash
+    .substr(1)
+    .split('&')
+    .map(entry => {
+      const splitEntry = entry.split('=');
+      if (splitEntry[0] === 'access_token') {
         window.opener.postMessage(
           {
             type: 'access_token',
@@ -14,8 +19,8 @@ export const fetchUser = () => dispatch => {
         );
         window.close();
       }
-    }
-  }
+      return entry;
+    });
 };
 
 export const doLogin = token => dispatch => {
@@ -30,7 +35,13 @@ export const doLogin = token => dispatch => {
 
 export const signInWithSpotify = e => dispatch => {
   e.preventDefault();
-  const appUrl = encodeURIComponent(window.location.href.split('#')[0]);
+  const appUrl = encodeURIComponent(
+    window.location.protocol +
+      '//' +
+      window.location.hostname +
+      (window.location.port ? ':' + window.location.port : '') +
+      '/'
+  );
   const scopes =
     'user-library-read playlist-read-private playlist-modify-private playlist-modify-public user-modify-playback-state user-read-playback-state';
   const url =
