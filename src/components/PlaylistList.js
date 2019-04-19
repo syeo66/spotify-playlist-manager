@@ -1,71 +1,10 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Color from 'color';
-import styled from 'styled-components';
 
 import { retrievePlaylists } from '../actions';
 
-import { black, green, lightGreen, yellow } from '../styles/colors';
-
-import { Pill } from '../styles/components';
-
-const PlaylistContainer = styled.ul`
-  border: 1px solid ${green};
-  border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem
-    ${Color(black)
-      .alpha(0.2)
-      .string()};
-  margin: 0 0 1rem;
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-`;
-
-const ListEntry = styled.li`
-  min-height: 2.2rem;
-  padding: 0 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  transition: background-color 300ms, color 300ms;
-  background-color: ${({ active }) => (active ? yellow : green)};
-  color: ${({ active }) => (active ? green : 'white')};
-  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
-
-  &:first-of-type {
-    border-radius: 0.4rem 0.4rem 0 0;
-  }
-
-  &:last-of-type {
-    border-radius: 0 0 0.4rem 0.4rem;
-  }
-
-  :hover {
-    background-color: ${({ active }) => (active ? yellow : lightGreen)};
-  }
-`;
-
-const ListEntryLink = styled(Link)`
-  color: inherit;
-  text-decoration: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  flex-grow: 1;
-`;
-
-const EntryTitle = styled.span`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
+import Selector from './Selector';
 
 const PlaylistList = props => {
   useEffect(() => {
@@ -78,19 +17,14 @@ const PlaylistList = props => {
     .sort((a, b) => {
       return a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1;
     })
-    .map(entry => {
-      const isActive = entry.id === props.id;
-      return (
-        <ListEntry key={entry.id} active={isActive}>
-          <ListEntryLink to={'/' + entry.id}>
-            <EntryTitle>{entry.name}</EntryTitle>
-            <Pill active={isActive}>{entry.tracks.total}</Pill>
-          </ListEntryLink>
-        </ListEntry>
-      );
-    });
+    .map(entry => ({
+      id: entry.id,
+      title: entry.name,
+      pill: entry.tracks.total,
+      url: '/' + entry.id,
+    }));
 
-  return <PlaylistContainer>{playlists}</PlaylistContainer>;
+  return <Selector id={props.id} list={playlists} />;
 };
 
 PlaylistList.propTypes = {
@@ -101,17 +35,13 @@ PlaylistList.propTypes = {
   retrievePlaylists: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ auth, data }) => {
-  return {
-    authenticated: auth,
-    playlists: data.playlists ? data.playlists : [],
-    userId: data.user ? data.user.id : null,
-  };
-};
+const mapStateToProps = ({ auth, data }) => ({
+  authenticated: auth,
+  playlists: data.playlists ? data.playlists : [],
+  userId: data.user ? data.user.id : null,
+});
 
 export default connect(
   mapStateToProps,
-  {
-    retrievePlaylists,
-  }
+  { retrievePlaylists }
 )(PlaylistList);

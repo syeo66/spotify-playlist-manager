@@ -23,13 +23,17 @@ const PlaylistHeader = ({ playlist }) => {
         ) : (
           <FontAwesomeIcon title="Private" icon={faLock} />
         )}
-        &nbsp;«{playlist.name}» by {playlist.owner.display_name}&nbsp;
+        &nbsp;{playlist.name ? '«' + playlist.name + '»' : 'Songs'}
+        {playlist.owner ? ' by ' + playlist.owner.display_name : ''}
+        &nbsp;
       </Title>
-      <div>
-        <Pill color="#fff" backgroundColor={orange}>
-          {playlist.tracks.total} Tracks
-        </Pill>
-      </div>
+      {playlist.tracks.total && (
+        <div>
+          <Pill color="#fff" backgroundColor={orange}>
+            {playlist.tracks.total} Tracks
+          </Pill>
+        </div>
+      )}
     </PlaylistHeaderContainer>
   );
 };

@@ -1,4 +1,4 @@
-import { FETCH_PLAYLISTS, APPEND_PLAYLISTS, FETCH_TRACKS } from '../actions/types';
+import { FETCH_PLAYLISTS, APPEND_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from '../actions/types';
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -22,6 +22,15 @@ export default (state = {}, action) => {
       return {
         ...state,
         tracks: action.payload,
+      };
+
+    case RETRIEVE_TRACKS_OVERVIEW:
+      return {
+        ...state,
+        library: {
+          ...state.library,
+          trackCount: action.payload.total,
+        },
       };
 
     default:

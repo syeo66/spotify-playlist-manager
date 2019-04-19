@@ -6,7 +6,7 @@ import { removeDuplicates, findDuplicates } from './find-duplicates';
 
 import { orange, white } from '../styles/colors';
 
-import { Button, ToolHeading, PlaylistContainer, Track, Pill, ButtonContainer } from '../styles/components';
+import { Button, ToolHeading, PlaylistDisplayContainer, Track, Pill, ButtonContainer } from '../styles/components';
 import PlaylistHeader from './PlaylistHeader';
 import Progress from './Progress';
 
@@ -54,7 +54,7 @@ const FindDuplicates = ({ id, playlists, authenticated }) => {
           <ButtonContainer>
             <Button onClick={handleRemoveDuplicatesClick}>Remove Duplicates</Button>
           </ButtonContainer>
-          <PlaylistContainer>
+          <PlaylistDisplayContainer>
             {duplicates.map(item => (
               <Track key={item.track.id + item.added_at}>
                 <Pill backgroundColor={orange} color={white}>
@@ -64,7 +64,7 @@ const FindDuplicates = ({ id, playlists, authenticated }) => {
                 {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}
               </Track>
             ))}
-          </PlaylistContainer>
+          </PlaylistDisplayContainer>
         </React.Fragment>
       ) : (
         'No duplicates found'

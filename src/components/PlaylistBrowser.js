@@ -8,7 +8,7 @@ import { retrievePlaylistAlbums } from '../actions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Button, PlaylistContainer, Track, ButtonContainer } from '../styles/components';
+import { Button, PlaylistDisplayContainer, Track, ButtonContainer } from '../styles/components';
 import PlaylistHeader from './PlaylistHeader';
 
 const RowItem = styled.div`
@@ -17,8 +17,21 @@ const RowItem = styled.div`
   align-items: center;
 `;
 
+const retrievePlaylist = playlists => id => {
+  if (id === 'tracks') {
+    return {
+      tracks: {
+        href: 'https://api.spotify.com/v1/me/tracks?limit=50',
+      },
+    };
+  } else {
+    const [playlist] = playlists.filter(playlist => id === playlist.id);
+    return playlist;
+  }
+};
+
 const PlaylistBrowser = ({ authenticated, id, retrievePlaylistAlbums, playlists, tracks }) => {
-  const [playlist] = useMemo(() => playlists.filter(playlist => id === playlist.id), [id, playlists]);
+  const playlist = useMemo(() => retrievePlaylist(playlists)(id), [playlists, id]);
 
   const playlistUrl = playlist ? playlist.tracks.href : null;
   useEffect(() => {
@@ -61,21 +74,25 @@ const PlaylistBrowser = ({ authenticated, id, retrievePlaylistAlbums, playlists,
   ) : (
     <React.Fragment>
       <PlaylistHeader playlist={playlist} />
-      <ButtonContainer>
-        <Link to={'/' + id + '/duplicates'}>
-          <Button>Find Duplicates</Button>
-        </Link>
-      </ButtonContainer>
+      {id === 'tracks' ? (
+        ''
+      ) : (
+        <ButtonContainer>
+          <Link to={'/' + id + '/duplicates'}>
+            <Button>Find Duplicates</Button>
+          </Link>
+        </ButtonContainer>
+      )}
       {tracks.items ? (
         <React.Fragment>
           {pagination}
-          <PlaylistContainer>
+          <PlaylistDisplayContainer>
             {tracks.items.map((item, index) => (
               <Track key={item.track.id + '-' + index}>
                 {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}
               </Track>
             ))}
-          </PlaylistContainer>
+          </PlaylistDisplayContainer>
           {pagination}
         </React.Fragment>
       ) : (

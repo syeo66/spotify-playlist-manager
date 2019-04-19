@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import Color from 'color';
+
 import { green, lightGreen, yellow, black, orange } from './colors';
 import breakpoints from '../styles/breakpoints';
-import Color from 'color';
 
 export const Button = styled.button`
   border: 0 transparent none;
@@ -73,7 +75,7 @@ export const ToolHeading = styled.h3`
   border-bottom: 1px solid ${orange};
 `;
 
-export const PlaylistContainer = styled(GenericContainer)`
+export const PlaylistDisplayContainer = styled(GenericContainer)`
   flex-direction: column;
   padding: 0;
 `;
@@ -95,4 +97,64 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+export const ListEntry = styled.li`
+  min-height: 2.2rem;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: background-color 300ms, color 300ms;
+  background-color: ${({ active }) => (active ? yellow : green)};
+  color: ${({ active }) => (active ? green : 'white')};
+  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
+
+  &:first-of-type {
+    border-radius: 0.4rem 0.4rem 0 0;
+  }
+
+  &:last-of-type {
+    border-radius: 0 0 0.4rem 0.4rem;
+
+    &:first-of-type {
+      border-radius: 0.4rem;
+    }
+  }
+
+  :hover {
+    background-color: ${({ active }) => (active ? yellow : lightGreen)};
+  }
+`;
+
+export const ListEntryLink = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+`;
+
+export const EntryTitle = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const PlaylistSelectorContainer = styled.ul`
+  border: 1px solid ${green};
+  border-radius: 0.5rem;
+  box-shadow: 0 0.2rem 0.5rem
+    ${Color(black)
+      .alpha(0.2)
+      .string()};
+  margin: 0 0 1rem;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
 `;

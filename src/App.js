@@ -14,6 +14,11 @@ const initialState = {
     playlists: [],
     playlistsSize: 0,
     tracks: {},
+    library: {
+      trackCount: 0,
+      albumCount: 0,
+      artistCount: 0,
+    },
   },
 };
 

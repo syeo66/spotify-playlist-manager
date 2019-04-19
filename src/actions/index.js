@@ -1,4 +1,10 @@
-import { RETRIEVE_AUTH_TOKEN, APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS } from './types';
+import {
+  RETRIEVE_AUTH_TOKEN,
+  APPEND_PLAYLISTS,
+  FETCH_PLAYLISTS,
+  RETRIEVE_TRACKS_OVERVIEW,
+  FETCH_TRACKS,
+} from './types';
 
 export const fetchUser = () => dispatch => {
   if (!window.opener) {
@@ -111,6 +117,32 @@ export const retrievePlaylistAlbums = (authenticated, url) => dispatch => {
     .then(response => {
       dispatch({
         type: FETCH_TRACKS,
+        payload: response,
+      });
+    });
+};
+
+export const retrieveTracksOverview = (
+  authenticated,
+  url = 'https://api.spotify.com/v1/me/tracks?limit=5'
+) => dispatch => {
+  fetch(url, {
+    method: 'get',
+    headers: new Headers({
+      Authorization: 'Bearer ' + authenticated,
+    }),
+  })
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          doSignOut(dispatch);
+        }
+      }
+      return response.json();
+    })
+    .then(response => {
+      dispatch({
+        type: RETRIEVE_TRACKS_OVERVIEW,
         payload: response,
       });
     });
