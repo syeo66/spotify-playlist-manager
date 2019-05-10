@@ -19,31 +19,33 @@ export const findDuplicates = authenticated => progressCallback => playlist => {
   const authFetchPlaylist = fetchPlaylist(authenticated);
 
   return authFetchPlaylist(playlist.tracks.href)().then(items =>
-    items.reduce(
-      (() => {
-        let knownItems = [];
-        let addedItems = [];
-        return (acc, item, index) => {
-          if (knownItems.indexOf(item.track.id) !== -1) {
-            if (addedItems.indexOf(item.track.id) !== -1) {
-              // if this is a duplicate and we have already added it
-              // just add the index to the existing entry
-              return acc.map(entry =>
-                entry.track.id === item.track.id ? { ...entry, indexes: entry.indexes.concat([index]) } : entry
-              );
+    items
+      .filter(item => !!item.track)
+      .reduce(
+        (() => {
+          let knownItems = [];
+          let addedItems = [];
+          return (acc, item, index) => {
+            if (knownItems.indexOf(item.track.id) !== -1) {
+              if (addedItems.indexOf(item.track.id) !== -1) {
+                // if this is a duplicate and we have already added it
+                // just add the index to the existing entry
+                return acc.map(entry =>
+                  entry.track.id === item.track.id ? { ...entry, indexes: entry.indexes.concat([index]) } : entry
+                );
+              }
+
+              // add a duplicate, if it is the first one found
+              addedItems.push(item.track.id);
+              return acc.concat({ ...item, indexes: [index] });
             }
 
-            // add a duplicate, if it is the first one found
-            addedItems.push(item.track.id);
-            return acc.concat({ ...item, indexes: [index] });
-          }
-
-          // no duplicate, so store it in the list of known items
-          knownItems.push(item.track.id);
-          return acc;
-        };
-      })(),
-      []
-    )
+            // no duplicate, so store it in the list of known items
+            knownItems.push(item.track.id);
+            return acc;
+          };
+        })(),
+        []
+      )
   );
 };

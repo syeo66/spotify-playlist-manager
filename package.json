@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Playlist Manager for Spotify",
   "author": "Red Ochsenbein <red@redochsenbein.ch>",
+  "homepage": "https://playlist.raven.ch",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.17",

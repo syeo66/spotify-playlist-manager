@@ -87,11 +87,13 @@ const PlaylistBrowser = ({ authenticated, id, retrievePlaylistAlbums, playlists,
         <React.Fragment>
           {pagination}
           <PlaylistDisplayContainer>
-            {tracks.items.map((item, index) => (
-              <Track key={item.track.id + '-' + index}>
-                {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}
-              </Track>
-            ))}
+            {tracks.items
+              .filter(item => !!item.track)
+              .map((item, index) => (
+                <Track key={item.track.id + '-' + index}>
+                  {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}
+                </Track>
+              ))}
           </PlaylistDisplayContainer>
           {pagination}
         </React.Fragment>
