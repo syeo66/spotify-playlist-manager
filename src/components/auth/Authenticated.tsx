@@ -1,20 +1,20 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 
-import Signin from '../Signin';
+import Signin from '../Signin'
 
 interface AuthenticatedProps {
-  auth: string | boolean;
+  auth: string | boolean
 }
 const Authenticated: React.FC<AuthenticatedProps> = ({ auth, children }) => {
-  return !auth ? <Signin /> : <>{children}</>;
-};
+  return !auth ? <Signin /> : <>{children}</>
+}
 
 interface MapStateToPropsInput {
-  auth: string | boolean;
+  auth: string | boolean
 }
 const mapStateToProps = ({ auth }: MapStateToPropsInput) => {
-  return { auth };
-};
+  return { auth }
+}
 
-export default connect(mapStateToProps, {})(Authenticated);
+export default connect(mapStateToProps, {})(Authenticated)

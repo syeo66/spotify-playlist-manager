@@ -1,29 +1,29 @@
-import React, { lazy, Suspense } from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import reduxThunk from 'redux-thunk';
-import { Provider } from 'react-redux';
+import './App.css'
 
-import reducers from './reducers';
+import React, { lazy, Suspense } from 'react'
+import { Provider } from 'react-redux'
+import { applyMiddleware, createStore } from 'redux'
+import reduxThunk from 'redux-thunk'
 
-import './App.css';
+import reducers from './reducers'
 
-const Main = lazy(() => import('./components/Main'));
+const Main = lazy(() => import('./components/Main'))
 
 const initialState = {
   auth: false,
   data: {
+    library: {
+      albumCount: 0,
+      artistCount: 0,
+      trackCount: 0,
+    },
     playlists: [],
     playlistsSize: 0,
     tracks: {},
-    library: {
-      trackCount: 0,
-      albumCount: 0,
-      artistCount: 0,
-    },
   },
-};
+}
 
-const store = createStore(reducers, initialState, applyMiddleware(reduxThunk));
+const store = createStore(reducers, initialState, applyMiddleware(reduxThunk))
 
 const App = () => {
   return (
@@ -34,7 +34,7 @@ const App = () => {
         </Suspense>
       </div>
     </Provider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

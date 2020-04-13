@@ -1,86 +1,86 @@
-import React, { useEffect, useMemo } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useEffect, useMemo } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
-import { retrievePlaylistAlbums } from '../actions';
-import { Button, PlaylistDisplayContainer, Track, ButtonContainer } from '../styles/components';
-import PlaylistHeader from './PlaylistHeader';
+import { retrievePlaylistAlbums } from '../actions'
+import { Button, ButtonContainer, PlaylistDisplayContainer, Track } from '../styles/components'
+import PlaylistHeader from './PlaylistHeader'
 
 const RowItem = styled.div`
   width: 0;
   display: flex;
   align-items: center;
-`;
+`
 
 const retrievePlaylist: (playlists: Array<Playlist>) => (id: string) => Playlist = playlists => (id: string) => {
   const defaultPlaylist = {
     tracks: {
       href: 'https://api.spotify.com/v1/me/tracks?limit=50',
     },
-  };
-  if (id === 'tracks') {
-    return defaultPlaylist;
   }
-  return playlists.find(playlist => id === playlist.id) || defaultPlaylist;
-};
+  if (id === 'tracks') {
+    return defaultPlaylist
+  }
+  return playlists.find(playlist => id === playlist.id) || defaultPlaylist
+}
 
 interface Playlist {
-  id?: string;
-  tracks: { href: string };
+  id?: string
+  tracks: { href: string }
 }
 interface Album {
-  name: string;
+  name: string
 }
 interface Artist {
-  name: string;
+  name: string
 }
 interface Track {
-  album: Album;
-  artists: Artist[];
-  id: string;
-  name: string;
+  album: Album
+  artists: Artist[]
+  id: string
+  name: string
 }
 interface Item {
-  track: Track;
+  track: Track
 }
 interface Tracks {
-  items: Item[];
-  limit: number;
-  next: string;
-  offset: number;
-  previous: string;
-  total: number;
+  items: Item[]
+  limit: number
+  next: string
+  offset: number
+  previous: string
+  total: number
 }
 interface PlaylistBrowserProps {
-  authenticated: string;
-  id: string;
-  retrievePlaylistAlbums: (authenticated: string, href: string) => void;
-  tracks: Tracks;
-  playlists: Playlist[];
+  authenticated: string
+  id: string
+  retrievePlaylistAlbums: (authenticated: string, href: string) => void
+  tracks: Tracks
+  playlists: Playlist[]
 }
 
 const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
   authenticated,
   id,
   playlists,
-  retrievePlaylistAlbums,
+  retrievePlaylistAlbums: doRetrievePlaylistAlbums,
   tracks,
 }) => {
-  const playlist = useMemo(() => retrievePlaylist(playlists)(id), [playlists, id]);
+  const playlist = useMemo(() => retrievePlaylist(playlists)(id), [playlists, id])
 
-  const playlistUrl = playlist ? playlist.tracks.href : null;
+  const playlistUrl = playlist ? playlist.tracks.href : null
   useEffect(() => {
     if (!playlist) {
-      return;
+      return
     }
-    retrievePlaylistAlbums(authenticated, playlist.tracks.href);
-  }, [playlistUrl, authenticated, playlist, retrievePlaylistAlbums]);
+    doRetrievePlaylistAlbums(authenticated, playlist.tracks.href)
+  }, [playlistUrl, authenticated, playlist, doRetrievePlaylistAlbums])
 
-  const handlePrev = () => retrievePlaylistAlbums(authenticated, tracks.previous);
-  const handleNext = () => retrievePlaylistAlbums(authenticated, tracks.next);
+  const handlePrev = () => doRetrievePlaylistAlbums(authenticated, tracks.previous)
+  const handleNext = () => doRetrievePlaylistAlbums(authenticated, tracks.next)
 
   const pagination =
     tracks.next || tracks.previous ? (
@@ -105,7 +105,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
       </ButtonContainer>
     ) : (
       ''
-    );
+    )
 
   return !playlist ? (
     <></>
@@ -116,7 +116,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
         ''
       ) : (
         <ButtonContainer>
-          <Link to={'/' + id + '/duplicates'}>
+          <Link to={`/${id}/duplicates`}>
             <Button>Find Duplicates</Button>
           </Link>
         </ButtonContainer>
@@ -128,7 +128,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
             {tracks.items
               .filter(item => !!item.track)
               .map((item, index) => (
-                <Track key={item.track.id + '-' + index}>
+                <Track key={`${item.track.id}-${index}`}>
                   {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}
                 </Track>
               ))}
@@ -139,19 +139,19 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
         ''
       )}
     </React.Fragment>
-  );
-};
+  )
+}
 
 interface MapStateToPropsInput {
-  auth: string;
-  data: { tracks: Tracks; playlists: Playlist[] };
+  auth: string
+  data: { tracks: Tracks; playlists: Playlist[] }
 }
 const mapStateToProps = ({ auth, data: { tracks, playlists } }: MapStateToPropsInput) => {
   return {
     authenticated: auth,
     playlists: playlists ? playlists : [],
     tracks: tracks ? tracks : ({} as Tracks),
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, { retrievePlaylistAlbums })(PlaylistBrowser);
+export default connect(mapStateToProps, { retrievePlaylistAlbums })(PlaylistBrowser)

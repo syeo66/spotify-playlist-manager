@@ -1,4 +1,4 @@
-import { removeDuplicates } from './removeDuplicates';
-import { findDuplicates } from './findDuplicates';
+import { findDuplicates } from './findDuplicates'
+import { removeDuplicates } from './removeDuplicates'
 
-export { removeDuplicates, findDuplicates };
+export { removeDuplicates, findDuplicates }
