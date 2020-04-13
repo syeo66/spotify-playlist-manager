@@ -1,12 +1,18 @@
 import {
-  RETRIEVE_AUTH_TOKEN,
   APPEND_PLAYLISTS,
   FETCH_PLAYLISTS,
-  RETRIEVE_TRACKS_OVERVIEW,
   FETCH_TRACKS,
+  RETRIEVE_AUTH_TOKEN,
+  RETRIEVE_TRACKS_OVERVIEW,
 } from './types';
 
-export const fetchUser = () => dispatch => {
+interface DispatchInput {
+  type: string;
+  payload: string | null;
+}
+type DispatchFunction = (params: DispatchInput) => void;
+
+export const fetchUser = () => (dispatch: DispatchFunction) => {
   if (!window.opener) {
     return;
   }
@@ -29,7 +35,7 @@ export const fetchUser = () => dispatch => {
     });
 };
 
-export const doLogin = token => dispatch => {
+export const doLogin = (token: string) => (dispatch: DispatchFunction) => {
   if (typeof Storage !== 'undefined') {
     window.localStorage.setItem('access_token', token);
   }
@@ -39,7 +45,7 @@ export const doLogin = token => dispatch => {
   });
 };
 
-export const signInWithSpotify = e => dispatch => {
+export const signInWithSpotify = (e: MouseEvent) => (dispatch: DispatchFunction) => {
   e.preventDefault();
   const appUrl = encodeURIComponent(
     window.location.protocol +
@@ -61,12 +67,12 @@ export const signInWithSpotify = e => dispatch => {
   window.open(url, 'spotify', 'width=400, height=500');
 };
 
-export const signOut = e => dispatch => {
+export const signOut = (e: MouseEvent) => (dispatch: DispatchFunction) => {
   e.preventDefault();
   doSignOut(dispatch);
 };
 
-const doSignOut = dispatch => {
+const doSignOut = (dispatch: DispatchFunction) => {
   if (typeof Storage !== 'undefined') {
     window.localStorage.removeItem('access_token');
   }
@@ -77,10 +83,10 @@ const doSignOut = dispatch => {
 };
 
 export const retrievePlaylists = (
-  authenticated,
+  authenticated: string,
   url = 'https://api.spotify.com/v1/me/playlists?limit=50',
   append = false
-) => dispatch => {
+) => (dispatch: DispatchFunction) => {
   fetch(url, {
     method: 'get',
     headers: new Headers({
@@ -106,7 +112,7 @@ export const retrievePlaylists = (
     });
 };
 
-export const retrievePlaylistAlbums = (authenticated, url) => dispatch => {
+export const retrievePlaylistAlbums = (authenticated: string, url: string) => (dispatch: DispatchFunction) => {
   fetch(url, {
     method: 'get',
     headers: new Headers({
@@ -122,10 +128,9 @@ export const retrievePlaylistAlbums = (authenticated, url) => dispatch => {
     });
 };
 
-export const retrieveTracksOverview = (
-  authenticated,
-  url = 'https://api.spotify.com/v1/me/tracks?limit=5'
-) => dispatch => {
+export const retrieveTracksOverview = (authenticated: string, url = 'https://api.spotify.com/v1/me/tracks?limit=5') => (
+  dispatch: DispatchFunction
+) => {
   fetch(url, {
     method: 'get',
     headers: new Headers({
