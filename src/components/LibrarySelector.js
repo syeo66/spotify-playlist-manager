@@ -42,7 +42,4 @@ const mapStateToProps = ({ auth, data: { library, user } }) => ({
   userId: user ? user.id : null,
 });
 
-export default connect(
-  mapStateToProps,
-  { retrieveTracksOverview }
-)(LibrarySelector);
+export default connect(mapStateToProps, { retrieveTracksOverview })(LibrarySelector);

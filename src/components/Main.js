@@ -73,7 +73,4 @@ const mapStateToProps = ({ auth }) => {
   return { auth };
 };
 
-export default connect(
-  mapStateToProps,
-  { doLogin, fetchUser }
-)(Main);
+export default connect(mapStateToProps, { doLogin, fetchUser })(Main);

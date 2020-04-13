@@ -41,7 +41,4 @@ const mapStateToProps = ({ auth, data }) => ({
   userId: data.user ? data.user.id : null,
 });
 
-export default connect(
-  mapStateToProps,
-  { retrievePlaylists }
-)(PlaylistList);
+export default connect(mapStateToProps, { retrievePlaylists })(PlaylistList);

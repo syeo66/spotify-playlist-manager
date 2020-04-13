@@ -88,7 +88,4 @@ const mapStateToProps = ({ auth, data: { tracks, playlists } }) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {}
-)(FindDuplicates);
+export default connect(mapStateToProps, {})(FindDuplicates);

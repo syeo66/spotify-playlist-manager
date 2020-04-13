@@ -1,8 +1,9 @@
 import React, { lazy, Suspense } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import reducers from './reducers';
 import { Provider } from 'react-redux';
+
+import reducers from './reducers';
 
 import './App.css';
 
