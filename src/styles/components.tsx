@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import Color from 'color';
+import Color from 'color'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
-import { green, lightGreen, yellow, black, orange } from './colors';
-import breakpoints from '../styles/breakpoints';
+import breakpoints from '../styles/breakpoints'
+import { black, green, lightGreen, orange, yellow } from './colors'
 
 export const Button = styled.button`
   border: 0 transparent none;
@@ -29,9 +29,14 @@ export const Button = styled.button`
   :hover {
     background-color: ${lightGreen};
   }
-`;
+`
 
-export const Pill = styled.span`
+interface PillProps {
+  active?: boolean
+  backgroundColor?: string
+  color?: string
+}
+export const Pill = styled.span<PillProps>`
   background-color: ${({ active, backgroundColor }) => (backgroundColor ? backgroundColor : active ? green : yellow)};
   color: ${({ active, color }) => (color ? color : active ? yellow : green)};
   font-weight: bold;
@@ -39,7 +44,7 @@ export const Pill = styled.span`
   padding: 0 0.3rem;
   border-radius: 0.5em;
   white-space: nowrap;
-`;
+`
 
 export const GenericContainer = styled.div`
   padding: 0 1rem;
@@ -58,14 +63,14 @@ export const GenericContainer = styled.div`
       Color(color || black)
         .alpha(0.2)
         .string()};
-`;
+`
 
 export const PlaylistHeaderContainer = styled(GenericContainer)`
   height: 2.2rem;
   line-height: 2.2rem;
   justify-content: space-between;
   align-items: center;
-`;
+`
 
 export const ToolHeading = styled.h3`
   margin: 0 0 1rem;
@@ -73,12 +78,12 @@ export const ToolHeading = styled.h3`
   line-height: 2.2rem;
   height: 2.2rem;
   border-bottom: 1px solid ${orange};
-`;
+`
 
 export const PlaylistDisplayContainer = styled(GenericContainer)`
   flex-direction: column;
   padding: 0;
-`;
+`
 
 export const Track = styled.div`
   min-height: 1.7rem;
@@ -90,16 +95,19 @@ export const Track = styled.div`
   &:last-of-type {
     border-radius: 0 0 0.4rem 0.4rem;
   }
-`;
+`
 
 export const ButtonContainer = styled.div`
   margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
+`
 
-export const ListEntry = styled.li`
+interface ListEntryProps {
+  active?: boolean
+}
+export const ListEntry = styled.li<ListEntryProps>`
   min-height: 2.2rem;
   padding: 0 1rem;
   display: flex;
@@ -126,7 +134,7 @@ export const ListEntry = styled.li`
   :hover {
     background-color: ${({ active }) => (active ? yellow : lightGreen)};
   }
-`;
+`
 
 export const ListEntryLink = styled(Link)`
   color: inherit;
@@ -137,13 +145,13 @@ export const ListEntryLink = styled(Link)`
   align-items: center;
   width: 100%;
   flex-grow: 1;
-`;
+`
 
 export const EntryTitle = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
+`
 
 export const PlaylistSelectorContainer = styled.ul`
   border: 1px solid ${green};
@@ -157,4 +165,4 @@ export const PlaylistSelectorContainer = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 0;
-`;
+`
