@@ -70,7 +70,7 @@ const doSignOut = (dispatch: DispatchFunction) => {
 }
 
 export const retrievePlaylists = (
-  authenticated: string,
+  authenticated: string | boolean,
   url = 'https://api.spotify.com/v1/me/playlists?limit=50',
   append = false
 ) => (dispatch: DispatchFunction) => {
