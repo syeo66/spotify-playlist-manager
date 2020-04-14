@@ -46,7 +46,10 @@ export const Pill = styled.span<PillProps>`
   white-space: nowrap;
 `
 
-export const GenericContainer = styled.div`
+interface GenericContainerProps {
+  color?: string
+}
+export const GenericContainer = styled.div<GenericContainerProps>`
   padding: 0 1rem;
   border-bottom: 1px solid
     ${({ color }) =>

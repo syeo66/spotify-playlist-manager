@@ -29,7 +29,10 @@ const retrievePlaylist: (playlists: Array<Playlist>) => (id: string) => Playlist
 
 interface Playlist {
   id?: string
-  tracks: { href: string }
+  name?: string
+  owner?: { display_name: string }
+  public?: boolean
+  tracks: { href: string; total?: number }
 }
 interface Album {
   name: string
