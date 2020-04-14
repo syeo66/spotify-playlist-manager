@@ -4,19 +4,30 @@ interface Tracks {
 interface Playlist {
   tracks: Tracks
 }
+interface Album {
+  name: string
+}
+interface Artist {
+  name: string
+}
 interface Track {
+  album: Album
+  artists: Artist[]
   id: string
+  name: string
+  uri: string
 }
 interface Item {
-  track: Track
+  added_at: string
   indexes: number[]
+  track: Track
 }
 
-export const findDuplicates = (authenticated: string) => (progressCallback: (percent: number) => void) => (
+export const findDuplicates = (authenticated: string | boolean) => (progressCallback: (percent: number) => void) => (
   playlist: Playlist
 ) => {
   const fetchPlaylist: (
-    authenticated: string
+    authenticated: string | boolean
   ) => (url: string) => (itemList?: Item[]) => Promise<Item[]> = auth => url => async (itemList = []) => {
     const response = await fetch(url, {
       headers: new Headers({

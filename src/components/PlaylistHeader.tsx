@@ -13,6 +13,7 @@ const Title = styled.div`
 `
 
 interface Tracks {
+  href?: string
   total?: number
 }
 interface Playlist {
