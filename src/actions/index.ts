@@ -115,9 +115,10 @@ export const retrievePlaylistAlbums = (authenticated: string, url: string) => (d
     })
 }
 
-export const retrieveTracksOverview = (authenticated: string, url = 'https://api.spotify.com/v1/me/tracks?limit=5') => (
-  dispatch: DispatchFunction
-) => {
+export const retrieveTracksOverview = (
+  authenticated: string | boolean,
+  url = 'https://api.spotify.com/v1/me/tracks?limit=5'
+) => (dispatch: DispatchFunction) => {
   fetch(url, {
     headers: new Headers({
       Authorization: `Bearer ${authenticated}`,
