@@ -1,14 +1,28 @@
-import { FETCH_PLAYLISTS, APPEND_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from '../actions/types';
+import { APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from '../actions/types'
 
-export default (state = {}, action) => {
+interface Item {
+  id?: string
+}
+interface Playlist {
+  id?: string
+}
+interface Action {
+  payload: { items: Item[]; total: number }
+  type: string
+}
+interface State {
+  playlists?: Playlist[]
+  library?: { trackCount: number }
+}
+export default (state: State = {}, action: Action) => {
   switch (action.type) {
     case APPEND_PLAYLISTS: {
-      const playlists = state.playlists.concat(action.payload.items);
+      const playlists = state.playlists?.concat(action.payload.items)
       return {
         ...state,
         playlists: playlists,
         playlistsSize: action.payload.total,
-      };
+      }
     }
 
     case FETCH_PLAYLISTS:
@@ -16,13 +30,13 @@ export default (state = {}, action) => {
         ...state,
         playlists: action.payload.items,
         playlistsSize: action.payload.total,
-      };
+      }
 
     case FETCH_TRACKS:
       return {
         ...state,
         tracks: action.payload,
-      };
+      }
 
     case RETRIEVE_TRACKS_OVERVIEW:
       return {
@@ -31,9 +45,9 @@ export default (state = {}, action) => {
           ...state.library,
           trackCount: action.payload.total,
         },
-      };
+      }
 
     default:
-      return state;
+      return state
   }
-};
+}

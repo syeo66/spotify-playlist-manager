@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { orange } from '../styles/colors.js'
+import { orange } from '../styles/colors'
 
 const ProgressContainer = styled.div`
   border: 1px solid ${orange};
