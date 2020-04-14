@@ -1,16 +1,26 @@
-import styled from 'styled-components';
-import breakpoints from './breakpoints';
+import styled from 'styled-components'
 
-export const Row = styled.div`
+import breakpoints from './breakpoints'
+
+interface RowProps {
+  justify?: string
+}
+export const Row = styled.div<RowProps>`
   display: flex;
   flex-direction: column;
   @media only screen and (min-width: ${breakpoints.sm}) {
     flex-direction: row;
     justify-content: ${props => (props.justify ? props.justify : 'flex-start')};
   }
-`;
+`
 
-export const Column = styled.div`
+interface ColumnProps {
+  lg?: string | number
+  md?: string | number
+  sm?: string | number
+  xs?: string | number
+}
+export const Column = styled.div<ColumnProps>`
   flex-grow: ${({ xs }) => xs || 1};
   width: 100%;
   flex-basis: 0;
@@ -32,4 +42,4 @@ export const Column = styled.div`
     width: 0;
     flex-basis: 0;
   }
-`;
+`
