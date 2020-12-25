@@ -1,12 +1,14 @@
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight, faList, faTh } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { retrievePlaylistAlbums } from '../actions'
-import { Button, ButtonContainer, PlaylistDisplayContainer, Track } from '../styles/components'
+import { Button, ButtonContainer, Track } from '../styles/components'
+import { Column, Row } from '../styles/grid'
+import PlaylistDisplayContainer from './PlaylistDisplayContainer'
 import PlaylistHeader from './PlaylistHeader'
 
 const RowItem = styled.div`
@@ -65,6 +67,8 @@ interface PlaylistBrowserProps {
   playlists: Playlist[]
 }
 
+type DisplayMode = 'list' | 'album'
+
 const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
   authenticated,
   id,
@@ -72,6 +76,8 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
   retrievePlaylistAlbums: doRetrievePlaylistAlbums,
   tracks,
 }) => {
+  const [displayMode, setDisplayMode] = useState<DisplayMode>('list')
+
   const playlist = useMemo(() => retrievePlaylist(playlists)(id), [playlists, id])
 
   const playlistUrl = playlist ? playlist.tracks.href : null
@@ -82,8 +88,18 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
     doRetrievePlaylistAlbums(authenticated, playlist.tracks.href)
   }, [playlistUrl, authenticated, playlist, doRetrievePlaylistAlbums])
 
-  const handlePrev = () => doRetrievePlaylistAlbums(authenticated, tracks.previous)
-  const handleNext = () => doRetrievePlaylistAlbums(authenticated, tracks.next)
+  const handlePrev = useCallback(() => doRetrievePlaylistAlbums(authenticated, tracks.previous), [
+    authenticated,
+    doRetrievePlaylistAlbums,
+    tracks.previous,
+  ])
+  const handleNext = useCallback(() => doRetrievePlaylistAlbums(authenticated, tracks.next), [
+    authenticated,
+    doRetrievePlaylistAlbums,
+    tracks.next,
+  ])
+  const handleSelectAlbumView = useCallback(() => setDisplayMode('album'), [])
+  const handleSelectListView = useCallback(() => setDisplayMode('list'), [])
 
   const pagination =
     tracks.next || tracks.previous ? (
@@ -118,11 +134,26 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
       {id === 'tracks' ? (
         ''
       ) : (
-        <ButtonContainer>
-          <Link to={`/${id}/duplicates`}>
-            <Button>Find Duplicates</Button>
-          </Link>
-        </ButtonContainer>
+        <Row>
+          <Column>
+            <ButtonContainer>
+              <Link to={`/${id}/duplicates`}>
+                <Button>Find Duplicates</Button>
+              </Link>
+            </ButtonContainer>
+          </Column>
+
+          <Column>
+            <ButtonContainer justify="right">
+              <Button active={displayMode === 'list'} onClick={handleSelectListView}>
+                <FontAwesomeIcon icon={faList} />
+              </Button>
+              <Button active={displayMode === 'album'} onClick={handleSelectAlbumView}>
+                <FontAwesomeIcon icon={faTh} />
+              </Button>
+            </ButtonContainer>
+          </Column>
+        </Row>
       )}
       {tracks.items ? (
         <React.Fragment>

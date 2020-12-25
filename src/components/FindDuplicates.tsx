@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { connect } from 'react-redux'
 
 import { orange, white } from '../styles/colors'
-import { Button, ButtonContainer, Pill, PlaylistDisplayContainer, ToolHeading, Track } from '../styles/components'
+import { Button, ButtonContainer, Pill, ToolHeading, Track } from '../styles/components'
 import { findDuplicates, removeDuplicates } from './find-duplicates'
+import PlaylistDisplayContainer from './PlaylistDisplayContainer'
 import PlaylistHeader from './PlaylistHeader'
 import Progress from './Progress'
 

@@ -5,10 +5,14 @@ import styled from 'styled-components'
 import breakpoints from '../styles/breakpoints'
 import { black, green, lightGreen, orange, yellow } from './colors'
 
-export const Button = styled.button`
+interface ButtonProps {
+  active?: boolean
+}
+export const Button = styled.button<ButtonProps>`
   border: 0 transparent none;
-  background-color: ${green};
-  color: white;
+  background-color: ${({ active }) => (active ? yellow : green)};
+  color: ${({ active }) => (active ? green : 'white')};
+  border: 1px solid ${green};
   padding: 0 0.5rem;
   font-size: 0.8rem;
   border-radius: 0.4rem;
@@ -27,6 +31,7 @@ export const Button = styled.button`
   }
 
   :hover {
+    color: white;
     background-color: ${lightGreen};
   }
 `
@@ -83,7 +88,7 @@ export const ToolHeading = styled.h3`
   border-bottom: 1px solid ${orange};
 `
 
-export const PlaylistDisplayContainer = styled(GenericContainer)`
+export const PlaylistListDisplayContainer = styled(GenericContainer)`
   flex-direction: column;
   padding: 0;
 `
@@ -100,11 +105,25 @@ export const Track = styled.div`
   }
 `
 
-export const ButtonContainer = styled.div`
+interface ButtonContainerProps {
+  justify?: 'left' | 'right' | 'space-between'
+}
+export const ButtonContainer = styled.div<ButtonContainerProps>`
   margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: ${({ justify = 'space-between' }) => {
+    const mapping = new Map([
+      ['left', 'flex-start'],
+      ['right', 'flex-end'],
+    ])
+
+    return mapping.get(justify) || justify
+  }};
+
+  > *:not(:first-child) {
+    margin-left: 0.4rem;
+  }
 `
 
 interface ListEntryProps {
