@@ -9,7 +9,17 @@ interface Item {
   track: Track
 }
 
-export const removeDuplicates = (authenticated: string | boolean, duplicates: Item[], playlist: Playlist) => {
+type RemoveDuplicatesType = (
+  authenticated: string | boolean,
+  duplicates: Item[],
+  playlist: Playlist
+) => Promise<unknown>
+
+export const removeDuplicates: RemoveDuplicatesType = (
+  authenticated: string | boolean,
+  duplicates: Item[],
+  playlist: Playlist
+) => {
   const duplicatesToApiTracksMapper = (item: Item) => ({ positions: item.indexes, uri: item.track.uri })
   const toDelete = duplicates.map(duplicatesToApiTracksMapper)
   return remove100PlaylistTracks(authenticated, playlist, toDelete)

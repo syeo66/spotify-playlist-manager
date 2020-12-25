@@ -1,7 +1,4 @@
 module.exports = {
-  root: true,
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier', 'simple-import-sort'],
   extends: [
     'react-app',
     'eslint:recommended',
@@ -9,14 +6,19 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
+    ecmaFeatures: { modules: true },
     ecmaVersion: 6,
     sourceType: 'module',
-    ecmaFeatures: { modules: true },
   },
+  plugins: ['@typescript-eslint', 'prettier', 'simple-import-sort'],
+  root: true,
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none' } }],
+    complexity: ['warn', 10],
+    eqeqeq: 'error',
     'no-console': 'error',
     'no-else-return': 'error',
     'no-empty': 'error',
@@ -24,12 +26,10 @@ module.exports = {
     'prefer-destructuring': 'error',
     'prefer-template': 'error',
     'prettier/prettier': 'error',
+    'simple-import-sort/exports': 'error',
     'simple-import-sort/imports': 'error',
-    "simple-import-sort/exports": "error",
     // 'sort-imports': 'error',
     'sort-keys': 'error',
     'sort-vars': 'error',
-    complexity: ['warn', 10],
-    eqeqeq: 'error',
   },
 }

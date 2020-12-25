@@ -25,7 +25,7 @@ const initialState = {
 
 const store = createStore(reducers, initialState, applyMiddleware(reduxThunk))
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className="App">

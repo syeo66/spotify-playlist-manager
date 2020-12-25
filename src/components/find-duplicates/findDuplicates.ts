@@ -23,9 +23,13 @@ interface Item {
   track: Track
 }
 
-export const findDuplicates = (authenticated: string | boolean) => (progressCallback: (percent: number) => void) => (
-  playlist: Playlist
-) => {
+type FindDuplicatesType = (
+  authenticated: string | boolean
+) => (progressCallback: (percent: number) => void) => (playlist: Playlist) => Promise<Item[]>
+
+export const findDuplicates: FindDuplicatesType = (authenticated: string | boolean) => (
+  progressCallback: (percent: number) => void
+) => async (playlist: Playlist) => {
   const fetchPlaylist: (auth: string | boolean) => (url: string) => (itemList?: Item[]) => Promise<Item[]> = (auth) => (
     url
   ) => async (itemList = []) => {
@@ -45,35 +49,34 @@ export const findDuplicates = (authenticated: string | boolean) => (progressCall
 
   const authFetchPlaylist = fetchPlaylist(authenticated)
 
-  return authFetchPlaylist(playlist.tracks.href)().then((items) =>
-    items
-      .filter((item) => !!item.track)
-      .reduce(
-        (() => {
-          const knownItems: string[] = []
-          const addedItems: string[] = []
+  const items_1 = await authFetchPlaylist(playlist.tracks.href)()
+  return items_1
+    .filter((item) => !!item.track)
+    .reduce(
+      (() => {
+        const knownItems: string[] = []
+        const addedItems: string[] = []
 
-          return (acc: Item[], item: Item, index: number) => {
-            if (knownItems.indexOf(item.track.id) !== -1) {
-              if (addedItems.indexOf(item.track.id) !== -1) {
-                // if this is a duplicate and we have already added it
-                // just add the index to the existing entry
-                return acc.map((entry) =>
-                  entry.track.id === item.track.id ? { ...entry, indexes: entry.indexes.concat([index]) } : entry
-                )
-              }
-
-              // add a duplicate, if it is the first one found
-              addedItems.push(item.track.id)
-              return acc.concat({ ...item, indexes: [index] })
+        return (acc: Item[], item_1: Item, index: number) => {
+          if (knownItems.indexOf(item_1.track.id) !== -1) {
+            if (addedItems.indexOf(item_1.track.id) !== -1) {
+              // if this is a duplicate and we have already added it
+              // just add the index to the existing entry
+              return acc.map((entry) =>
+                entry.track.id === item_1.track.id ? { ...entry, indexes: entry.indexes.concat([index]) } : entry
+              )
             }
 
-            // no duplicate, so store it in the list of known items
-            knownItems.push(item.track.id)
-            return acc
+            // add a duplicate, if it is the first one found
+            addedItems.push(item_1.track.id)
+            return acc.concat({ ...item_1, indexes: [index] })
           }
-        })(),
-        [] as Item[]
-      )
-  )
+
+          // no duplicate, so store it in the list of known items
+          knownItems.push(item_1.track.id)
+          return acc
+        }
+      })(),
+      [] as Item[]
+    )
 }

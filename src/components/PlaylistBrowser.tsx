@@ -40,14 +40,14 @@ interface Album {
 interface Artist {
   name: string
 }
-interface Track {
+interface AlbumTrack {
   album: Album
   artists: Artist[]
   id: string
   name: string
 }
 interface Item {
-  track: Track
+  track: AlbumTrack
 }
 interface Tracks {
   items: Item[]

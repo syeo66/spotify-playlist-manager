@@ -14,7 +14,10 @@ interface State {
   playlists?: Playlist[]
   library?: { trackCount: number }
 }
-export default (state: State = {}, action: Action) => {
+
+type DataReducerType = (state: State, action: Action) => State
+
+const dataReducer: DataReducerType = (state: State = {}, action: Action) => {
   switch (action.type) {
     case APPEND_PLAYLISTS: {
       const playlists = state.playlists?.concat(action.payload.items)
@@ -51,3 +54,5 @@ export default (state: State = {}, action: Action) => {
       return state
   }
 }
+
+export default dataReducer

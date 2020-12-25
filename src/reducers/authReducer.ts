@@ -4,7 +4,10 @@ interface Action {
   type: string
   payload: string | boolean
 }
-export default (state: string | boolean = false, action: Action) => {
+
+type AuthReducerType = (state: string | boolean, action: Action) => string | boolean
+
+const authReducer: AuthReducerType = (state: string | boolean = false, action: Action) => {
   switch (action.type) {
     case RETRIEVE_AUTH_TOKEN:
       return action.payload || false
@@ -12,3 +15,5 @@ export default (state: string | boolean = false, action: Action) => {
       return state
   }
 }
+
+export default authReducer

@@ -13,7 +13,7 @@ interface Album {
 interface Artist {
   name: string
 }
-interface Track {
+interface AlbumTrack {
   id: string
   name: string
   uri: string
@@ -23,7 +23,7 @@ interface Track {
 interface Item {
   added_at: string
   indexes: number[]
-  track: Track
+  track: AlbumTrack
 }
 interface Tracks {
   href: string
