@@ -26,9 +26,9 @@ interface Item {
 export const findDuplicates = (authenticated: string | boolean) => (progressCallback: (percent: number) => void) => (
   playlist: Playlist
 ) => {
-  const fetchPlaylist: (
-    authenticated: string | boolean
-  ) => (url: string) => (itemList?: Item[]) => Promise<Item[]> = auth => url => async (itemList = []) => {
+  const fetchPlaylist: (auth: string | boolean) => (url: string) => (itemList?: Item[]) => Promise<Item[]> = (auth) => (
+    url
+  ) => async (itemList = []) => {
     const response = await fetch(url, {
       headers: new Headers({
         Authorization: `Bearer ${auth}`,
@@ -45,9 +45,9 @@ export const findDuplicates = (authenticated: string | boolean) => (progressCall
 
   const authFetchPlaylist = fetchPlaylist(authenticated)
 
-  return authFetchPlaylist(playlist.tracks.href)().then(items =>
+  return authFetchPlaylist(playlist.tracks.href)().then((items) =>
     items
-      .filter(item => !!item.track)
+      .filter((item) => !!item.track)
       .reduce(
         (() => {
           const knownItems: string[] = []
@@ -58,7 +58,7 @@ export const findDuplicates = (authenticated: string | boolean) => (progressCall
               if (addedItems.indexOf(item.track.id) !== -1) {
                 // if this is a duplicate and we have already added it
                 // just add the index to the existing entry
-                return acc.map(entry =>
+                return acc.map((entry) =>
                   entry.track.id === item.track.id ? { ...entry, indexes: entry.indexes.concat([index]) } : entry
                 )
               }

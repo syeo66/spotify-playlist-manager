@@ -10,7 +10,7 @@ export const Row = styled.div<RowProps>`
   flex-direction: column;
   @media only screen and (min-width: ${breakpoints.sm}) {
     flex-direction: row;
-    justify-content: ${props => (props.justify ? props.justify : 'flex-start')};
+    justify-content: ${(props) => (props.justify ? props.justify : 'flex-start')};
   }
 `
 

@@ -44,7 +44,7 @@ const Main: React.FC<MainProps> = ({ doLogin: login, fetchUser: doFetchUser }) =
       <Route
         path="/:id?"
         exact
-        render={props => (
+        render={(props) => (
           <Authenticated>
             <Suspense fallback={<div />}>
               <PlaylistEditor {...props} component={PlaylistBrowser} />
@@ -55,7 +55,7 @@ const Main: React.FC<MainProps> = ({ doLogin: login, fetchUser: doFetchUser }) =
       <Route
         path="/:id/duplicates"
         exact
-        render={props => (
+        render={(props) => (
           <Authenticated>
             <Suspense fallback={<div />}>
               <PlaylistEditor {...props} component={FindDuplicates} />

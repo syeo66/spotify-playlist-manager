@@ -33,7 +33,7 @@ const PlaylistList: React.FC<PlaylistListProps> = ({
 
   const localPlaylists = playlists
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
-    .map(entry => ({
+    .map((entry) => ({
       id: entry.id,
       pill: `${entry.tracks.total}`,
       title: entry.name,

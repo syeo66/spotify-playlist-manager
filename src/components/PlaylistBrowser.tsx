@@ -15,7 +15,7 @@ const RowItem = styled.div`
   align-items: center;
 `
 
-const retrievePlaylist: (playlists: Array<Playlist>) => (id: string) => Playlist = playlists => (id: string) => {
+const retrievePlaylist: (playlists: Array<Playlist>) => (id: string) => Playlist = (playlists) => (id: string) => {
   const defaultPlaylist = {
     tracks: {
       href: 'https://api.spotify.com/v1/me/tracks?limit=50',
@@ -24,7 +24,7 @@ const retrievePlaylist: (playlists: Array<Playlist>) => (id: string) => Playlist
   if (id === 'tracks') {
     return defaultPlaylist
   }
-  return playlists.find(playlist => id === playlist.id) || defaultPlaylist
+  return playlists.find((playlist) => id === playlist.id) || defaultPlaylist
 }
 
 interface Playlist {
@@ -129,7 +129,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
           {pagination}
           <PlaylistDisplayContainer>
             {tracks.items
-              .filter(item => !!item.track)
+              .filter((item) => !!item.track)
               .map((item, index) => (
                 <Track key={`${item.track.id}-${index}`}>
                   {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}

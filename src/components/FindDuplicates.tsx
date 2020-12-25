@@ -38,7 +38,7 @@ interface FindDuplicatesProps {
   playlists: Playlist[]
 }
 const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenticated }) => {
-  const getPlaylist = useCallback(() => playlists.find(p => id === p.id), [id, playlists])
+  const getPlaylist = useCallback(() => playlists.find((p) => id === p.id), [id, playlists])
 
   const [duplicates, setDuplicates] = useState<Item[]>([])
   const [isPurging, setIsPurging] = useState(0)
@@ -47,14 +47,14 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
 
   const authFindDuplicates = useMemo(() => findDuplicates(authenticated)(setProgress), [authenticated])
   const fetchAndStoreDuplicates = useCallback(
-    (pl: Playlist) => authFindDuplicates(pl).then(data => setDuplicates(data)),
+    (pl: Playlist) => authFindDuplicates(pl).then((data) => setDuplicates(data)),
     [authFindDuplicates]
   )
   const refetchDuplicates = useCallback(() => {
     if (!playlist) {
       return
     }
-    fetchAndStoreDuplicates(playlist).then(() => setIsPurging(prev => prev + 1))
+    fetchAndStoreDuplicates(playlist).then(() => setIsPurging((prev) => prev + 1))
   }, [fetchAndStoreDuplicates, playlist])
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
     fetchAndStoreDuplicates(playlist)
   }, [fetchAndStoreDuplicates, playlist])
 
-  const handleRemoveDuplicatesClick = useCallback(() => setIsPurging(prev => prev + 1), [])
+  const handleRemoveDuplicatesClick = useCallback(() => setIsPurging((prev) => prev + 1), [])
 
   return !playlist ? (
     <></>
@@ -97,7 +97,7 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
             <Button onClick={handleRemoveDuplicatesClick}>Remove Duplicates</Button>
           </ButtonContainer>
           <PlaylistDisplayContainer>
-            {duplicates.map(item => (
+            {duplicates.map((item) => (
               <Track key={item.track.id + item.added_at}>
                 <Pill backgroundColor={orange} color={white}>
                   {item.indexes.length + 1}x

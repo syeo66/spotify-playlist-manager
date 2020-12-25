@@ -13,8 +13,8 @@ interface SelectorProps {
   list: Entry[]
 }
 
-const Selector: React.FC<SelectorProps> = props => {
-  const playlists = props.list.map(entry => {
+const Selector: React.FC<SelectorProps> = (props) => {
+  const playlists = props.list.map((entry) => {
     const isActive = entry.id === props.id
     return (
       <ListEntry key={entry.id} active={isActive}>

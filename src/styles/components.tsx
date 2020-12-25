@@ -159,10 +159,7 @@ export const EntryTitle = styled.span`
 export const PlaylistSelectorContainer = styled.ul`
   border: 1px solid ${green};
   border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem
-    ${Color(black)
-      .alpha(0.2)
-      .string()};
+  box-shadow: 0 0.2rem 0.5rem ${Color(black).alpha(0.2).string()};
   margin: 0 0 1rem;
   list-style-type: none;
   display: flex;

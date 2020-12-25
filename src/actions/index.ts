@@ -15,7 +15,7 @@ export const fetchUser = () => (dispatch: DispatchFunction) => {
   window.location.hash
     .substr(1)
     .split('&')
-    .map(entry => {
+    .map((entry) => {
       const splitEntry = entry.split('=')
       if (splitEntry[0] === 'access_token') {
         window.opener.postMessage(
@@ -80,7 +80,7 @@ export const retrievePlaylists = (
     }),
     method: 'get',
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         if (response.status === 401) {
           doSignOut(dispatch)
@@ -88,7 +88,7 @@ export const retrievePlaylists = (
       }
       return response.json()
     })
-    .then(response => {
+    .then((response) => {
       if (response.next && response.total > response.offset + response.limit) {
         retrievePlaylists(authenticated, response.next, true)(dispatch)
       }
@@ -106,8 +106,8 @@ export const retrievePlaylistAlbums = (authenticated: string, url: string) => (d
     }),
     method: 'get',
   })
-    .then(response => response.json())
-    .then(response => {
+    .then((response) => response.json())
+    .then((response) => {
       dispatch({
         payload: response,
         type: FETCH_TRACKS,
@@ -125,7 +125,7 @@ export const retrieveTracksOverview = (
     }),
     method: 'get',
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         if (response.status === 401) {
           doSignOut(dispatch)
@@ -133,7 +133,7 @@ export const retrieveTracksOverview = (
       }
       return response.json()
     })
-    .then(response => {
+    .then((response) => {
       dispatch({
         payload: response,
         type: RETRIEVE_TRACKS_OVERVIEW,

@@ -24,7 +24,7 @@ const LibrarySelector: React.FC<LibrarySelectorProps> = ({
 
   const librarySelectors = [{ id: 'tracks', name: 'Songs', trackCount: trackCount }]
 
-  const playlists = librarySelectors.map(entry => ({
+  const playlists = librarySelectors.map((entry) => ({
     id: entry.id,
     pill: `${entry.trackCount}`,
     title: entry.name,
