@@ -27,7 +27,8 @@ const store = createStore(reducers, initialState, applyMiddleware(reduxThunk))
 
 const App: React.FC = () => {
   return (
-    <Provider store={store}>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    <Provider store={store as any}>
       <div className="App">
         <Suspense fallback={<div />}>
           <Main />
