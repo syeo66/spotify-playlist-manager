@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 interface Playlist {
   id: string
 }
@@ -30,14 +32,15 @@ const remove100PlaylistTracks = async (auth: string | boolean, playlist: Playlis
   const playlistId = playlist.id
   const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`
 
-  const response = await fetch(url, {
-    body: JSON.stringify({
+  const response = await axios({
+    data: {
       tracks: deleteChunks,
-    }),
-    headers: new Headers({
+    },
+    headers: {
       Authorization: `Bearer ${auth}`,
-    }),
+    },
     method: 'delete',
+    url,
   })
-  return await response.json()
+  return await response.data
 }

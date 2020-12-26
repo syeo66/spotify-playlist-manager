@@ -1,11 +1,15 @@
 import './App.css'
 
+import axios from 'axios'
+import retry from 'axios-retry-after'
 import React, { lazy, Suspense } from 'react'
 import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import reduxThunk from 'redux-thunk'
 
 import reducers from './reducers'
+
+axios.interceptors.response.use(undefined, retry(axios))
 
 const Main = lazy(() => import('./components/Main'))
 

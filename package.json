@@ -18,6 +18,8 @@
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.4",
     "@types/styled-components": "^5.1.2",
+    "axios": "^0.21.1",
+    "axios-retry-after": "^1.0.1",
     "color": "^3.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

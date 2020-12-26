@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 interface Tracks {
   href: string
 }
@@ -33,13 +35,14 @@ export const findDuplicates: FindDuplicatesType = (authenticated: string | boole
   const fetchPlaylist: (auth: string | boolean) => (url: string) => (itemList?: Item[]) => Promise<Item[]> = (auth) => (
     url
   ) => async (itemList = []) => {
-    const response = await fetch(url, {
-      headers: new Headers({
+    const response = await axios({
+      headers: {
         Authorization: `Bearer ${auth}`,
-      }),
+      },
       method: 'get',
+      url,
     })
-    const jsonResponse = await response.json()
+    const jsonResponse = await response.data
     const items = itemList.concat(jsonResponse.items)
     if (progressCallback && typeof progressCallback === 'function') {
       progressCallback((100 * (jsonResponse.items.length + jsonResponse.offset)) / jsonResponse.total)

@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { MouseEvent } from 'react'
 
 import { APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS, RETRIEVE_AUTH_TOKEN, RETRIEVE_TRACKS_OVERVIEW } from './types'
@@ -83,19 +84,20 @@ export const retrievePlaylists: RetrievePlaylistsType = (
   url = 'https://api.spotify.com/v1/me/playlists?limit=50',
   append = false
 ) => (dispatch: DispatchFunction) => {
-  fetch(url, {
-    headers: new Headers({
+  axios({
+    headers: {
       Authorization: `Bearer ${authenticated}`,
-    }),
+    },
     method: 'get',
+    url,
   })
     .then((response) => {
-      if (!response.ok) {
+      if (response.status !== 200) {
         if (response.status === 401) {
           doSignOut(dispatch)
         }
       }
-      return response.json()
+      return response.data
     })
     .then((response) => {
       if (response.next && response.total > response.offset + response.limit) {
@@ -113,13 +115,14 @@ type RetrievePlaylistAlbumsType = (authenticated: string, url: string) => Dispat
 export const retrievePlaylistAlbums: RetrievePlaylistAlbumsType = (authenticated: string, url: string) => (
   dispatch: DispatchFunction
 ) => {
-  fetch(url, {
-    headers: new Headers({
+  axios({
+    headers: {
       Authorization: `Bearer ${authenticated}`,
-    }),
+    },
     method: 'get',
+    url,
   })
-    .then((response) => response.json())
+    .then((response) => response.data)
     .then((response) => {
       dispatch({
         payload: response,
@@ -134,19 +137,20 @@ export const retrieveTracksOverview: RetrieveTracksOverviewType = (
   authenticated: string | boolean,
   url = 'https://api.spotify.com/v1/me/tracks?limit=5'
 ) => (dispatch: DispatchFunction) => {
-  fetch(url, {
-    headers: new Headers({
+  axios({
+    headers: {
       Authorization: `Bearer ${authenticated}`,
-    }),
+    },
     method: 'get',
+    url,
   })
     .then((response) => {
-      if (!response.ok) {
+      if (response.status !== 200) {
         if (response.status === 401) {
           doSignOut(dispatch)
         }
       }
-      return response.json()
+      return response.data
     })
     .then((response) => {
       dispatch({
