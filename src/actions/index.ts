@@ -20,7 +20,7 @@ export const fetchUser: () => void = () => () => {
     .map((entry) => {
       const splitEntry = entry.split('=')
       if (splitEntry[0] === 'access_token') {
-        window.opener.postMessage(
+        window.opener?.postMessage(
           {
             token: splitEntry[1],
             type: 'access_token',
@@ -79,83 +79,79 @@ const doSignOut = (dispatch: DispatchFunction) => {
 
 type RetrievePlaylistsType = (authenticated: string | boolean, url?: string, append?: boolean) => Dispatchable
 
-export const retrievePlaylists: RetrievePlaylistsType = (
-  authenticated: string | boolean,
-  url = 'https://api.spotify.com/v1/me/playlists?limit=50',
-  append = false
-) => (dispatch: DispatchFunction) => {
-  axios({
-    headers: {
-      Authorization: `Bearer ${authenticated}`,
-    },
-    method: 'get',
-    url,
-  })
-    .then((response) => {
-      if (response.status !== 200) {
-        if (response.status === 401) {
-          doSignOut(dispatch)
+export const retrievePlaylists: RetrievePlaylistsType =
+  (authenticated: string | boolean, url = 'https://api.spotify.com/v1/me/playlists?limit=50', append = false) =>
+  (dispatch: DispatchFunction) => {
+    axios({
+      headers: {
+        Authorization: `Bearer ${authenticated}`,
+      },
+      method: 'get',
+      url,
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          if (response.status === 401) {
+            doSignOut(dispatch)
+          }
         }
-      }
-      return response.data
-    })
-    .then((response) => {
-      if (response.next && response.total > response.offset + response.limit) {
-        retrievePlaylists(authenticated, response.next, true)(dispatch)
-      }
-      dispatch({
-        payload: response,
-        type: append ? APPEND_PLAYLISTS : FETCH_PLAYLISTS,
+        return response.data
       })
-    })
-}
+      .then((response) => {
+        if (response.next && response.total > response.offset + response.limit) {
+          retrievePlaylists(authenticated, response.next, true)(dispatch)
+        }
+        dispatch({
+          payload: response,
+          type: append ? APPEND_PLAYLISTS : FETCH_PLAYLISTS,
+        })
+      })
+  }
 
 type RetrievePlaylistAlbumsType = (authenticated: string, url: string) => Dispatchable
 
-export const retrievePlaylistAlbums: RetrievePlaylistAlbumsType = (authenticated: string, url: string) => (
-  dispatch: DispatchFunction
-) => {
-  axios({
-    headers: {
-      Authorization: `Bearer ${authenticated}`,
-    },
-    method: 'get',
-    url,
-  })
-    .then((response) => response.data)
-    .then((response) => {
-      dispatch({
-        payload: response,
-        type: FETCH_TRACKS,
-      })
+export const retrievePlaylistAlbums: RetrievePlaylistAlbumsType =
+  (authenticated: string, url: string) => (dispatch: DispatchFunction) => {
+    axios({
+      headers: {
+        Authorization: `Bearer ${authenticated}`,
+      },
+      method: 'get',
+      url,
     })
-}
+      .then((response) => response.data)
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: FETCH_TRACKS,
+        })
+      })
+  }
 
 type RetrieveTracksOverviewType = (authenticated: string | boolean, url?: string) => Dispatchable
 
-export const retrieveTracksOverview: RetrieveTracksOverviewType = (
-  authenticated: string | boolean,
-  url = 'https://api.spotify.com/v1/me/tracks?limit=5'
-) => (dispatch: DispatchFunction) => {
-  axios({
-    headers: {
-      Authorization: `Bearer ${authenticated}`,
-    },
-    method: 'get',
-    url,
-  })
-    .then((response) => {
-      if (response.status !== 200) {
-        if (response.status === 401) {
-          doSignOut(dispatch)
+export const retrieveTracksOverview: RetrieveTracksOverviewType =
+  (authenticated: string | boolean, url = 'https://api.spotify.com/v1/me/tracks?limit=5') =>
+  (dispatch: DispatchFunction) => {
+    axios({
+      headers: {
+        Authorization: `Bearer ${authenticated}`,
+      },
+      method: 'get',
+      url,
+    })
+      .then((response) => {
+        if (response.status !== 200) {
+          if (response.status === 401) {
+            doSignOut(dispatch)
+          }
         }
-      }
-      return response.data
-    })
-    .then((response) => {
-      dispatch({
-        payload: response,
-        type: RETRIEVE_TRACKS_OVERVIEW,
+        return response.data
       })
-    })
-}
+      .then((response) => {
+        dispatch({
+          payload: response,
+          type: RETRIEVE_TRACKS_OVERVIEW,
+        })
+      })
+  }

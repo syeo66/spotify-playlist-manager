@@ -4,7 +4,9 @@ help:
 	@echo "make clean     Clean the build artifacts."
 	@echo "make test      Run tests."
 
-build: node_modules src
+SRCFILES=$(shell find src -type f)
+
+build: node_modules $(SRCFILES)
 	yarn build
 	touch build
 

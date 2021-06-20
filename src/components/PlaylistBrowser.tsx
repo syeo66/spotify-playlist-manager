@@ -88,16 +88,14 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
     doRetrievePlaylistAlbums(authenticated, playlist.tracks.href)
   }, [playlistUrl, authenticated, playlist, doRetrievePlaylistAlbums])
 
-  const handlePrev = useCallback(() => doRetrievePlaylistAlbums(authenticated, tracks.previous), [
-    authenticated,
-    doRetrievePlaylistAlbums,
-    tracks.previous,
-  ])
-  const handleNext = useCallback(() => doRetrievePlaylistAlbums(authenticated, tracks.next), [
-    authenticated,
-    doRetrievePlaylistAlbums,
-    tracks.next,
-  ])
+  const handlePrev = useCallback(
+    () => doRetrievePlaylistAlbums(authenticated, tracks.previous),
+    [authenticated, doRetrievePlaylistAlbums, tracks.previous]
+  )
+  const handleNext = useCallback(
+    () => doRetrievePlaylistAlbums(authenticated, tracks.next),
+    [authenticated, doRetrievePlaylistAlbums, tracks.next]
+  )
   const handleSelectAlbumView = useCallback(() => setDisplayMode('album'), [])
   const handleSelectListView = useCallback(() => setDisplayMode('list'), [])
 
