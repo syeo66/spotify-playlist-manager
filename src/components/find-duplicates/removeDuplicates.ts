@@ -42,5 +42,5 @@ const remove100PlaylistTracks = async (auth: string | boolean, playlist: Playlis
     method: 'delete',
     url,
   })
-  return await response.data
+  return response.data
 }

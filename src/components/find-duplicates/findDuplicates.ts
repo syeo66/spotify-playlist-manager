@@ -42,7 +42,7 @@ export const findDuplicates: FindDuplicatesType =
           method: 'get',
           url,
         })
-        const jsonResponse = await response.data
+        const jsonResponse = response.data
         const items = itemList.concat(jsonResponse.items)
         if (progressCallback && typeof progressCallback === 'function') {
           progressCallback((100 * (jsonResponse.items.length + jsonResponse.offset)) / jsonResponse.total)

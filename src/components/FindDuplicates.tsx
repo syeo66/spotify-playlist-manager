@@ -48,7 +48,7 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
 
   const authFindDuplicates = useMemo(() => findDuplicates(authenticated)(setProgress), [authenticated])
   const fetchAndStoreDuplicates = useCallback(
-    (pl: Playlist) => authFindDuplicates(pl).then((data) => setDuplicates(data)),
+    (pl: Playlist) => authFindDuplicates(pl).then(setDuplicates),
     [authFindDuplicates]
   )
   const refetchDuplicates = useCallback(() => {
@@ -87,7 +87,7 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
   return !playlist ? (
     <></>
   ) : (
-    <React.Fragment>
+    <>
       <PlaylistHeader playlist={playlist} />
       <ToolHeading>Find Duplicates</ToolHeading>
       {progress && progress < 100 ? (
@@ -112,7 +112,7 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
       ) : (
         <>No duplicates found</>
       )}
-    </React.Fragment>
+    </>
   )
 }
 
