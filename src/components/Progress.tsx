@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 
 import { orange } from '../styles/colors'
@@ -39,4 +39,4 @@ const Progress: React.FC<ProgressProps> = ({ value, max }) => {
   )
 }
 
-export default Progress
+export default memo(Progress)

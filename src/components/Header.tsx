@@ -1,6 +1,6 @@
 import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { memo } from 'react'
 import { useQuery } from 'react-query'
 import styled from 'styled-components'
 
@@ -46,4 +46,4 @@ const Header: React.FC = () => {
   )
 }
 
-export default Header
+export default memo(Header)

@@ -45,7 +45,6 @@ const PlaylistList: React.FC<PlaylistListProps> = ({ id, playlists, retrievePlay
 }
 
 interface MapStateToPropsInput {
-  auth: string | boolean
   data: { playlists: Playlist[]; user: { id: string } }
 }
 const mapStateToProps = ({ data }: MapStateToPropsInput) => ({

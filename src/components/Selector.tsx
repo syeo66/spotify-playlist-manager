@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import { EntryTitle, ListEntry, ListEntryLink, Pill, PlaylistSelectorContainer } from '../styles/components'
 
@@ -29,4 +29,4 @@ const Selector: React.FC<SelectorProps> = (props) => {
   return <PlaylistSelectorContainer>{playlists}</PlaylistSelectorContainer>
 }
 
-export default Selector
+export default memo(Selector)

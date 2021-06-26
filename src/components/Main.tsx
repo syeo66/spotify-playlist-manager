@@ -18,6 +18,7 @@ interface MainProps {
 const Main: React.FC<MainProps> = ({ fetchUser: doFetchUser }) => {
   const queryClient = useQueryClient()
   const { data: auth, isLoading } = useQuery(token.key, token.query)
+
   const doLogin = useMutation(signIn, {
     onSuccess: () => {
       queryClient.invalidateQueries(token.key)

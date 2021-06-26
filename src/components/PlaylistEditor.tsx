@@ -23,6 +23,7 @@ interface PlaylistEditorProps {
 }
 const PlaylistEditor: React.FC<PlaylistEditorProps> = ({ component: ToolComponent }) => {
   const match = useRouteMatch<{ id: string }>()
+
   return (
     <MainContainer>
       <SideContainer sm="2" md="1" lg="2">
