@@ -1,4 +1,4 @@
-import { APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from '../actions/types'
+import { APPEND_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from '../actions/types'
 
 interface Item {
   id?: string
@@ -20,20 +20,16 @@ interface State {
 const dataReducer = (state: State, action: Action): State => {
   switch (action.type) {
     case APPEND_PLAYLISTS: {
-      const playlists = state.playlists?.concat(action.payload?.items || [])
+      const playlists = [
+        ...(state.playlists?.filter((i) => !action.payload?.items?.find((p) => i.id === p.id)) || []),
+        ...(action.payload?.items || []),
+      ]
       return {
         ...state,
         playlists: playlists,
         playlistsSize: action.payload?.total || 0,
       }
     }
-
-    case FETCH_PLAYLISTS:
-      return {
-        ...state,
-        playlists: action.payload?.items || [],
-        playlistsSize: action.payload?.total || 0,
-      }
 
     case FETCH_TRACKS:
       return {

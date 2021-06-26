@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { MouseEvent } from 'react'
 
-import { APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from './types'
+import { token } from '../queries'
+import { APPEND_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from './types'
 
 interface DispatchInput {
   type: string
@@ -33,7 +34,7 @@ export const fetchUser: () => void = () => () => {
     })
 }
 
-export const signIn = async (token: string): Promise<void> => window.localStorage.setItem('access_token', token)
+export const signIn = async (t: string): Promise<void> => window.localStorage.setItem('access_token', t)
 
 type SignInWithSpotifyType = (e: MouseEvent) => void
 
@@ -56,11 +57,12 @@ export const signOut = async (): Promise<void> => {
   return
 }
 
-type RetrievePlaylistsType = (authenticated: string | boolean, url?: string, append?: boolean) => Dispatchable
+export type RetrievePlaylistsType = (url?: string) => Dispatchable
 
 export const retrievePlaylists: RetrievePlaylistsType =
-  (authenticated: string | boolean, url = 'https://api.spotify.com/v1/me/playlists?limit=50', append = false) =>
+  (url = 'https://api.spotify.com/v1/me/playlists?limit=50') =>
   (dispatch: DispatchFunction) => {
+    const authenticated = token.query()
     axios({
       headers: {
         Authorization: `Bearer ${authenticated}`,
@@ -68,21 +70,14 @@ export const retrievePlaylists: RetrievePlaylistsType =
       method: 'get',
       url,
     })
-      .then((response) => {
-        if (response.status !== 200) {
-          if (response.status === 401) {
-            signOut()
-          }
-        }
-        return response.data
-      })
+      .then((response) => response.data)
       .then((response) => {
         if (response.next && response.total > response.offset + response.limit) {
-          retrievePlaylists(authenticated, response.next, true)(dispatch)
+          retrievePlaylists(response.next)(dispatch)
         }
         dispatch({
           payload: response,
-          type: append ? APPEND_PLAYLISTS : FETCH_PLAYLISTS,
+          type: APPEND_PLAYLISTS,
         })
       })
   }

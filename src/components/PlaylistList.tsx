@@ -17,8 +17,8 @@ interface Playlist {
 interface PlaylistListProps {
   id: string
   playlists: Playlist[]
-  retrievePlaylists: (auth: string | boolean) => void
   userId: string | null
+  retrievePlaylists: (url?: string) => void
 }
 const PlaylistList: React.FC<PlaylistListProps> = ({ id, playlists, retrievePlaylists: doRetrievePlaylists }) => {
   const { data: authenticated, isLoading } = useQuery(token.key, token.query)
@@ -27,8 +27,8 @@ const PlaylistList: React.FC<PlaylistListProps> = ({ id, playlists, retrievePlay
     if (isLoading || !authenticated) {
       return
     }
-    doRetrievePlaylists(authenticated)
-    const polling = setInterval(() => doRetrievePlaylists(authenticated), 4900)
+    doRetrievePlaylists()
+    const polling = setInterval(() => doRetrievePlaylists(), 10000)
     return () => clearInterval(polling)
   }, [authenticated, doRetrievePlaylists, isLoading])
 

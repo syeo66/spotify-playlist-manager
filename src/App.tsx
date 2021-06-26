@@ -15,7 +15,6 @@ axios.interceptors.response.use(undefined, retry(axios))
 const Main = lazy(() => import('./components/Main'))
 
 const initialState = {
-  auth: false,
   data: {
     library: {
       albumCount: 0,
