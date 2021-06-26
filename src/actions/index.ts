@@ -60,21 +60,10 @@ export const signInWithSpotify: SignInWithSpotifyType = (e: MouseEvent) => {
   window.open(url, 'spotify', 'width=400, height=500')
 }
 
-type SignOutType = (e: MouseEvent) => Dispatchable
+export const signOut = async (): Promise<void> => {
+  window.localStorage.removeItem('access_token')
 
-export const signOut: SignOutType = (e: MouseEvent) => (dispatch: DispatchFunction) => {
-  e.preventDefault()
-  doSignOut(dispatch)
-}
-
-const doSignOut = (dispatch: DispatchFunction) => {
-  if (typeof Storage !== 'undefined') {
-    window.localStorage.removeItem('access_token')
-  }
-  dispatch({
-    payload: null,
-    type: RETRIEVE_AUTH_TOKEN,
-  })
+  return
 }
 
 type RetrievePlaylistsType = (authenticated: string | boolean, url?: string, append?: boolean) => Dispatchable
@@ -92,7 +81,7 @@ export const retrievePlaylists: RetrievePlaylistsType =
       .then((response) => {
         if (response.status !== 200) {
           if (response.status === 401) {
-            doSignOut(dispatch)
+            signOut()
           }
         }
         return response.data
@@ -143,7 +132,7 @@ export const retrieveTracksOverview: RetrieveTracksOverviewType =
       .then((response) => {
         if (response.status !== 200) {
           if (response.status === 401) {
-            doSignOut(dispatch)
+            signOut()
           }
         }
         return response.data

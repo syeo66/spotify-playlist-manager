@@ -3,6 +3,7 @@ import './App.css'
 import axios from 'axios'
 import retry from 'axios-retry-after'
 import React, { lazy, Suspense } from 'react'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import reduxThunk from 'redux-thunk'
@@ -28,16 +29,19 @@ const initialState = {
 }
 
 const store = createStore(reducers, initialState, applyMiddleware(reduxThunk))
+const queryClient = new QueryClient()
 
 const App: React.FC = () => {
   return (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     <Provider store={store as any}>
-      <div className="App">
-        <Suspense fallback={<div />}>
-          <Main />
-        </Suspense>
-      </div>
+      <QueryClientProvider client={queryClient}>
+        <div className="App">
+          <Suspense fallback={<div />}>
+            <Main />
+          </Suspense>
+        </div>
+      </QueryClientProvider>
     </Provider>
   )
 }

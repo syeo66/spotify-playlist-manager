@@ -1,23 +1,27 @@
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { memo, MouseEvent, useCallback } from 'react'
-import { connect } from 'react-redux'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
+import React, { memo, useCallback } from 'react'
+import { useMutation, useQueryClient } from 'react-query'
+import { useHistory, withRouter } from 'react-router-dom'
 
 import { signOut } from '../actions'
+import { token } from '../queries'
 import { Button } from '../styles/components'
 
-interface SignoutProps extends RouteComponentProps {
-  signOut: (event: MouseEvent) => void
-}
-const Signout: React.FC<SignoutProps> = ({ signOut: doSignOut, history }) => {
-  const handleClick = useCallback(
-    (event: MouseEvent) => {
-      doSignOut(event)
+const Signout: React.FC = () => {
+  const history = useHistory()
+  const queryClient = useQueryClient()
+
+  const logoff = useMutation(signOut, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(token.key)
       history.push('/')
     },
-    [history, doSignOut]
-  )
+  })
+
+  const handleClick = useCallback(() => {
+    logoff.mutate()
+  }, [logoff])
 
   return (
     <Button onClick={handleClick}>
@@ -27,8 +31,4 @@ const Signout: React.FC<SignoutProps> = ({ signOut: doSignOut, history }) => {
   )
 }
 
-const mapStateToProps = () => {
-  return {}
-}
-
-export default withRouter(connect(mapStateToProps, { signOut })(memo(Signout)))
+export default withRouter(memo(Signout))

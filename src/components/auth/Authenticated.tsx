@@ -1,20 +1,17 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useQuery } from 'react-query'
 
+import { token } from '../../queries'
 import Signin from '../Signin'
 
-interface AuthenticatedProps {
-  auth: string | boolean
-}
-const Authenticated: React.FC<AuthenticatedProps> = ({ auth, children }) => {
+const Authenticated: React.FC = ({ children }) => {
+  const { data: auth, isLoading } = useQuery(token.key, token.query)
+
+  if (isLoading) {
+    return <>Loading...</>
+  }
+
   return !auth ? <Signin /> : <>{children}</>
 }
 
-interface MapStateToPropsInput {
-  auth: string | boolean
-}
-const mapStateToProps = ({ auth }: MapStateToPropsInput) => {
-  return { auth }
-}
-
-export default connect(mapStateToProps, {})(Authenticated)
+export default Authenticated
