@@ -1,7 +1,6 @@
 import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { MouseEvent } from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { signInWithSpotify } from '../actions'
@@ -23,10 +22,10 @@ interface SigninProps {
   signInWithSpotify?: (e: MouseEvent) => void
 }
 
-const Signin: React.FC<SigninProps> = ({ signInWithSpotify: doSignInWithSpotify }) => {
+const Signin: React.FC<SigninProps> = () => {
   return (
     <SigninBox>
-      <Button onClick={doSignInWithSpotify}>
+      <Button onClick={signInWithSpotify}>
         <FontAwesomeIcon icon={faSpotify} />
         &nbsp;Sign In With Spotify
       </Button>
@@ -34,8 +33,4 @@ const Signin: React.FC<SigninProps> = ({ signInWithSpotify: doSignInWithSpotify 
   )
 }
 
-const mapStateToProps = () => {
-  return {}
-}
-
-export default connect(mapStateToProps, { signInWithSpotify })(Signin)
+export default Signin

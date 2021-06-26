@@ -45,9 +45,9 @@ export const doLogin: DoLoginType = (token: string) => (dispatch: DispatchFuncti
   })
 }
 
-type SignInWithSpotifyType = (e: MouseEvent) => Dispatchable
+type SignInWithSpotifyType = (e: MouseEvent) => void
 
-export const signInWithSpotify: SignInWithSpotifyType = (e: MouseEvent) => (dispatch: DispatchFunction) => {
+export const signInWithSpotify: SignInWithSpotifyType = (e: MouseEvent) => {
   e.preventDefault()
   const appUrl = encodeURIComponent(
     `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}/`
