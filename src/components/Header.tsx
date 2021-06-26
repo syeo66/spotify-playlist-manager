@@ -1,9 +1,10 @@
 import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { connect } from 'react-redux'
+import { useQuery } from 'react-query'
 import styled from 'styled-components'
 
+import { token } from '../queries'
 import breakpoints from '../styles/breakpoints'
 import { black } from '../styles/colors'
 import Signout from './Signout'
@@ -31,26 +32,18 @@ const Title = styled.h1`
   }
 `
 
-interface HeaderProps {
-  auth: string | boolean
-}
-const Header: React.FC<HeaderProps> = ({ auth }) => {
+const Header: React.FC = () => {
+  const { data: auth, isLoading } = useQuery(token.key, token.query)
+
   return (
     <StyledHeader>
       <Title>
         <FontAwesomeIcon icon={faSpotify} color="#20d760" />
         &nbsp; Spotify Playlist Manager
       </Title>
-      {auth && <Signout />}
+      {!isLoading && !!auth && <Signout />}
     </StyledHeader>
   )
 }
 
-interface MapStateToPropsInput {
-  auth: string | boolean
-}
-const mapStateToProps = ({ auth }: MapStateToPropsInput) => ({
-  auth,
-})
-
-export default connect(mapStateToProps, {})(Header)
+export default Header

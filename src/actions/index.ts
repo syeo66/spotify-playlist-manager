@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { MouseEvent } from 'react'
 
-import { APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS, RETRIEVE_AUTH_TOKEN, RETRIEVE_TRACKS_OVERVIEW } from './types'
+import { APPEND_PLAYLISTS, FETCH_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from './types'
 
 interface DispatchInput {
   type: string
@@ -33,17 +33,7 @@ export const fetchUser: () => void = () => () => {
     })
 }
 
-type DoLoginType = (token: string) => Dispatchable
-
-export const doLogin: DoLoginType = (token: string) => (dispatch: DispatchFunction) => {
-  if (typeof Storage !== 'undefined') {
-    window.localStorage.setItem('access_token', token)
-  }
-  dispatch({
-    payload: token,
-    type: RETRIEVE_AUTH_TOKEN,
-  })
-}
+export const signIn = async (token: string): Promise<void> => window.localStorage.setItem('access_token', token)
 
 type SignInWithSpotifyType = (e: MouseEvent) => void
 

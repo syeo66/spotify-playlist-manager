@@ -2,7 +2,7 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { memo, useCallback } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
-import { useHistory, withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { signOut } from '../actions'
 import { token } from '../queries'
@@ -31,4 +31,4 @@ const Signout: React.FC = () => {
   )
 }
 
-export default withRouter(memo(Signout))
+export default memo(Signout)

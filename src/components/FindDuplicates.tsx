@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useQuery } from 'react-query'
 import { connect } from 'react-redux'
 
+import { token } from '../queries'
 import { orange, white } from '../styles/colors'
 import { Button, ButtonContainer, Pill, ToolHeading, Track } from '../styles/components'
 import { findDuplicates, removeDuplicates } from './find-duplicates'
@@ -35,10 +37,10 @@ interface Playlist {
 }
 interface FindDuplicatesProps {
   id: string
-  authenticated: string | boolean
   playlists: Playlist[]
 }
-const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenticated }) => {
+const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists }) => {
+  const { data: authenticated } = useQuery(token.key, token.query)
   const getPlaylist = useCallback(() => playlists.find((p) => id === p.id), [id, playlists])
 
   const [duplicates, setDuplicates] = useState<Item[]>([])
@@ -46,7 +48,7 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
   const [playlist, setPlaylist] = useState(getPlaylist())
   const [progress, setProgress] = useState<number | null>(null)
 
-  const authFindDuplicates = useMemo(() => findDuplicates(authenticated)(setProgress), [authenticated])
+  const authFindDuplicates = useMemo(() => findDuplicates(authenticated || false)(setProgress), [authenticated])
   const fetchAndStoreDuplicates = useCallback(
     (pl: Playlist) => authFindDuplicates(pl).then(setDuplicates),
     [authFindDuplicates]
@@ -71,7 +73,7 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
       return
     }
     if (isPurging && playlist) {
-      removeDuplicates(authenticated, duplicates, playlist).then(refetchDuplicates)
+      removeDuplicates(authenticated || false, duplicates, playlist).then(refetchDuplicates)
     }
   }, [authenticated, duplicates, isPurging, playlist, refetchDuplicates])
 
@@ -117,12 +119,10 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists, authenti
 }
 
 interface MapStateToPropsInput {
-  auth: string | boolean
   data: { tracks: Tracks; playlists: Playlist[] }
 }
-const mapStateToProps = ({ auth, data: { tracks, playlists } }: MapStateToPropsInput) => {
+const mapStateToProps = ({ data: { tracks, playlists } }: MapStateToPropsInput) => {
   return {
-    authenticated: auth,
     playlists: playlists ? playlists : [],
     tracks: tracks ? tracks : {},
   }

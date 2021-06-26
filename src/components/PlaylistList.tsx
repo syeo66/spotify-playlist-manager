@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
+import { useQuery } from 'react-query'
 import { connect } from 'react-redux'
 
 import { retrievePlaylists } from '../actions'
+import { token } from '../queries'
 import Selector from './Selector'
 
 interface Tracks {
@@ -13,23 +15,22 @@ interface Playlist {
   tracks: Tracks
 }
 interface PlaylistListProps {
-  authenticated: string | boolean
   id: string
   playlists: Playlist[]
   retrievePlaylists: (auth: string | boolean) => void
   userId: string | null
 }
-const PlaylistList: React.FC<PlaylistListProps> = ({
-  authenticated,
-  id,
-  playlists,
-  retrievePlaylists: doRetrievePlaylists,
-}) => {
+const PlaylistList: React.FC<PlaylistListProps> = ({ id, playlists, retrievePlaylists: doRetrievePlaylists }) => {
+  const { data: authenticated, isLoading } = useQuery(token.key, token.query)
+
   useEffect(() => {
+    if (isLoading || !authenticated) {
+      return
+    }
     doRetrievePlaylists(authenticated)
     const polling = setInterval(() => doRetrievePlaylists(authenticated), 4900)
     return () => clearInterval(polling)
-  }, [authenticated, doRetrievePlaylists])
+  }, [authenticated, doRetrievePlaylists, isLoading])
 
   const localPlaylists = playlists
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
@@ -47,8 +48,7 @@ interface MapStateToPropsInput {
   auth: string | boolean
   data: { playlists: Playlist[]; user: { id: string } }
 }
-const mapStateToProps = ({ auth, data }: MapStateToPropsInput) => ({
-  authenticated: auth,
+const mapStateToProps = ({ data }: MapStateToPropsInput) => ({
   playlists: data.playlists ? data.playlists : [],
   userId: data.user ? data.user.id : null,
 })

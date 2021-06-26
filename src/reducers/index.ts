@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 
-import auth from './authReducer'
 import data from './dataReducer'
 
 interface StateData {
@@ -15,12 +14,10 @@ interface StateData {
 }
 
 export interface State {
-  auth: boolean
   data: StateData
 }
 
 const reducers = combineReducers<State>({
-  auth,
   data,
 })
 

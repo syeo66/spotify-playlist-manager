@@ -1,11 +1,13 @@
 import { faArrowLeft, faArrowRight, faList, faTh } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useQuery } from 'react-query'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { retrievePlaylistAlbums } from '../actions'
+import { token } from '../queries'
 import { Button, ButtonContainer, Track } from '../styles/components'
 import { Column, Row } from '../styles/grid'
 import PlaylistDisplayContainer from './PlaylistDisplayContainer'
@@ -60,7 +62,6 @@ interface Tracks {
   total: number
 }
 interface PlaylistBrowserProps {
-  authenticated: string
   id: string
   retrievePlaylistAlbums: (authenticated: string, href: string) => void
   tracks: Tracks
@@ -70,32 +71,38 @@ interface PlaylistBrowserProps {
 type DisplayMode = 'list' | 'album'
 
 const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
-  authenticated,
   id,
   playlists,
   retrievePlaylistAlbums: doRetrievePlaylistAlbums,
   tracks,
 }) => {
+  const { data: authenticated, isLoading } = useQuery(token.key, token.query)
   const [displayMode, setDisplayMode] = useState<DisplayMode>('list')
 
   const playlist = useMemo(() => retrievePlaylist(playlists)(id), [playlists, id])
 
   const playlistUrl = playlist ? playlist.tracks.href : null
   useEffect(() => {
-    if (!playlist) {
+    if (isLoading || !authenticated || !playlist) {
       return
     }
     doRetrievePlaylistAlbums(authenticated, playlist.tracks.href)
-  }, [playlistUrl, authenticated, playlist, doRetrievePlaylistAlbums])
+  }, [playlistUrl, authenticated, playlist, doRetrievePlaylistAlbums, isLoading])
 
-  const handlePrev = useCallback(
-    () => doRetrievePlaylistAlbums(authenticated, tracks.previous),
-    [authenticated, doRetrievePlaylistAlbums, tracks.previous]
-  )
-  const handleNext = useCallback(
-    () => doRetrievePlaylistAlbums(authenticated, tracks.next),
-    [authenticated, doRetrievePlaylistAlbums, tracks.next]
-  )
+  const handlePrev = useCallback(() => {
+    if (isLoading || !authenticated) {
+      return
+    }
+    doRetrievePlaylistAlbums(authenticated, tracks.previous)
+  }, [authenticated, doRetrievePlaylistAlbums, isLoading, tracks.previous])
+
+  const handleNext = useCallback(() => {
+    if (isLoading || !authenticated) {
+      return
+    }
+    doRetrievePlaylistAlbums(authenticated, tracks.next)
+  }, [authenticated, doRetrievePlaylistAlbums, isLoading, tracks.next])
+
   const handleSelectAlbumView = useCallback(() => setDisplayMode('album'), [])
   const handleSelectListView = useCallback(() => setDisplayMode('list'), [])
 
@@ -175,12 +182,10 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
 }
 
 interface MapStateToPropsInput {
-  auth: string
   data: { tracks: Tracks; playlists: Playlist[] }
 }
-const mapStateToProps = ({ auth, data: { tracks, playlists } }: MapStateToPropsInput) => {
+const mapStateToProps = ({ data: { tracks, playlists } }: MapStateToPropsInput) => {
   return {
-    authenticated: auth,
     playlists: playlists ? playlists : [],
     tracks: tracks ? tracks : ({} as Tracks),
   }

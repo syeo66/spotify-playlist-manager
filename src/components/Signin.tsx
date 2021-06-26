@@ -1,6 +1,6 @@
 import { faSpotify } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { MouseEvent } from 'react'
+import React, { memo, MouseEvent } from 'react'
 import styled from 'styled-components'
 
 import { signInWithSpotify } from '../actions'
@@ -33,4 +33,4 @@ const Signin: React.FC<SigninProps> = () => {
   )
 }
 
-export default Signin
+export default memo(Signin)
