@@ -1,4 +1,4 @@
-import { APPEND_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from '../actions/types'
+import { APPEND_PLAYLISTS, FETCH_TRACKS } from '../actions/types'
 
 interface Item {
   id?: string
@@ -35,15 +35,6 @@ const dataReducer = (state: State, action: Action): State => {
       return {
         ...state,
         tracks: action.payload,
-      }
-
-    case RETRIEVE_TRACKS_OVERVIEW:
-      return {
-        ...state,
-        library: {
-          ...state.library,
-          trackCount: action.payload?.total || 0,
-        },
       }
 
     default:

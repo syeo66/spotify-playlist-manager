@@ -2,7 +2,7 @@ import axios from 'axios'
 import { MouseEvent } from 'react'
 
 import { token } from '../queries'
-import { APPEND_PLAYLISTS, FETCH_TRACKS, RETRIEVE_TRACKS_OVERVIEW } from './types'
+import { APPEND_PLAYLISTS, FETCH_TRACKS } from './types'
 
 interface DispatchInput {
   type: string
@@ -98,34 +98,6 @@ export const retrievePlaylistAlbums: RetrievePlaylistAlbumsType =
         dispatch({
           payload: response,
           type: FETCH_TRACKS,
-        })
-      })
-  }
-
-type RetrieveTracksOverviewType = (authenticated: string | boolean, url?: string) => Dispatchable
-
-export const retrieveTracksOverview: RetrieveTracksOverviewType =
-  (authenticated: string | boolean, url = 'https://api.spotify.com/v1/me/tracks?limit=5') =>
-  (dispatch: DispatchFunction) => {
-    axios({
-      headers: {
-        Authorization: `Bearer ${authenticated}`,
-      },
-      method: 'get',
-      url,
-    })
-      .then((response) => {
-        if (response.status !== 200) {
-          if (response.status === 401) {
-            signOut()
-          }
-        }
-        return response.data
-      })
-      .then((response) => {
-        dispatch({
-          payload: response,
-          type: RETRIEVE_TRACKS_OVERVIEW,
         })
       })
   }
