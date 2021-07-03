@@ -1,6 +1,6 @@
 import { faGlobe, faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 
 import { orange } from '../styles/colors'
@@ -49,4 +49,4 @@ const PlaylistHeader: React.FC<PlaylistHeaderProps> = ({ playlist }) => {
   )
 }
 
-export default PlaylistHeader
+export default memo(PlaylistHeader)

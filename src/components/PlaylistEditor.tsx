@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -37,4 +37,4 @@ const PlaylistEditor: React.FC<PlaylistEditorProps> = ({ component: ToolComponen
   )
 }
 
-export default PlaylistEditor
+export default memo(PlaylistEditor)
