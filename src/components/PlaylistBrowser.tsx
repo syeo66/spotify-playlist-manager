@@ -1,6 +1,6 @@
 import { faArrowLeft, faArrowRight, faList, faTh } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -63,13 +63,12 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
 
   const [displayMode, setDisplayMode] = useState<DisplayMode>('list')
 
-  const playlistUrl = playlist?.tracks?.href || null
   useEffect(() => {
     if (isLoading || !authenticated || !playlist) {
       return
     }
     doRetrievePlaylistAlbums(authenticated, playlist.tracks.href)
-  }, [playlistUrl, authenticated, playlist, doRetrievePlaylistAlbums, isLoading])
+  }, [authenticated, doRetrievePlaylistAlbums, isLoading, playlist])
 
   const handlePrev = useCallback(() => {
     if (isLoading || !authenticated) {
@@ -88,34 +87,37 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
   const handleSelectAlbumView = useCallback(() => setDisplayMode('album'), [])
   const handleSelectListView = useCallback(() => setDisplayMode('list'), [])
 
+  const pagination = useMemo(
+    () =>
+      tracks.next || tracks.previous ? (
+        <ButtonContainer>
+          {tracks.previous ? (
+            <Button onClick={handlePrev}>
+              <FontAwesomeIcon title="Previous" icon={faArrowLeft} />
+            </Button>
+          ) : (
+            <RowItem />
+          )}
+          <RowItem>
+            {Math.ceil((tracks.offset + 1) / tracks.limit)}/{Math.ceil(tracks.total / tracks.limit)}
+          </RowItem>
+          {tracks.next ? (
+            <Button onClick={handleNext}>
+              <FontAwesomeIcon title="Next" icon={faArrowRight} />
+            </Button>
+          ) : (
+            <RowItem />
+          )}
+        </ButtonContainer>
+      ) : (
+        ''
+      ),
+    [handleNext, handlePrev, tracks.limit, tracks.next, tracks.offset, tracks.previous, tracks.total]
+  )
+
   if (isLoading || !playlist) {
     return <Loading />
   }
-
-  const pagination =
-    tracks.next || tracks.previous ? (
-      <ButtonContainer>
-        {tracks.previous ? (
-          <Button onClick={handlePrev}>
-            <FontAwesomeIcon title="Previous" icon={faArrowLeft} />
-          </Button>
-        ) : (
-          <RowItem />
-        )}
-        <RowItem>
-          {Math.ceil((tracks.offset + 1) / tracks.limit)}/{Math.ceil(tracks.total / tracks.limit)}
-        </RowItem>
-        {tracks.next ? (
-          <Button onClick={handleNext}>
-            <FontAwesomeIcon title="Next" icon={faArrowRight} />
-          </Button>
-        ) : (
-          <RowItem />
-        )}
-      </ButtonContainer>
-    ) : (
-      ''
-    )
 
   return (
     <React.Fragment>
