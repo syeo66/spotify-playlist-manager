@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { retrievePlaylistAlbums } from '../actions'
-import { playlist as playlistQuery, token } from '../queries'
+import { playlist as playlistQuery, playlistAlbums, token } from '../queries'
 import { Button, ButtonContainer, Track } from '../styles/components'
 import { Column, Row } from '../styles/grid'
 import Loading from './Loading'
@@ -51,69 +51,79 @@ interface PlaylistBrowserProps {
 
 type DisplayMode = 'list' | 'album'
 
-const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
-  id,
-  retrievePlaylistAlbums: doRetrievePlaylistAlbums,
-  tracks,
-}) => {
-  const { data: authenticated } = useQuery(token.key, token.query)
-  const { data: playlist, isLoading } = useQuery([playlistQuery.key, id], () => playlistQuery.query(id), {
-    enabled: !!authenticated,
-  })
-
+const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id, retrievePlaylistAlbums: doRetrievePlaylistAlbums }) => {
+  const [page, setPage] = useState<string | null>(null)
   const [displayMode, setDisplayMode] = useState<DisplayMode>('list')
 
+  const { data: authenticated } = useQuery(token.key, token.query)
+  const { data: playlist } = useQuery([playlistQuery.key, id], () => playlistQuery.query(id), {
+    enabled: !!authenticated,
+  })
+  const {
+    data: tracks,
+    isLoading,
+    isPreviousData,
+  } = useQuery([playlistAlbums.key, page], () => playlistAlbums.query(page || ''), {
+    enabled: !!page,
+    keepPreviousData: true,
+  })
+
   useEffect(() => {
-    if (isLoading || !authenticated || !playlist) {
-      return
+    if (!page) {
+      setPage(playlist?.tracks.href || null)
     }
-    doRetrievePlaylistAlbums(authenticated, playlist.tracks.href)
-  }, [authenticated, doRetrievePlaylistAlbums, isLoading, playlist])
+  }, [page, playlist?.tracks.href])
 
-  const handlePrev = useCallback(() => {
-    if (isLoading || !authenticated) {
-      return
-    }
-    doRetrievePlaylistAlbums(authenticated, tracks.previous)
-  }, [authenticated, doRetrievePlaylistAlbums, isLoading, tracks.previous])
+  useEffect(() => {
+    setPage(null)
+  }, [id])
 
-  const handleNext = useCallback(() => {
-    if (isLoading || !authenticated) {
-      return
-    }
-    doRetrievePlaylistAlbums(authenticated, tracks.next)
-  }, [authenticated, doRetrievePlaylistAlbums, isLoading, tracks.next])
+  const handlePrev = useCallback(() => setPage(tracks?.previous || null), [tracks?.previous])
+  const handleNext = useCallback(() => setPage(tracks?.next || null), [tracks?.next])
 
   const handleSelectAlbumView = useCallback(() => setDisplayMode('album'), [])
   const handleSelectListView = useCallback(() => setDisplayMode('list'), [])
 
-  const pagination = useMemo(
-    () =>
-      tracks.next || tracks.previous ? (
-        <ButtonContainer>
-          {tracks.previous ? (
-            <Button onClick={handlePrev}>
-              <FontAwesomeIcon title="Previous" icon={faArrowLeft} />
-            </Button>
-          ) : (
-            <RowItem />
+  const pagination = useMemo(() => {
+    return tracks?.next || tracks?.previous ? (
+      <ButtonContainer>
+        {tracks.previous ? (
+          <Button onClick={handlePrev}>
+            <FontAwesomeIcon title="Previous" icon={faArrowLeft} />
+          </Button>
+        ) : (
+          <RowItem />
+        )}
+        <RowItem>
+          {Math.ceil((tracks.offset + 1) / tracks.limit)}/{Math.ceil(tracks.total / tracks.limit)}
+          {isPreviousData && (
+            <>
+              &nbsp;
+              <Loading />
+            </>
           )}
-          <RowItem>
-            {Math.ceil((tracks.offset + 1) / tracks.limit)}/{Math.ceil(tracks.total / tracks.limit)}
-          </RowItem>
-          {tracks.next ? (
-            <Button onClick={handleNext}>
-              <FontAwesomeIcon title="Next" icon={faArrowRight} />
-            </Button>
-          ) : (
-            <RowItem />
-          )}
-        </ButtonContainer>
-      ) : (
-        ''
-      ),
-    [handleNext, handlePrev, tracks.limit, tracks.next, tracks.offset, tracks.previous, tracks.total]
-  )
+        </RowItem>
+        {tracks.next ? (
+          <Button onClick={handleNext}>
+            <FontAwesomeIcon title="Next" icon={faArrowRight} />
+          </Button>
+        ) : (
+          <RowItem />
+        )}
+      </ButtonContainer>
+    ) : (
+      ''
+    )
+  }, [
+    handleNext,
+    handlePrev,
+    isPreviousData,
+    tracks?.limit,
+    tracks?.next,
+    tracks?.offset,
+    tracks?.previous,
+    tracks?.total,
+  ])
 
   if (isLoading || !playlist) {
     return <Loading />
@@ -146,7 +156,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
           </Column>
         </Row>
       )}
-      {tracks.items ? (
+      {tracks?.items ? (
         <React.Fragment>
           {pagination}
           <PlaylistDisplayContainer>
