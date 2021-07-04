@@ -60,7 +60,7 @@ const Main: React.FC<MainProps> = ({ fetchUser: doFetchUser }) => {
           </RouteContainer>
         )}
       />
-      <Redirect to="/tracks" />
+      {auth && <Redirect to="/tracks" />}
     </BrowserRouter>
   )
 }

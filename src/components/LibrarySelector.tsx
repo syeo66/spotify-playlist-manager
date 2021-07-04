@@ -9,9 +9,7 @@ interface LibrarySelectorProps {
   id: string
 }
 const LibrarySelector: React.FC<LibrarySelectorProps> = ({ id }) => {
-  const { data, isLoading } = useQuery(libraryOverview.key, libraryOverview.query, {
-    refetchInterval: 10000 + Math.random() * 1000,
-  })
+  const { data, isLoading } = useQuery(libraryOverview.key, libraryOverview.query)
 
   const librarySelectors = [{ id: 'tracks', name: 'Songs', trackCount: data?.total }]
 

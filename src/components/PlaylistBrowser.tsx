@@ -1,15 +1,16 @@
 import { faArrowLeft, faArrowRight, faList, faTh } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { retrievePlaylistAlbums } from '../actions'
-import { token } from '../queries'
+import { playlist as playlistQuery, token } from '../queries'
 import { Button, ButtonContainer, Track } from '../styles/components'
 import { Column, Row } from '../styles/grid'
+import Loading from './Loading'
 import PlaylistDisplayContainer from './PlaylistDisplayContainer'
 import PlaylistHeader from './PlaylistHeader'
 
@@ -19,25 +20,6 @@ const RowItem = styled.div`
   align-items: center;
 `
 
-const retrievePlaylist: (playlists: Array<Playlist>) => (id: string) => Playlist = (playlists) => (id: string) => {
-  const defaultPlaylist = {
-    tracks: {
-      href: 'https://api.spotify.com/v1/me/tracks?limit=50',
-    },
-  }
-  if (id === 'tracks') {
-    return defaultPlaylist
-  }
-  return playlists.find((playlist) => id === playlist.id) || defaultPlaylist
-}
-
-interface Playlist {
-  id?: string
-  name?: string
-  owner?: { display_name: string }
-  public?: boolean
-  tracks: { href: string; total?: number }
-}
 interface Album {
   name: string
 }
@@ -65,23 +47,23 @@ interface PlaylistBrowserProps {
   id: string
   retrievePlaylistAlbums: (authenticated: string, href: string) => void
   tracks: Tracks
-  playlists: Playlist[]
 }
 
 type DisplayMode = 'list' | 'album'
 
 const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
   id,
-  playlists,
   retrievePlaylistAlbums: doRetrievePlaylistAlbums,
   tracks,
 }) => {
-  const { data: authenticated, isLoading } = useQuery(token.key, token.query)
+  const { data: authenticated } = useQuery(token.key, token.query)
+  const { data: playlist, isLoading } = useQuery([playlistQuery.key, id], () => playlistQuery.query(id), {
+    enabled: !!authenticated,
+  })
+
   const [displayMode, setDisplayMode] = useState<DisplayMode>('list')
 
-  const playlist = useMemo(() => retrievePlaylist(playlists)(id), [playlists, id])
-
-  const playlistUrl = playlist ? playlist.tracks.href : null
+  const playlistUrl = playlist?.tracks?.href || null
   useEffect(() => {
     if (isLoading || !authenticated || !playlist) {
       return
@@ -105,6 +87,10 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
 
   const handleSelectAlbumView = useCallback(() => setDisplayMode('album'), [])
   const handleSelectListView = useCallback(() => setDisplayMode('list'), [])
+
+  if (isLoading || !playlist) {
+    return <Loading />
+  }
 
   const pagination =
     tracks.next || tracks.previous ? (
@@ -131,9 +117,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
       ''
     )
 
-  return !playlist ? (
-    <></>
-  ) : (
+  return (
     <React.Fragment>
       <PlaylistHeader playlist={playlist} />
       {id === 'tracks' ? (
@@ -182,11 +166,10 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({
 }
 
 interface MapStateToPropsInput {
-  data: { tracks: Tracks; playlists: Playlist[] }
+  data: { tracks: Tracks }
 }
-const mapStateToProps = ({ data: { tracks, playlists } }: MapStateToPropsInput) => {
+const mapStateToProps = ({ data: { tracks } }: MapStateToPropsInput) => {
   return {
-    playlists: playlists ? playlists : [],
     tracks: tracks ? tracks : ({} as Tracks),
   }
 }
