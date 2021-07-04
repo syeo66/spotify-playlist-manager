@@ -1,39 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { memo } from 'react'
 import { useQuery } from 'react-query'
-import { connect } from 'react-redux'
 
-import { retrievePlaylists } from '../actions'
-import { token } from '../queries'
+import { playlists as playlistsQuery, token } from '../queries'
+import Loading from './Loading'
 import Selector from './Selector'
 
-interface Tracks {
-  total: number
-}
-interface Playlist {
-  name: string
-  id: string
-  tracks: Tracks
-}
 interface PlaylistListProps {
   id: string
-  playlists: Playlist[]
-  userId: string | null
-  retrievePlaylists: (url?: string) => void
 }
-const PlaylistList: React.FC<PlaylistListProps> = ({ id, playlists, retrievePlaylists: doRetrievePlaylists }) => {
-  const { data: authenticated, isLoading } = useQuery(token.key, token.query)
+const PlaylistList: React.FC<PlaylistListProps> = ({ id }) => {
+  const { data: authenticated, isLoading: isAuthLoading } = useQuery(token.key, token.query)
+  const { data: playlists, isLoading } = useQuery(playlistsQuery.key, () => playlistsQuery.query(), {
+    enabled: !!authenticated,
+  })
 
-  useEffect(() => {
-    if (isLoading || !authenticated) {
-      return
-    }
-    doRetrievePlaylists()
-    const polling = setInterval(() => doRetrievePlaylists(), 10000)
-    return () => clearInterval(polling)
-  }, [authenticated, doRetrievePlaylists, isLoading])
+  if (isLoading || isAuthLoading) {
+    return <Loading />
+  }
 
   const localPlaylists = playlists
-    .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
+    ?.sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
     .map((entry) => ({
       id: entry.id,
       pill: `${entry.tracks.total}`,
@@ -41,15 +27,7 @@ const PlaylistList: React.FC<PlaylistListProps> = ({ id, playlists, retrievePlay
       url: `/${entry.id}`,
     }))
 
-  return <Selector id={id} list={localPlaylists} />
+  return <Selector id={id} list={localPlaylists || []} />
 }
 
-interface MapStateToPropsInput {
-  data: { playlists: Playlist[]; user: { id: string } }
-}
-const mapStateToProps = ({ data }: MapStateToPropsInput) => ({
-  playlists: data.playlists ? data.playlists : [],
-  userId: data.user ? data.user.id : null,
-})
-
-export default connect(mapStateToProps, { retrievePlaylists })(PlaylistList)
+export default memo(PlaylistList)
