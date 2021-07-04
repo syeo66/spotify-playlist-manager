@@ -1,12 +1,13 @@
 import React, { lazy, Suspense, useEffect } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { connect } from 'react-redux'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Redirect, Route } from 'react-router-dom'
 
 import { fetchUser, signIn } from '../actions'
 import { token } from '../queries'
 import Authenticated from './auth/Authenticated'
 import Header from './Header'
+import Loading from './Loading'
 
 const FindDuplicates = lazy(() => import('./FindDuplicates'))
 const PlaylistBrowser = lazy(() => import('./PlaylistBrowser'))
@@ -45,25 +46,30 @@ const Main: React.FC<MainProps> = ({ fetchUser: doFetchUser }) => {
         path="/:id?"
         exact
         render={(props) => (
-          <Authenticated>
-            <Suspense fallback={<div />}>
-              <PlaylistEditor {...props} component={PlaylistBrowser} />
-            </Suspense>
-          </Authenticated>
+          <RouteContainer>
+            <PlaylistEditor {...props} component={PlaylistBrowser} />
+          </RouteContainer>
         )}
       />
       <Route
         path="/:id/duplicates"
         exact
         render={(props) => (
-          <Authenticated>
-            <Suspense fallback={<div />}>
-              <PlaylistEditor {...props} component={FindDuplicates} />
-            </Suspense>
-          </Authenticated>
+          <RouteContainer>
+            <PlaylistEditor {...props} component={FindDuplicates} />
+          </RouteContainer>
         )}
       />
+      <Redirect to="/tracks" />
     </BrowserRouter>
+  )
+}
+
+const RouteContainer: React.FC = ({ children }) => {
+  return (
+    <Authenticated>
+      <Suspense fallback={<Loading />}>{children}</Suspense>
+    </Authenticated>
   )
 }
 
