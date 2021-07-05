@@ -2,10 +2,11 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { connect } from 'react-redux'
 
-import { token } from '../queries'
+import { playlists as playlistsQuery, token } from '../queries'
 import { orange, white } from '../styles/colors'
 import { Button, ButtonContainer, Pill, ToolHeading, Track } from '../styles/components'
 import { findDuplicates, removeDuplicates } from './find-duplicates'
+import Loading from './Loading'
 import PlaylistDisplayContainer from './PlaylistDisplayContainer'
 import PlaylistHeader from './PlaylistHeader'
 import Progress from './Progress'
@@ -37,11 +38,14 @@ interface Playlist {
 }
 interface FindDuplicatesProps {
   id: string
-  playlists: Playlist[]
 }
-const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists }) => {
+const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id }) => {
   const { data: authenticated } = useQuery(token.key, token.query)
-  const getPlaylist = useCallback(() => playlists.find((p) => id === p.id), [id, playlists])
+  const { data: playlists, isLoading } = useQuery(playlistsQuery.key, () => playlistsQuery.query(), {
+    enabled: !!authenticated,
+  })
+
+  const getPlaylist = useCallback(() => playlists?.find((p) => id === p.id), [id, playlists])
 
   const [duplicates, setDuplicates] = useState<Item[]>([])
   const [isPurging, setIsPurging] = useState(0)
@@ -86,6 +90,10 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists }) => {
 
   const handleRemoveDuplicatesClick = useCallback(() => setIsPurging((prev) => prev + 1), [])
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return !playlist ? (
     <></>
   ) : (
@@ -119,11 +127,10 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id, playlists }) => {
 }
 
 interface MapStateToPropsInput {
-  data: { tracks: Tracks; playlists: Playlist[] }
+  data: { tracks: Tracks }
 }
-const mapStateToProps = ({ data: { tracks, playlists } }: MapStateToPropsInput) => {
+const mapStateToProps = ({ data: { tracks } }: MapStateToPropsInput) => {
   return {
-    playlists: playlists ? playlists : [],
     tracks: tracks ? tracks : {},
   }
 }

@@ -69,14 +69,14 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id, retrievePlaylistA
   })
 
   useEffect(() => {
+    setPage(null)
+  }, [id])
+
+  useEffect(() => {
     if (!page) {
       setPage(playlist?.tracks.href || null)
     }
   }, [page, playlist?.tracks.href])
-
-  useEffect(() => {
-    setPage(null)
-  }, [id])
 
   const handlePrev = useCallback(() => setPage(tracks?.previous || null), [tracks?.previous])
   const handleNext = useCallback(() => setPage(tracks?.next || null), [tracks?.next])

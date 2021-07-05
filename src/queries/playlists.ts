@@ -5,7 +5,7 @@ import { token } from '.'
 interface RetrievePlaylistFunctionOutput {
   id: string
   name: string
-  tracks: { total: number }
+  tracks: { total: number; href: string }
 }
 type RetrievePlaylistsFunction = (url?: string) => Promise<RetrievePlaylistFunctionOutput[]>
 
