@@ -8,6 +8,7 @@ import { token } from '../queries'
 import breakpoints from '../styles/breakpoints'
 import { black } from '../styles/colors'
 import Signout from './Signout'
+import UserInfo from './UserInfo'
 
 const StyledHeader = styled.header`
   margin: 0;
@@ -41,9 +42,18 @@ const Header: React.FC = () => {
         <FontAwesomeIcon icon={faSpotify} color="#20d760" />
         &nbsp; Spotify Playlist Manager
       </Title>
-      {!isLoading && !!auth && <Signout />}
+      {!isLoading && !!auth && (
+        <Profile>
+          <UserInfo />
+          <Signout />
+        </Profile>
+      )}
     </StyledHeader>
   )
 }
+
+const Profile = styled.div`
+  display: flex;
+`
 
 export default memo(Header)
