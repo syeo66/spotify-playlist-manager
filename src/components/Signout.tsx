@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { memo, useCallback } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 
 import { signOut } from '../actions'
 import { token } from '../queries'
+import breakpoints from '../styles/breakpoints'
 import { Button } from '../styles/components'
 
 const Signout: React.FC = () => {
@@ -26,9 +28,17 @@ const Signout: React.FC = () => {
   return (
     <Button onClick={handleClick}>
       <FontAwesomeIcon icon={faSignOutAlt} />
-      &nbsp;Signout
+      <ButtonText>&nbsp;Signout</ButtonText>
     </Button>
   )
 }
+
+const ButtonText = styled.span`
+  display: none;
+
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    display: inline;
+  }
+`
 
 export default memo(Signout)
