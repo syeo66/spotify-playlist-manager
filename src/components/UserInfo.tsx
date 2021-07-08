@@ -16,19 +16,18 @@ const UserInfo: React.FC = () => {
   const logoff = useMutation(signOut, {
     onSuccess: () => {
       queryClient.invalidateQueries(token.key)
+      queryClient.setQueryData(userData.key, () => null)
+      queryClient.setQueryData(token.key, () => null)
     },
   })
 
   useEffect(() => {
     if (
       accessToken &&
-      data &&
       !isFetching &&
       isError &&
       (error as { response?: { status: number } })?.response?.status === 401
     ) {
-      // eslint-disable-next-line no-console
-      console.log('phuhuuu')
       logoff.mutate()
     }
   }, [accessToken, data, error, isError, isFetching, logoff])
