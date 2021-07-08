@@ -1,12 +1,10 @@
 import { faArrowLeft, faArrowRight, faList, faTh } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { retrievePlaylistAlbums } from '../actions'
 import { playlist as playlistQuery, playlistAlbums, token } from '../queries'
 import { Button, ButtonContainer, Track } from '../styles/components'
 import { Column, Row } from '../styles/grid'
@@ -20,38 +18,13 @@ const RowItem = styled.div`
   align-items: center;
 `
 
-interface Album {
-  name: string
-}
-interface Artist {
-  name: string
-}
-interface AlbumTrack {
-  album: Album
-  artists: Artist[]
-  id: string
-  name: string
-}
-interface Item {
-  track: AlbumTrack
-}
-interface Tracks {
-  items: Item[]
-  limit: number
-  next: string
-  offset: number
-  previous: string
-  total: number
-}
 interface PlaylistBrowserProps {
   id: string
-  retrievePlaylistAlbums: (authenticated: string, href: string) => void
-  tracks: Tracks
 }
 
 type DisplayMode = 'list' | 'album'
 
-const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id, retrievePlaylistAlbums: doRetrievePlaylistAlbums }) => {
+const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
   const [page, setPage] = useState<string | null>(null)
   const [displayMode, setDisplayMode] = useState<DisplayMode>('list')
 
@@ -177,13 +150,4 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id, retrievePlaylistA
   )
 }
 
-interface MapStateToPropsInput {
-  data: { tracks: Tracks }
-}
-const mapStateToProps = ({ data: { tracks } }: MapStateToPropsInput) => {
-  return {
-    tracks: tracks ? tracks : ({} as Tracks),
-  }
-}
-
-export default connect(mapStateToProps, { retrievePlaylistAlbums })(PlaylistBrowser)
+export default memo(PlaylistBrowser)

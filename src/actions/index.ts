@@ -11,7 +11,7 @@ interface DispatchInput {
 type DispatchFunction = (params: DispatchInput) => void
 type Dispatchable = (dispatch: DispatchFunction) => void
 
-export const fetchUser: () => void = () => () => {
+export const processAccessToken: () => void = () => {
   if (!window.opener) {
     return
   }
@@ -77,9 +77,9 @@ export const retrievePlaylists: RetrievePlaylistsType =
       })
   }
 
-type RetrievePlaylistAlbumsType = (authenticated: string, url: string) => Dispatchable
+type RetrieveTracksType = (authenticated: string, url: string) => Dispatchable
 
-export const retrievePlaylistAlbums: RetrievePlaylistAlbumsType =
+export const retrieveTracks: RetrieveTracksType =
   (authenticated: string, url: string) => (dispatch: DispatchFunction) => {
     axios({
       headers: {

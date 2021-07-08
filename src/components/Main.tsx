@@ -1,9 +1,8 @@
-import React, { lazy, Suspense, useEffect } from 'react'
+import React, { lazy, memo, Suspense, useEffect } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { connect } from 'react-redux'
 import { BrowserRouter, Redirect, Route } from 'react-router-dom'
 
-import { fetchUser, signIn } from '../actions'
+import { processAccessToken, signIn } from '../actions'
 import { token } from '../queries'
 import Authenticated from './auth/Authenticated'
 import Header from './Header'
@@ -13,12 +12,9 @@ const FindDuplicates = lazy(() => import('./FindDuplicates'))
 const PlaylistBrowser = lazy(() => import('./PlaylistBrowser'))
 const PlaylistEditor = lazy(() => import('./PlaylistEditor'))
 
-interface MainProps {
-  fetchUser: () => void
-}
-const Main: React.FC<MainProps> = ({ fetchUser: doFetchUser }) => {
+const Main: React.FC = () => {
   const queryClient = useQueryClient()
-  const { data: auth, isLoading } = useQuery(token.key, token.query)
+  const { data: auth } = useQuery(token.key, token.query)
 
   const doLogin = useMutation(signIn, {
     onSuccess: () => {
@@ -34,10 +30,10 @@ const Main: React.FC<MainProps> = ({ fetchUser: doFetchUser }) => {
     }
 
     window.addEventListener('message', onMessage)
-    doFetchUser()
+    processAccessToken()
 
     return () => window.removeEventListener('message', onMessage)
-  }, [auth, doFetchUser, doLogin, isLoading])
+  }, [doLogin])
 
   return (
     <BrowserRouter>
@@ -77,8 +73,4 @@ const RouteContainer: React.FC = ({ children }) => {
   )
 }
 
-const mapStateToProps = () => {
-  return {}
-}
-
-export default connect(mapStateToProps, { fetchUser })(Main)
+export default memo(Main)
