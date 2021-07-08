@@ -51,14 +51,9 @@ export const signInWithSpotify: SignInWithSpotifyType = (e: MouseEvent) => {
   window.open(url, 'spotify', 'width=400, height=500')
 }
 
-export const signOut = async (): Promise<void> => {
-  window.localStorage.removeItem('access_token')
-
-  return
-}
+export const signOut = async (): Promise<void> => window.localStorage.removeItem('access_token')
 
 export type RetrievePlaylistsType = (url?: string) => Dispatchable
-
 export const retrievePlaylists: RetrievePlaylistsType =
   (url = 'https://api.spotify.com/v1/me/playlists?limit=50') =>
   (dispatch: DispatchFunction) => {
