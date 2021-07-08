@@ -30,7 +30,7 @@ const UserInfo: React.FC = () => {
     ) {
       logoff.mutate()
     }
-  }, [accessToken, data, error, isError, isFetching, logoff])
+  }, [accessToken, error, isError, isFetching, logoff])
 
   return (
     <>
