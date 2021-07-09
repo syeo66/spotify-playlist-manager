@@ -27,10 +27,12 @@ interface Item {
 
 type FindDuplicatesType = (
   authenticated: string | boolean
-) => (progressCallback: (percent: number) => void) => (playlist: Playlist) => Promise<Item[]>
+) => (progressCallback: (percent: number) => boolean) => (playlist: Playlist) => Promise<Item[]>
 
 export const findDuplicates: FindDuplicatesType =
-  (authenticated: string | boolean) => (progressCallback: (percent: number) => void) => async (playlist: Playlist) => {
+  (authenticated: string | boolean) =>
+  (progressCallback: (percent: number) => boolean) =>
+  async (playlist: Playlist) => {
     const fetchPlaylist: (auth: string | boolean) => (url: string) => (itemList?: Item[]) => Promise<Item[]> =
       (auth) =>
       (url) =>
@@ -44,10 +46,11 @@ export const findDuplicates: FindDuplicatesType =
         })
         const jsonResponse = response.data
         const items = itemList.concat(jsonResponse.items)
+        let doContinue = true
         if (progressCallback && typeof progressCallback === 'function') {
-          progressCallback((100 * (jsonResponse.items.length + jsonResponse.offset)) / jsonResponse.total)
+          doContinue = progressCallback((100 * (jsonResponse.items.length + jsonResponse.offset)) / jsonResponse.total)
         }
-        return jsonResponse.next ? authFetchPlaylist(jsonResponse.next)(items) : items
+        return doContinue && jsonResponse.next ? authFetchPlaylist(jsonResponse.next)(items) : items
       }
 
     const authFetchPlaylist = fetchPlaylist(authenticated)

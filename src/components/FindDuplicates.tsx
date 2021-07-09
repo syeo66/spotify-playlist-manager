@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
-import { connect } from 'react-redux'
 
 import { playlists as playlistsQuery, token } from '../queries'
 import { orange, white } from '../styles/colors'
@@ -40,6 +39,8 @@ interface FindDuplicatesProps {
   id: string
 }
 const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id }) => {
+  const isMounted = useRef(true)
+
   const { data: authenticated } = useQuery(token.key, token.query)
   const { data: playlists, isLoading } = useQuery(playlistsQuery.key, () => playlistsQuery.query(), {
     enabled: !!authenticated,
@@ -49,12 +50,29 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id }) => {
 
   const [duplicates, setDuplicates] = useState<Item[]>([])
   const [isPurging, setIsPurging] = useState(0)
-  const [playlist, setPlaylist] = useState(getPlaylist())
   const [progress, setProgress] = useState<number | null>(null)
+  const [playlist, setPlaylist] = useState(getPlaylist())
 
-  const authFindDuplicates = useMemo(() => findDuplicates(authenticated || false)(setProgress), [authenticated])
+  const authFindDuplicates = useMemo(
+    () =>
+      findDuplicates(authenticated || false)((value) => {
+        if (!isMounted.current) {
+          // eslint-disable-next-line no-console
+          return false
+        }
+        setProgress(value)
+        return true
+      }),
+    [authenticated]
+  )
   const fetchAndStoreDuplicates = useCallback(
-    (pl: Playlist) => authFindDuplicates(pl).then(setDuplicates),
+    async (pl: Playlist) => {
+      const dupes = await authFindDuplicates(pl)
+      if (!isMounted.current) {
+        return
+      }
+      setDuplicates(dupes)
+    },
     [authFindDuplicates]
   )
   const refetchDuplicates = useCallback(() => {
@@ -65,6 +83,15 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id }) => {
   }, [fetchAndStoreDuplicates, playlist])
 
   useEffect(() => {
+    isMounted.current = true
+
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
+
+  useEffect(() => {
+    // update playlist
     const pl = getPlaylist()
     if (pl?.id === playlist?.id) {
       return
@@ -126,13 +153,4 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id }) => {
   )
 }
 
-interface MapStateToPropsInput {
-  data: { tracks: Tracks }
-}
-const mapStateToProps = ({ data: { tracks } }: MapStateToPropsInput) => {
-  return {
-    tracks: tracks ? tracks : {},
-  }
-}
-
-export default connect(mapStateToProps, {})(FindDuplicates)
+export default memo(FindDuplicates)
