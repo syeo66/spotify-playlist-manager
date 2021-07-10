@@ -12,12 +12,17 @@ interface TrackProps {
 const Track: React.FC<TrackProps> = ({ track, pill }) => {
   return (
     <TrackContainer>
-      {!!pill && (
-        <Pill backgroundColor={orange} color={white}>
-          {pill}
-        </Pill>
-      )}
-      <TrackTitle>{track.name}</TrackTitle>
+      <TrackTitle>
+        {!!pill && (
+          <>
+            <Pill backgroundColor={orange} color={white}>
+              {pill}
+            </Pill>
+            &nbsp;
+          </>
+        )}
+        {track.name}
+      </TrackTitle>
       <TrackInfo>
         <TrackInfoEntry>
           <Label>Artist:</Label> {track.artists[0].name}
