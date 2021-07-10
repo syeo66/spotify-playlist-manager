@@ -1,23 +1,12 @@
 import axios from 'axios'
 
+import { Track } from '../../types'
+
 interface Tracks {
   href: string
 }
 interface Playlist {
   tracks: Tracks
-}
-interface Album {
-  name: string
-}
-interface Artist {
-  name: string
-}
-interface Track {
-  album: Album
-  artists: Artist[]
-  id: string
-  name: string
-  uri: string
 }
 interface Item {
   added_at: string

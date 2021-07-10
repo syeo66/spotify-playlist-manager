@@ -2,31 +2,19 @@ import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from '
 import { useQuery } from 'react-query'
 
 import { playlists as playlistsQuery, token } from '../queries'
-import { orange, white } from '../styles/colors'
-import { Button, ButtonContainer, Pill, ToolHeading, Track } from '../styles/components'
+import { Button, ButtonContainer, ToolHeading } from '../styles/components'
+import { Track } from '../types'
 import { findDuplicates, removeDuplicates } from './find-duplicates'
 import Loading from './Loading'
 import PlaylistDisplayContainer from './PlaylistDisplayContainer'
 import PlaylistHeader from './PlaylistHeader'
 import Progress from './Progress'
+import TrackEntry from './Track'
 
-interface Album {
-  name: string
-}
-interface Artist {
-  name: string
-}
-interface AlbumTrack {
-  id: string
-  name: string
-  uri: string
-  album: Album
-  artists: Artist[]
-}
 interface Item {
   added_at: string
   indexes: number[]
-  track: AlbumTrack
+  track: Track
 }
 interface Tracks {
   href: string
@@ -117,13 +105,11 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id }) => {
 
   const handleRemoveDuplicatesClick = useCallback(() => setIsPurging((prev) => prev + 1), [])
 
-  if (isLoading) {
+  if (isLoading || !playlist) {
     return <Loading />
   }
 
-  return !playlist ? (
-    <></>
-  ) : (
+  return (
     <>
       <PlaylistHeader playlist={playlist} />
       <ToolHeading>Find Duplicates</ToolHeading>
@@ -136,13 +122,7 @@ const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id }) => {
           </ButtonContainer>
           <PlaylistDisplayContainer>
             {duplicates.map((item) => (
-              <Track key={item.track.id + item.added_at}>
-                <Pill backgroundColor={orange} color={white}>
-                  {item.indexes.length + 1}x
-                </Pill>
-                &nbsp;
-                {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}
-              </Track>
+              <TrackEntry key={item.track.id + item.added_at} track={item.track} pill={`${item.indexes.length + 1}x`} />
             ))}
           </PlaylistDisplayContainer>
         </React.Fragment>

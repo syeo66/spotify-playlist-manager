@@ -1,29 +1,9 @@
 import axios from 'axios'
 
+import { Paging } from '../types'
 import { token } from './token'
 
-interface Artist {
-  id: string
-  name: string
-}
-interface Album {
-  id: string
-  name: string
-}
-interface Track {
-  id: string
-  track: { id: string; name: string; album: Album; artists: Artist[] }
-}
-interface Albums {
-  id: string
-  next: string
-  previous: string
-  offset: number
-  limit: number
-  total: number
-  items: Track[]
-}
-type RetrievePlaylistAlbumsType = (url: string) => Promise<Albums>
+type RetrievePlaylistAlbumsType = (url: string) => Promise<Paging>
 
 const retrievePlaylistAlbums: RetrievePlaylistAlbumsType = async (url: string) => {
   const authenticated = token.query()

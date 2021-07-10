@@ -1,14 +1,7 @@
 import axios from 'axios'
 
+import { Playlist } from '../types'
 import { token } from '.'
-
-interface Playlist {
-  id?: string
-  name?: string
-  owner?: { display_name: string }
-  public?: boolean
-  tracks: { href: string; total?: number }
-}
 
 const retrievePlaylist: (id: string) => Promise<Playlist> = async (id: string) => {
   const url =

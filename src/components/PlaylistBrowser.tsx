@@ -6,11 +6,12 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { playlist as playlistQuery, playlistAlbums, token } from '../queries'
-import { Button, ButtonContainer, Track } from '../styles/components'
+import { Button, ButtonContainer } from '../styles/components'
 import { Column, Row } from '../styles/grid'
 import Loading from './Loading'
 import PlaylistDisplayContainer from './PlaylistDisplayContainer'
 import PlaylistHeader from './PlaylistHeader'
+import Track from './Track'
 
 const RowItem = styled.div`
   width: 0;
@@ -136,9 +137,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
             {tracks.items
               .filter((item) => !!item.track)
               .map((item, index) => (
-                <Track key={`${item.track.id}-${index}`}>
-                  {item.track.name} - {item.track.album.name} - {item.track.artists[0].name}
-                </Track>
+                <Track key={`${item.track.id}-${index}`} track={item.track} />
               ))}
           </PlaylistDisplayContainer>
           {pagination}

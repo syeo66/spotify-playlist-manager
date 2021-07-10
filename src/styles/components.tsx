@@ -93,7 +93,7 @@ export const PlaylistListDisplayContainer = styled(GenericContainer)`
   padding: 0;
 `
 
-export const Track = styled.div`
+export const TrackContainer = styled.div`
   min-height: 1.7rem;
   padding: 0.5rem 1rem;
   display: flex;
