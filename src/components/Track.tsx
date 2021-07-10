@@ -41,9 +41,11 @@ const Track: React.FC<TrackProps> = ({ track, pill, audioFeatures }) => {
           <TrackInfoEntry>
             <Label>Album:</Label> {track.album.name}
           </TrackInfoEntry>
-          <TrackInfoEntry>
-            <Label>BPM:</Label> {audioFeatures?.tempo}
-          </TrackInfoEntry>
+          {audioFeatures?.tempo && (
+            <TrackInfoEntry>
+              <Label>BPM:</Label> {Math.round(audioFeatures.tempo)}
+            </TrackInfoEntry>
+          )}
         </TrackInfo>
       </TrackContent>
     </TrackContainer>
