@@ -41,6 +41,9 @@ const Track: React.FC<TrackProps> = ({ track, pill, audioFeatures }) => {
           <TrackInfoEntry>
             <Label>Album:</Label> {track.album.name}
           </TrackInfoEntry>
+          <TrackInfoEntry>
+            <Label>BPM:</Label> {audioFeatures?.tempo}
+          </TrackInfoEntry>
         </TrackInfo>
       </TrackContent>
     </TrackContainer>
@@ -58,6 +61,7 @@ const TrackStyle = styled.div<TrackStyleProps>`
   height: 1em;
   border-radius: 50%;
   display: inline-block;
+  flex-shrink: 0;
   margin-right: 0.5rem;
   background-color: ${({ energy, acousticness, valence, danceability }) =>
     `rgba(${(energy || 0) * 255}, ${(acousticness || 0) * 255},${(danceability || 0) * 255},  1)`};
@@ -75,7 +79,7 @@ const TrackImage: React.FC<TrackImageProps> = ({ images }) => {
 
   return (
     <TrackImageContainer ref={containerRef}>
-      {imagePick && <img src={imagePick.url} width={size} height={size} alt="" />}
+      <TrackImageBox>{imagePick && <img src={imagePick.url} width={size} height={size} alt="" />}</TrackImageBox>
     </TrackImageContainer>
   )
 }
@@ -84,6 +88,10 @@ const TrackContent = styled.div``
 
 const TrackImageContainer = styled.div`
   margin-right: 0.5rem;
+  flex-shrink: 0;
+`
+
+const TrackImageBox = styled.div`
   aspect-ratio: 1;
   border-radius: 0.2rem;
   flex-shrink: 0;
@@ -125,6 +133,7 @@ const TrackInfoEntry = styled.div`
   &:not(:first-child) {
     margin-left: 1rem;
   }
+  font-size: clamp(0.65rem, calc(100vw / 30), 1rem);
 `
 
 const Label = styled.span`
