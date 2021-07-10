@@ -5,9 +5,10 @@ import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { playlist as playlistQuery, playlistAlbums, token } from '../queries'
+import { audioFeatures, playlist as playlistQuery, playlistAlbums, token } from '../queries'
 import { Button, ButtonContainer } from '../styles/components'
 import { Column, Row } from '../styles/grid'
+import { AudioFeatures } from '../types'
 import Loading from './Loading'
 import PlaylistDisplayContainer from './PlaylistDisplayContainer'
 import PlaylistHeader from './PlaylistHeader'
@@ -41,6 +42,9 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
     enabled: !!page,
     keepPreviousData: true,
   })
+  const ids = tracks ? tracks.items.map((i) => i.track.id) : []
+  const { data: aFeatures } = useQuery([audioFeatures.key, ids], () => audioFeatures.query(ids), { enabled: !!tracks })
+  const features: Record<string, AudioFeatures> = aFeatures?.reduce((acc, a) => ({ ...acc, [a.id]: a }), {}) || {}
 
   useEffect(() => {
     setPage(null)
@@ -137,7 +141,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
             {tracks.items
               .filter((item) => !!item.track)
               .map((item, index) => (
-                <Track key={`${item.track.id}-${index}`} track={item.track} />
+                <Track key={`${item.track.id}-${index}`} track={item.track} audioFeatures={features[item.track.id]} />
               ))}
           </PlaylistDisplayContainer>
         </React.Fragment>

@@ -53,3 +53,19 @@ export interface Paging {
   total: number
   items: Item[]
 }
+
+export interface AudioFeatures {
+  danceability: number
+  energy: number
+  loudness: number
+  speechiness: number
+  acousticness: number
+  instrumentalness: number
+  liveness: number
+  valence: number
+  tempo: number
+  id: string
+  uri: string
+  analysis_url: string
+  type: 'audio_features'
+}
