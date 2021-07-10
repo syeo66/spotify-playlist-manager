@@ -140,7 +140,6 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
                 <Track key={`${item.track.id}-${index}`} track={item.track} />
               ))}
           </PlaylistDisplayContainer>
-          {pagination}
         </React.Fragment>
       ) : (
         ''

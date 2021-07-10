@@ -91,6 +91,10 @@ export const ToolHeading = styled.h3`
 export const PlaylistListDisplayContainer = styled(GenericContainer)`
   flex-direction: column;
   padding: 0;
+  overflow: auto;
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    max-height: calc(100vh - 290px);
+  }
 `
 
 interface ButtonContainerProps {

@@ -1,3 +1,9 @@
+export interface Image {
+  height: number
+  width: number
+  url: string
+}
+
 export interface Artist {
   id: string
   name: string
@@ -7,6 +13,8 @@ export interface Artist {
 export interface Album {
   id: string
   name: string
+  release_data: string
+  images: Image[]
   type: 'album'
 }
 
