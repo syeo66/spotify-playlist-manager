@@ -1,6 +1,6 @@
 {
   "name": "spotify-playlist-manager",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Playlist Manager for Spotify",
   "author": "Red Ochsenbein <red@redochsenbein.ch>",
   "homepage": "https://playlist.raven.ch",
@@ -15,7 +15,6 @@
     "@types/node": "^14.14.16",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.4",
     "@types/styled-components": "^5.1.2",
     "axios": "^0.21.1",
@@ -27,8 +26,6 @@
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^4.0.1",
-    "redux": "^3.0.0",
-    "redux-thunk": "^2.3.0",
     "styled-components": "^5.1.1",
     "typescript": "^4.3.4"
   },

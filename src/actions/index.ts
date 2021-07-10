@@ -1,15 +1,4 @@
-import axios from 'axios'
 import { MouseEvent } from 'react'
-
-import { token } from '../queries'
-import { APPEND_PLAYLISTS, FETCH_TRACKS } from './types'
-
-interface DispatchInput {
-  type: string
-  payload: string | null
-}
-type DispatchFunction = (params: DispatchInput) => void
-type Dispatchable = (dispatch: DispatchFunction) => void
 
 export const processAccessToken: () => void = () => {
   if (!window.opener) {
@@ -37,7 +26,6 @@ export const processAccessToken: () => void = () => {
 export const signIn = async (t: string): Promise<void> => window.localStorage.setItem('access_token', t)
 
 type SignInWithSpotifyType = (e: MouseEvent) => void
-
 export const signInWithSpotify: SignInWithSpotifyType = (e: MouseEvent) => {
   e.preventDefault()
   const appUrl = encodeURIComponent(
@@ -52,47 +40,3 @@ export const signInWithSpotify: SignInWithSpotifyType = (e: MouseEvent) => {
 }
 
 export const signOut = async (): Promise<void> => window.localStorage.removeItem('access_token')
-
-export type RetrievePlaylistsType = (url?: string) => Dispatchable
-export const retrievePlaylists: RetrievePlaylistsType =
-  (url = 'https://api.spotify.com/v1/me/playlists?limit=50') =>
-  (dispatch: DispatchFunction) => {
-    const authenticated = token.query()
-    axios({
-      headers: {
-        Authorization: `Bearer ${authenticated}`,
-      },
-      method: 'get',
-      url,
-    })
-      .then((response) => response.data)
-      .then((response) => {
-        if (response.next && response.total > response.offset + response.limit) {
-          retrievePlaylists(response.next)(dispatch)
-        }
-        dispatch({
-          payload: response,
-          type: APPEND_PLAYLISTS,
-        })
-      })
-  }
-
-type RetrieveTracksType = (authenticated: string, url: string) => Dispatchable
-
-export const retrieveTracks: RetrieveTracksType =
-  (authenticated: string, url: string) => (dispatch: DispatchFunction) => {
-    axios({
-      headers: {
-        Authorization: `Bearer ${authenticated}`,
-      },
-      method: 'get',
-      url,
-    })
-      .then((response) => response.data)
-      .then((response) => {
-        dispatch({
-          payload: response,
-          type: FETCH_TRACKS,
-        })
-      })
-  }
