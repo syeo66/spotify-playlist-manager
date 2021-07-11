@@ -1,8 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
+import { useOutsideClick } from 'rooks'
 import styled from 'styled-components'
 
 import { orange, white } from '../styles/colors'
-import { Pill } from '../styles/components'
+import { GenericContainer, Pill } from '../styles/components'
 import { AudioFeatures, Image, Track as SpotifyTrack } from '../types'
 
 interface TrackProps {
@@ -30,6 +31,7 @@ const Track: React.FC<TrackProps> = ({ track, pill, audioFeatures }) => {
               valence={audioFeatures.valence}
               acousticness={audioFeatures.acousticness}
               danceability={audioFeatures.danceability}
+              instrumentalness={audioFeatures.instrumentalness}
             />
           )}
           {track.name}
@@ -57,15 +59,121 @@ interface TrackStyleProps {
   acousticness?: number
   valence?: number
   danceability?: number
+  instrumentalness?: number
 }
-const TrackStyle = styled.div<TrackStyleProps>`
-  width: 1em;
-  height: 1em;
+const TrackStyle: React.FC<TrackStyleProps> = (props) => {
+  const [showDetails, setShowDetails] = useState(false)
+
+  const buttonRef = useRef<HTMLDivElement>(document.createElement('div'))
+
+  const toggleShowDetails = useCallback(() => setShowDetails((v) => !v), [])
+
+  useOutsideClick(buttonRef, toggleShowDetails, showDetails)
+
+  const top = buttonRef.current?.offsetTop || 0
+  const left = buttonRef.current?.offsetLeft || 0
+
+  return (
+    <>
+      <TrackStyleButton {...props} ref={buttonRef} onClick={toggleShowDetails} />
+      {showDetails && <TrackStyleContent top={top} left={left} {...props} />}
+    </>
+  )
+}
+
+interface TrackStyleContentProps extends TrackStyleProps {
+  top: number
+  left: number
+}
+const TrackStyleContent: React.FC<TrackStyleContentProps> = ({
+  top,
+  left,
+  energy,
+  acousticness,
+  valence,
+  danceability,
+  instrumentalness,
+}) => {
+  return (
+    <TrackStyleBox top={top} left={left}>
+      <TrackStyleContentEntry>
+        <TrackStyleContentEntryLabel>Energy</TrackStyleContentEntryLabel>
+        <Bar color="#ff0000" length={energy || 0} max={150} />
+      </TrackStyleContentEntry>
+      <TrackStyleContentEntry>
+        <TrackStyleContentEntryLabel>Acoustic</TrackStyleContentEntryLabel>
+        <Bar color="#00aa00" length={acousticness || 0} max={150} />
+      </TrackStyleContentEntry>
+      <TrackStyleContentEntry>
+        <TrackStyleContentEntryLabel>Dance</TrackStyleContentEntryLabel>
+        <Bar color="#0000ff" length={danceability || 0} max={150} />
+      </TrackStyleContentEntry>
+      <TrackStyleContentEntry>
+        <TrackStyleContentEntryLabel>Happiness</TrackStyleContentEntryLabel>
+        <Bar color="#996699" length={valence || 0} max={150} />
+      </TrackStyleContentEntry>
+      <TrackStyleContentEntry>
+        <TrackStyleContentEntryLabel>Instrumental</TrackStyleContentEntryLabel>
+        <Bar color="#335599" length={instrumentalness || 0} max={150} />
+      </TrackStyleContentEntry>
+    </TrackStyleBox>
+  )
+}
+
+const TrackStyleContentEntry = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+`
+const TrackStyleContentEntryLabel = styled.div`
+  width: 6.2em;
+`
+
+interface BarProps {
+  color: string
+  max: number
+  length: number
+}
+const Bar = styled.div<BarProps>`
+  &:after {
+    content: ' ';
+    display: block;
+    height: 0.2rem;
+    background: ${({ color }) => color};
+    width: ${({ length, max }) => `${length * max}px`};
+    border-radius: 0.2rem;
+  }
+  width: ${({ max }) => `${max}px`};
+`
+
+interface TrackStyleBoxProps {
+  top: number
+  left: number
+}
+const TrackStyleBox = styled(GenericContainer)<TrackStyleBoxProps>`
+  min-height: 1rem;
+  font-size: clamp(0.65rem, calc(100vw / 30), 1rem);
+  font-weight: normal;
+  padding: 0.5rem;
+  position: absolute;
+  flex-direction: column;
+  background: white;
+  top: ${({ top }) => top + 5}px;
+  left: ${({ left }) => left + 5}px;
+  z-index: 100;
+`
+
+const TrackStyleButton = styled.div<TrackStyleProps>`
+  position: relative;
   border-radius: 50%;
+  cursor: pointer;
   display: inline-block;
   flex-shrink: 0;
   margin-right: 0.5rem;
-  background-color: ${({ energy, acousticness, valence, danceability }) =>
+  height: 1em;
+  width: 1em;
+  z-index: 0;
+  background-color: ${({ energy, acousticness, danceability }) =>
     `rgba(${(energy || 0) * 255}, ${(acousticness || 0) * 255},${(danceability || 0) * 255},  1)`};
 `
 

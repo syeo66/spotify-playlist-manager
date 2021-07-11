@@ -89,6 +89,7 @@ export const ToolHeading = styled.h3`
 `
 
 export const PlaylistListDisplayContainer = styled(GenericContainer)`
+  position: relative;
   flex-direction: column;
   padding: 0;
   overflow: auto;

@@ -9763,6 +9763,14 @@ rollup@^1.31.1:
     "@types/node" "*"
     acorn "^7.1.0"
 
+rooks@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/rooks/-/rooks-5.0.3.tgz#6a1b59c519cf67133e5ff8be48f6eef416ac34ca"
+  integrity sha512-1KWWFFnZQ9LeMREmak3WvzXgIg/8QhuQ7ZYCe2yAWQ6cepX2hvVL3bbVL0UceqZLAqc9XBbKFkbgrBidfvQWfA==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    raf "^3.4.1"
+
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.npmjs.org/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"
