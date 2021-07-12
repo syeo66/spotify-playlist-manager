@@ -137,12 +137,26 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
       {tracks?.items ? (
         <React.Fragment>
           {pagination}
-          <PlaylistDisplayContainer>
-            {tracks.items
-              .filter((item) => !!item.track)
-              .map((item, index) => (
-                <Track key={`${item.track.id}-${index}`} track={item.track} audioFeatures={features[item.track.id]} />
-              ))}
+          <PlaylistDisplayContainer mode={displayMode}>
+            {displayMode === 'list'
+              ? tracks.items
+                  .filter((item) => !!item.track)
+                  .map((item, index) => (
+                    <Track
+                      key={`${item.track.id}-${index}`}
+                      track={item.track}
+                      audioFeatures={features[item.track.id]}
+                    />
+                  ))
+              : tracks.items
+                  .filter((item) => !!item.track)
+                  .map((item, index) => (
+                    <Track
+                      key={`${item.track.id}-${index}`}
+                      track={item.track}
+                      audioFeatures={features[item.track.id]}
+                    />
+                  ))}
           </PlaylistDisplayContainer>
         </React.Fragment>
       ) : (

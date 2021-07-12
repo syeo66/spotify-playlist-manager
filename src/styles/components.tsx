@@ -98,6 +98,17 @@ export const PlaylistListDisplayContainer = styled(GenericContainer)`
   }
 `
 
+export const PlaylistAlbumsDisplayContainer = styled(GenericContainer)`
+  display: grid;
+  overflow: auto;
+  padding: 0;
+  grid-template-columns: 1fr 1fr;
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    max-height: calc(100vh - 290px);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+`
+
 interface ButtonContainerProps {
   justify?: 'left' | 'right' | 'space-between'
 }
