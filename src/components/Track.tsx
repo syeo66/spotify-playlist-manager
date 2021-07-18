@@ -206,7 +206,7 @@ const TrackImageBox = styled.div`
   border-radius: 0.2rem;
   flex-shrink: 0;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 0 10px rgba(27, 153, 139, 0.5), 0 0 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 20px ${colors.shadow}, 0 0 10px ${colors.shadowPrimary}, 0 0 1px ${colors.shadow};
 `
 
 const TrackContainer = styled.div`
@@ -216,7 +216,7 @@ const TrackContainer = styled.div`
   flex-shrink: 0;
   flex-direction: row;
   align-items: stretch;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid ${colors.border};
   img {
     transition: transform 1s;
   }
@@ -247,7 +247,7 @@ const TrackInfoEntry = styled.div`
 `
 
 const Label = styled.span`
-  color: rgba(0, 0, 0, 0.4);
+  color: ${colors.textMuted};
   font-weight: bold;
 `
 
