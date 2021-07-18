@@ -3,7 +3,7 @@ import { useOutsideClick } from 'rooks'
 import styled from 'styled-components'
 
 import * as colors from '../styles/colors'
-import { GenericContainer, Pill } from '../styles/components'
+import { GenericContainer, ImageBox, Pill } from '../styles/components'
 import { AudioFeatures, Image, Track as SpotifyTrack } from '../types'
 
 interface TrackProps {
@@ -189,7 +189,7 @@ const TrackImage: React.FC<TrackImageProps> = ({ images }) => {
 
   return (
     <TrackImageContainer ref={containerRef}>
-      <TrackImageBox>{imagePick && <img src={imagePick.url} width={size} height={size} alt="" />}</TrackImageBox>
+      <ImageBox>{imagePick && <img src={imagePick.url} width={size} height={size} alt="" />}</ImageBox>
     </TrackImageContainer>
   )
 }
@@ -199,14 +199,6 @@ const TrackContent = styled.div``
 const TrackImageContainer = styled.div`
   margin-right: 0.5rem;
   flex-shrink: 0;
-`
-
-const TrackImageBox = styled.div`
-  aspect-ratio: 1;
-  border-radius: 0.2rem;
-  flex-shrink: 0;
-  overflow: hidden;
-  box-shadow: 0 0 20px ${colors.shadow}, 0 0 10px ${colors.shadowPrimary}, 0 0 1px ${colors.shadow};
 `
 
 const TrackContainer = styled.div`

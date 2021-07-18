@@ -93,11 +93,19 @@ export const PlaylistListDisplayContainer = styled(GenericContainer)`
 export const PlaylistAlbumsDisplayContainer = styled(GenericContainer)`
   display: grid;
   overflow: auto;
-  padding: 0;
+  padding: 2rem;
   grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+
   @media only screen and (min-width: ${breakpoints.sm}) {
-    max-height: calc(100vh - 290px);
+    max-height: calc(100vh - 290px - 4rem);
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media only screen and (min-width: ${breakpoints.md}) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  @media only screen and (min-width: ${breakpoints.lg}) {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
 `
 
@@ -180,4 +188,12 @@ export const PlaylistSelectorContainer = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 0;
+`
+
+export const ImageBox = styled.div`
+  aspect-ratio: 1;
+  border-radius: 0.2rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px ${colors.shadow}, 0 0 10px ${colors.shadowPrimary}, 0 0 1px ${colors.shadow};
 `
