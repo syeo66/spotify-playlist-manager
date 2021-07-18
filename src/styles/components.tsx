@@ -56,13 +56,13 @@ interface GenericContainerProps {
 }
 export const GenericContainer = styled.div<GenericContainerProps>`
   padding: 0 1rem;
-  border-bottom: 1px solid ${({ color }) => color || colors.border};
+  border: 1px solid ${({ color }) => color || colors.border};
   min-height: 2.2rem;
   margin-bottom: 1rem;
   color: ${colors.text};
   border-radius: 0.5em;
   display: flex;
-  box-shadow: 0 0.2rem 0.5rem ${({ color }) => color || colors.shadow};
+  box-shadow: 0 0.2rem 0.2rem ${({ color }) => color || colors.shadow}, 0 0.6rem 0.6rem ${colors.shadowPrimary};
 `
 
 export const PlaylistHeaderContainer = styled(GenericContainer)`
@@ -174,7 +174,7 @@ export const EntryTitle = styled.span`
 export const PlaylistSelectorContainer = styled.ul`
   border: 1px solid ${colors.primary};
   border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem ${colors.shadow};
+  box-shadow: 0 0.2rem 0.2rem ${colors.shadow}, 0 0.6rem 0.6rem ${colors.shadowPrimary};
   margin: 0 0 1rem;
   list-style-type: none;
   display: flex;

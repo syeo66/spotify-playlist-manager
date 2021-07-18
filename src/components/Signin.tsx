@@ -14,7 +14,7 @@ const SigninBox = styled.section`
   width: 20rem;
   display: flex;
   justify-content: center;
-  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.2rem 0.2rem ${colors.shadow}, 0 0.6rem 0.6rem ${colors.shadowPrimary};
   margin: 25vh auto 0;
 `
 
