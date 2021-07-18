@@ -6,14 +6,14 @@ import styled from 'styled-components'
 
 import { token } from '../queries'
 import breakpoints from '../styles/breakpoints'
-import { black } from '../styles/colors'
+import * as colors from '../styles/colors'
 import Signout from './Signout'
 import UserInfo from './UserInfo'
 
 const StyledHeader = styled.header`
   margin: 0;
   padding: 1rem;
-  background: linear-gradient(to bottom, ${black} 0%, #000 100%);
+  background: linear-gradient(to bottom, ${colors.headerGradientTop} 0%, ${colors.headerGradientBottom} 100%);
   display: flex;
   flex-direction: row;
   justify-content: space-between;

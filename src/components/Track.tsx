@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from 'react'
 import { useOutsideClick } from 'rooks'
 import styled from 'styled-components'
 
-import { orange, white } from '../styles/colors'
+import * as colors from '../styles/colors'
 import { GenericContainer, Pill } from '../styles/components'
 import { AudioFeatures, Image, Track as SpotifyTrack } from '../types'
 
@@ -19,7 +19,7 @@ const Track: React.FC<TrackProps> = ({ track, pill, audioFeatures }) => {
         <TrackTitle>
           {!!pill && (
             <>
-              <Pill backgroundColor={orange} color={white}>
+              <Pill backgroundColor={colors.tertiary} color={colors.textInverted}>
                 {pill}
               </Pill>
               &nbsp;

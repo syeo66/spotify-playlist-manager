@@ -4,11 +4,11 @@ import React, { memo, MouseEvent } from 'react'
 import styled from 'styled-components'
 
 import { signInWithSpotify } from '../actions'
-import { black } from '../styles/colors'
+import * as colors from '../styles/colors'
 import { Button } from '../styles/components'
 
 const SigninBox = styled.section`
-  border: 1px solid ${black};
+  border: 1px solid ${colors.border};
   padding: 5rem 0.5rem;
   border-radius: 1rem;
   width: 20rem;

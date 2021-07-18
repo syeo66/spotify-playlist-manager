@@ -1,14 +1,14 @@
-import Color from 'color'
+export const primary = 'var(--color-primary)'
+export const secondary = 'var(--color-secondary)'
+export const tertiary = 'var(--color-tertiary)'
 
-export const green = 'rgba(27, 153, 139, 1)'
-export const black = 'rgba(45, 48, 71, 1)'
-export const yellow = 'rgba(255, 253, 130, 1)'
-export const orange = 'rgba(255, 155, 113, 1)'
-export const red = 'rgba(232, 72, 85, 1)'
+export const primaryLight = 'var(--color-primary-light)'
 
-export const white = '#fff'
+export const text = 'var(--color-text)'
+export const textInverted = 'var(--color-text-inv)'
 
-export const lightGreen = Color(green).lighten(0.2).string()
+export const border = 'var(--color-border)'
+export const shadow = 'var(--color-shadow)'
 
-export const lightBlack = Color(black).lighten(0.2).string()
-export const darkBlack = Color(black).darken(0.2).string()
+export const headerGradientTop = 'var(--color-header-gradient-top)'
+export const headerGradientBottom = 'var(--color-header-gradient-bottom)'

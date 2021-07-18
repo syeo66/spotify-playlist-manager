@@ -1,10 +1,10 @@
 import React, { memo } from 'react'
 import styled from 'styled-components'
 
-import { orange } from '../styles/colors'
+import * as colors from '../styles/colors'
 
 const ProgressContainer = styled.div`
-  border: 1px solid ${orange};
+  border: 1px solid ${colors.tertiary};
   border-radius: 1rem;
   height: 1rem;
   font-size: 0.75rem;
@@ -16,7 +16,7 @@ interface ProgressBarProps {
 }
 const ProgressBar = styled.div<ProgressBarProps>`
   border-radius: 1rem;
-  background-color: ${orange};
+  background-color: ${colors.tertiary};
   overflow: hidden;
   width: ${({ value }) => `${value}%`};
   display: flex;

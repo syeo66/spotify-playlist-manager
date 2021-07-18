@@ -1,18 +1,17 @@
-import Color from 'color'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import breakpoints from '../styles/breakpoints'
-import { black, green, lightGreen, orange, yellow } from './colors'
+import * as colors from './colors'
 
 interface ButtonProps {
   active?: boolean
 }
 export const Button = styled.button<ButtonProps>`
   border: 0 transparent none;
-  background-color: ${({ active }) => (active ? yellow : green)};
-  color: ${({ active }) => (active ? green : 'white')};
-  border: 1px solid ${green};
+  background-color: ${({ active }) => (active ? colors.secondary : colors.primary)};
+  color: ${({ active }) => (active ? colors.primary : colors.textInverted)};
+  border: 1px solid ${colors.primary};
   padding: 0 0.5rem;
   font-size: 0.8rem;
   border-radius: 0.4rem;
@@ -32,7 +31,7 @@ export const Button = styled.button<ButtonProps>`
 
   :hover {
     color: white;
-    background-color: ${lightGreen};
+    background-color: ${colors.primaryLight};
   }
 `
 
@@ -42,8 +41,9 @@ interface PillProps {
   color?: string
 }
 export const Pill = styled.span<PillProps>`
-  background-color: ${({ active, backgroundColor }) => (backgroundColor ? backgroundColor : active ? green : yellow)};
-  color: ${({ active, color }) => (color ? color : active ? yellow : green)};
+  background-color: ${({ active, backgroundColor }) =>
+    backgroundColor ? backgroundColor : active ? colors.primary : colors.secondary};
+  color: ${({ active, color }) => (color ? color : active ? colors.secondary : colors.primary)};
   font-weight: bold;
   font-size: 0.9rem;
   padding: 0 0.3rem;
@@ -56,21 +56,13 @@ interface GenericContainerProps {
 }
 export const GenericContainer = styled.div<GenericContainerProps>`
   padding: 0 1rem;
-  border-bottom: 1px solid
-    ${({ color }) =>
-      Color(color || black)
-        .alpha(0.2)
-        .string()};
+  border-bottom: 1px solid ${({ color }) => color || colors.border};
   min-height: 2.2rem;
   margin-bottom: 1rem;
-  color: ${black};
+  color: ${colors.text};
   border-radius: 0.5em;
   display: flex;
-  box-shadow: 0 0.2rem 0.5rem
-    ${({ color }) =>
-      Color(color || black)
-        .alpha(0.2)
-        .string()};
+  box-shadow: 0 0.2rem 0.5rem ${({ color }) => color || colors.shadow};
 `
 
 export const PlaylistHeaderContainer = styled(GenericContainer)`
@@ -82,10 +74,10 @@ export const PlaylistHeaderContainer = styled(GenericContainer)`
 
 export const ToolHeading = styled.h3`
   margin: 0 0 1rem;
-  color: ${orange};
+  color: ${colors.tertiary};
   line-height: 2.2rem;
   height: 2.2rem;
-  border-bottom: 1px solid ${orange};
+  border-bottom: 1px solid ${colors.tertiary};
 `
 
 export const PlaylistListDisplayContainer = styled(GenericContainer)`
@@ -141,8 +133,8 @@ export const ListEntry = styled.li<ListEntryProps>`
   align-items: stretch;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: background-color 300ms, color 300ms;
-  background-color: ${({ active }) => (active ? yellow : green)};
-  color: ${({ active }) => (active ? green : 'white')};
+  background-color: ${({ active }) => (active ? colors.secondary : colors.primary)};
+  color: ${({ active }) => (active ? colors.primary : colors.textInverted)};
   font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
 
   &:first-of-type {
@@ -158,7 +150,7 @@ export const ListEntry = styled.li<ListEntryProps>`
   }
 
   :hover {
-    background-color: ${({ active }) => (active ? yellow : lightGreen)};
+    background-color: ${({ active }) => (active ? colors.secondary : colors.primaryLight)};
   }
 `
 
@@ -180,9 +172,9 @@ export const EntryTitle = styled.span`
 `
 
 export const PlaylistSelectorContainer = styled.ul`
-  border: 1px solid ${green};
+  border: 1px solid ${colors.primary};
   border-radius: 0.5rem;
-  box-shadow: 0 0.2rem 0.5rem ${Color(black).alpha(0.2).string()};
+  box-shadow: 0 0.2rem 0.5rem ${colors.shadow};
   margin: 0 0 1rem;
   list-style-type: none;
   display: flex;

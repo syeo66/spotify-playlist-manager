@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { memo } from 'react'
 import styled from 'styled-components'
 
-import { orange } from '../styles/colors'
+import * as colors from '../styles/colors'
 import { Pill, PlaylistHeaderContainer } from '../styles/components'
 
 const Title = styled.div`
@@ -40,7 +40,7 @@ const PlaylistHeader: React.FC<PlaylistHeaderProps> = ({ playlist }) => {
       </Title>
       {playlist.tracks.total && (
         <div>
-          <Pill color="#fff" backgroundColor={orange}>
+          <Pill color={colors.textInverted} backgroundColor={colors.tertiary}>
             {playlist.tracks.total || 0} Tracks
           </Pill>
         </div>
