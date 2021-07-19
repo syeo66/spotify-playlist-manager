@@ -42,9 +42,10 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
     enabled: !!page,
     keepPreviousData: true,
   })
-  const ids = tracks ? tracks.items.map((i) => i.track.id) : []
+  const ids = tracks ? tracks.items.map((i) => i.track?.id) : []
   const { data: aFeatures } = useQuery([audioFeatures.key, ids], () => audioFeatures.query(ids), { enabled: !!tracks })
-  const features: Record<string, AudioFeatures> = aFeatures?.reduce((acc, a) => ({ ...acc, [a.id]: a }), {}) || {}
+  const features: Record<string, AudioFeatures> =
+    aFeatures?.reduce((acc, a) => (a?.id ? { ...acc, [a.id]: a } : acc), {}) || {}
 
   useEffect(() => {
     setPage(null)
