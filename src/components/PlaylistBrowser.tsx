@@ -9,6 +9,7 @@ import { audioFeatures, playlist as playlistQuery, playlistAlbums, token } from 
 import { Button, ButtonContainer } from '../styles/components'
 import { Column, Row } from '../styles/grid'
 import { AudioFeatures } from '../types'
+import Album from './Album'
 import Loading from './Loading'
 import PlaylistDisplayContainer from './PlaylistDisplayContainer'
 import PlaylistHeader from './PlaylistHeader'
@@ -152,7 +153,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
               : tracks.items
                   .filter((item) => !!item.track)
                   .map((item, index) => (
-                    <Track
+                    <Album
                       key={`${item.track.id}-${index}`}
                       track={item.track}
                       audioFeatures={features[item.track.id]}
