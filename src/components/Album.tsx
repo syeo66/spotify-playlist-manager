@@ -2,25 +2,29 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { ImageBox } from '../styles/components'
-import { AudioFeatures, Track as SpotifyTrack } from '../types'
+import { Album as SpotifyAlbum, AudioFeatures } from '../types'
 
 interface AlbumProps {
-  track: SpotifyTrack
+  album: SpotifyAlbum
   pill?: string | number
   audioFeatures?: AudioFeatures
 }
-const Album: React.FC<AlbumProps> = ({ track }) => {
+const Album: React.FC<AlbumProps> = ({ album }) => {
   const size = Math.max(40, Math.min(75, window.innerWidth * 0.15))
-  const [bestImage] = track.album.images
+  const [bestImage] = album.images
     .filter((i) => i.width > (size || window.innerWidth))
     .sort((a, b) => a.width - b.width)
-  const imagePick = bestImage || track.album.images[0]
+  const imagePick = bestImage || album.images[0]
 
   return (
     <AlbumContainer>
       <ImageBox>
         {imagePick && <AlbumImage src={imagePick.url} width={imagePick.width} height={imagePick.height} />}
-        <AlbumInfo>Stuff</AlbumInfo>
+        <AlbumInfo>
+          <strong>{album.name}</strong>
+          <br />
+          by {album.artists.map((a) => a.name).join(', ')}
+        </AlbumInfo>
       </ImageBox>
     </AlbumContainer>
   )
@@ -42,6 +46,7 @@ const AlbumInfo = styled.div`
   color: white;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  font-size: 85%;
   width: calc(100% - 0.4rem);
 `
 

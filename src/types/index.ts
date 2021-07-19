@@ -8,6 +8,7 @@ export interface Artist {
   id: string
   name: string
   type: 'artist'
+  uri: string
 }
 
 export interface Album {
@@ -16,6 +17,7 @@ export interface Album {
   release_data: string
   images: Image[]
   type: 'album'
+  artists: Artist[]
 }
 
 export interface Track {

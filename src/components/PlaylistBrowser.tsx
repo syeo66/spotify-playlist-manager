@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { audioFeatures, playlist as playlistQuery, playlistAlbums, token } from '../queries'
 import { Button, ButtonContainer } from '../styles/components'
 import { Column, Row } from '../styles/grid'
-import { AudioFeatures } from '../types'
+import { Album as SpotifyAlbum, AudioFeatures } from '../types'
 import Album from './Album'
 import Loading from './Loading'
 import PlaylistDisplayContainer from './PlaylistDisplayContainer'
@@ -47,6 +47,12 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
   const { data: aFeatures } = useQuery([audioFeatures.key, ids], () => audioFeatures.query(ids), { enabled: !!tracks })
   const features: Record<string, AudioFeatures> =
     aFeatures?.reduce((acc, a) => (a?.id ? { ...acc, [a.id]: a } : acc), {}) || {}
+
+  useEffect(() => {
+    if (id === 'tracks' && displayMode !== 'list') {
+      setDisplayMode('list')
+    }
+  }, [displayMode, id])
 
   useEffect(() => {
     setPage(null)
@@ -109,6 +115,22 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
     return <Loading />
   }
 
+  const albums =
+    displayMode === 'list'
+      ? []
+      : (tracks?.items || []).reduce<[SpotifyAlbum[], Record<string, boolean>]>(
+          ([albs, memory], i) => {
+            const { album } = i.track
+
+            if (!memory[album.id]) {
+              return [[...albs, album], { ...memory, [album.id]: true }]
+            }
+
+            return [albs, memory]
+          },
+          [[], {}]
+        )[0]
+
   return (
     <React.Fragment>
       <PlaylistHeader playlist={playlist} />
@@ -150,15 +172,7 @@ const PlaylistBrowser: React.FC<PlaylistBrowserProps> = ({ id }) => {
                       audioFeatures={features[item.track.id]}
                     />
                   ))
-              : tracks.items
-                  .filter((item) => !!item.track)
-                  .map((item, index) => (
-                    <Album
-                      key={`${item.track.id}-${index}`}
-                      track={item.track}
-                      audioFeatures={features[item.track.id]}
-                    />
-                  ))}
+              : albums.map((item, index) => <Album key={`${item.id}-${index}`} album={item} />)}
           </PlaylistDisplayContainer>
         </React.Fragment>
       ) : (
