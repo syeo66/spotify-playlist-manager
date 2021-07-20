@@ -32,12 +32,14 @@ const Album: React.FC<AlbumProps> = ({ album }) => {
 
 const AlbumContainer = styled.div`
   position: relative;
+  overflow: hidden;
 `
 const AlbumImage = styled.img`
   width: 100%;
   height: 100%;
   aspect-ratio: 1;
   position: absolute;
+  border-radius: 0.2rem;
 `
 
 const AlbumInfo = styled.div`
@@ -48,6 +50,15 @@ const AlbumInfo = styled.div`
   background: rgba(0, 0, 0, 0.5);
   font-size: 85%;
   width: calc(100% - 0.4rem);
+  border-radius: 0 0 0.2rem 0.2rem;
+  animation: slide 1s;
+  opacity: 1;
+
+  @keyframes slide {
+    from {
+      opacity: 0;
+    }
+  }
 `
 
 export default Album
