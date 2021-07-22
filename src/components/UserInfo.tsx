@@ -12,6 +12,7 @@ const UserInfo: React.FC = () => {
   const { data, isLoading, isError, error, isFetching } = useQuery(userData.key, userData.query, {
     enabled: !!accessToken,
     refetchInterval: 2000,
+    retry: (count: number, { response: { status } }) => count < 3 && status !== 404 && status !== 401,
   })
   const logoff = useMutation(signOut, {
     onSuccess: () => {
