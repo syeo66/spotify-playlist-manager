@@ -9,9 +9,10 @@ import { Button } from '../styles/components'
 
 const SigninBox = styled.section`
   border: 1px solid ${colors.border};
-  padding: 5rem 0.5rem;
+  padding: clamp(0.5rem, 19vh, 5rem) 0.5rem;
   border-radius: 1rem;
   width: 20rem;
+  max-width: calc(100% - 1rem);
   display: flex;
   justify-content: center;
   box-shadow: 0 0.2rem 0.2rem ${colors.shadow}, 0 0.6rem 0.6rem ${colors.shadowPrimary};
