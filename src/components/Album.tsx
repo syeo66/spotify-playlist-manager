@@ -32,7 +32,6 @@ const Album: React.FC<AlbumProps> = ({ album }) => {
 
 const AlbumContainer = styled.div`
   position: relative;
-  overflow: hidden;
 `
 const AlbumImage = styled.img`
   width: 100%;
