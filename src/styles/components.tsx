@@ -195,7 +195,5 @@ export const ImageBox = styled.div`
   border-radius: 0.2rem;
   flex-shrink: 0;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
   box-shadow: 0 0 20px ${colors.shadow}, 0 0 10px ${colors.shadowPrimary}, 0 0 1px ${colors.shadow};
 `
