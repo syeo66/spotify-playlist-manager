@@ -163,7 +163,11 @@ const TrackStyleBox = styled(GenericContainer)<TrackStyleBoxProps>`
   z-index: 100;
 `
 
-const TrackStyleButton = styled.div<TrackStyleProps>`
+const TrackStyleButton = styled.div.attrs<TrackStyleProps>(({ energy, acousticness, danceability }) => ({
+  style: {
+    backgroundColor: `rgba(${(energy || 0) * 255}, ${(acousticness || 0) * 255},${(danceability || 0) * 255},  1)`,
+  },
+}))`
   position: relative;
   border-radius: 50%;
   cursor: pointer;
@@ -173,8 +177,6 @@ const TrackStyleButton = styled.div<TrackStyleProps>`
   height: 1em;
   width: 1em;
   z-index: 0;
-  background-color: ${({ energy, acousticness, danceability }) =>
-    `rgba(${(energy || 0) * 255}, ${(acousticness || 0) * 255},${(danceability || 0) * 255},  1)`};
 `
 
 interface TrackImageProps {
