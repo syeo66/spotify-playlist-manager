@@ -21,6 +21,7 @@
     "axios-retry-after": "^1.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-is": "^17.0.2",
     "react-query": "^3.17.2",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
@@ -45,7 +46,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@typescript-eslint/parser": "^4.29.1",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
