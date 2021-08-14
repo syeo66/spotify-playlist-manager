@@ -1734,7 +1734,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-svg-core@npm:^1.2.17":
+"@fortawesome/fontawesome-svg-core@npm:^1.2.36":
   version: 1.2.36
   resolution: "@fortawesome/fontawesome-svg-core@npm:1.2.36"
   dependencies:
@@ -1743,7 +1743,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/free-brands-svg-icons@npm:^5.8.1":
+"@fortawesome/free-brands-svg-icons@npm:^5.15.4":
   version: 5.15.4
   resolution: "@fortawesome/free-brands-svg-icons@npm:5.15.4"
   dependencies:
@@ -1752,7 +1752,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/free-solid-svg-icons@npm:^5.8.1":
+"@fortawesome/free-solid-svg-icons@npm:^5.15.4":
   version: 5.15.4
   resolution: "@fortawesome/free-solid-svg-icons@npm:5.15.4"
   dependencies:
@@ -1761,7 +1761,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/react-fontawesome@npm:^0.1.4":
+"@fortawesome/react-fontawesome@npm:^0.1.15":
   version: 0.1.15
   resolution: "@fortawesome/react-fontawesome@npm:0.1.15"
   dependencies:
@@ -2384,7 +2384,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/color@npm:^3.0.1":
+"@types/color@npm:^3.0.2":
   version: 3.0.2
   resolution: "@types/color@npm:3.0.2"
   dependencies:
@@ -2485,7 +2485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^26.0.19":
+"@types/jest@npm:^26.0.24":
   version: 26.0.24
   resolution: "@types/jest@npm:26.0.24"
   dependencies:
@@ -2516,7 +2516,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.16":
+"@types/node@npm:^14.17.9":
   version: 14.17.9
   resolution: "@types/node@npm:14.17.9"
   checksum: e59b92e4346ed0db61e042d439f9658d1d3e8ad1d14825b714804cafae8ce22220ff6c8d907c4e4c6384aac748de07283fa321ef13cb8bdeb460eb789d634244
@@ -2558,7 +2558,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.0":
+"@types/react-dom@npm:^17.0.9":
   version: 17.0.9
   resolution: "@types/react-dom@npm:17.0.9"
   dependencies:
@@ -2579,7 +2579,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-router-dom@npm:^5.1.4":
+"@types/react-router-dom@npm:^5.1.8":
   version: 5.1.8
   resolution: "@types/react-router-dom@npm:5.1.8"
   dependencies:
@@ -2600,7 +2600,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^17.0.0":
+"@types/react@npm:*":
   version: 17.0.16
   resolution: "@types/react@npm:17.0.16"
   dependencies:
@@ -2608,6 +2608,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: cba60aeb284d4024feaca1364557fda72011e984b6b08f6e06a7cdc65e267eabc42d59c541ddbbb81720ab195b6df95a3535540abadd5c0e2cce26b16759dbaa
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^17.0.17":
+  version: 17.0.17
+  resolution: "@types/react@npm:17.0.17"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 3f2ae9ab6f7d5c7b480cd5962fe996f0682173036a8437cfde0122bc8594e0e1482864b766dbf611daef40ed65a9fc73ec9510e12511d68c064f309f25219f67
   languageName: node
   linkType: hard
 
@@ -2641,7 +2652,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/styled-components@npm:^5.1.2":
+"@types/styled-components@npm:^5.1.12":
   version: 5.1.12
   resolution: "@types/styled-components@npm:5.1.12"
   dependencies:
@@ -3595,7 +3606,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios-retry-after@npm:^1.0.1":
+"axios-retry-after@npm:^1.0.3":
   version: 1.0.3
   resolution: "axios-retry-after@npm:1.0.3"
   peerDependencies:
@@ -6288,7 +6299,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^3.1.4":
+"eslint-plugin-prettier@npm:^3.4.0":
   version: 3.4.0
   resolution: "eslint-plugin-prettier@npm:3.4.0"
   dependencies:
@@ -6303,7 +6314,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^4.0.8, eslint-plugin-react-hooks@npm:^4.2.0":
+"eslint-plugin-react-hooks@npm:^4.2.0":
   version: 4.2.0
   resolution: "eslint-plugin-react-hooks@npm:4.2.0"
   peerDependencies:
@@ -6312,7 +6323,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.20.5, eslint-plugin-react@npm:^7.21.5":
+"eslint-plugin-react@npm:^7.21.5, eslint-plugin-react@npm:^7.24.0":
   version: 7.24.0
   resolution: "eslint-plugin-react@npm:7.24.0"
   dependencies:
@@ -11973,7 +11984,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.0.5":
+"prettier@npm:^2.3.2":
   version: 2.3.2
   resolution: "prettier@npm:2.3.2"
   bin:
@@ -12331,7 +12342,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^17.0.1":
+"react-dom@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-dom@npm:17.0.2"
   dependencies:
@@ -12365,9 +12376,9 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-query@npm:^3.17.2":
-  version: 3.19.2
-  resolution: "react-query@npm:3.19.2"
+"react-query@npm:^3.19.6":
+  version: 3.19.6
+  resolution: "react-query@npm:3.19.6"
   dependencies:
     "@babel/runtime": ^7.5.5
     broadcast-channel: ^3.4.1
@@ -12379,11 +12390,11 @@ fsevents@^1.2.7:
       optional: true
     react-native:
       optional: true
-  checksum: 94bad63adf4fc33b9285f82180efe157220a472717c7231af497ed60b927a4ca2b4c2004b06f2cdc8f78ab3be2f30386ba1c4b5e9f9ceeaedf8fe7f8f0111d49
+  checksum: 65cb3e78747467c08c186141ad069fefb095eb8575ef629ca094036246c315134d428c75db33006ec1178545583e0c6a9716a27e40beefd743ecd6848a47d42f
   languageName: node
   linkType: hard
 
-"react-redux@npm:^7.0.1":
+"react-redux@npm:^7.2.4":
   version: 7.2.4
   resolution: "react-redux@npm:7.2.4"
   dependencies:
@@ -12411,7 +12422,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^5.0.0":
+"react-router-dom@npm:^5.2.0":
   version: 5.2.0
   resolution: "react-router-dom@npm:5.2.0"
   dependencies:
@@ -12428,7 +12439,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-router-prop-types@npm:^1.0.4":
+"react-router-prop-types@npm:^1.0.5":
   version: 1.0.5
   resolution: "react-router-prop-types@npm:1.0.5"
   dependencies:
@@ -12458,7 +12469,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-scripts@npm:^4.0.1":
+"react-scripts@npm:^4.0.3":
   version: 4.0.3
   resolution: "react-scripts@npm:4.0.3"
   dependencies:
@@ -12536,7 +12547,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react@npm:^17.0.1":
+"react@npm:^17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
   dependencies:
@@ -13100,7 +13111,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"rooks@npm:^5.0.3":
+"rooks@npm:^5.4.6":
   version: 5.4.6
   resolution: "rooks@npm:5.4.6"
   dependencies:
@@ -13808,39 +13819,39 @@ resolve@^2.0.0-next.3:
   version: 0.0.0-use.local
   resolution: "spotify-playlist-manager@workspace:."
   dependencies:
-    "@fortawesome/fontawesome-svg-core": ^1.2.17
-    "@fortawesome/free-brands-svg-icons": ^5.8.1
-    "@fortawesome/free-solid-svg-icons": ^5.8.1
-    "@fortawesome/react-fontawesome": ^0.1.4
-    "@types/color": ^3.0.1
-    "@types/jest": ^26.0.19
-    "@types/node": ^14.14.16
-    "@types/react": ^17.0.0
-    "@types/react-dom": ^17.0.0
-    "@types/react-router-dom": ^5.1.4
-    "@types/styled-components": ^5.1.2
+    "@fortawesome/fontawesome-svg-core": ^1.2.36
+    "@fortawesome/free-brands-svg-icons": ^5.15.4
+    "@fortawesome/free-solid-svg-icons": ^5.15.4
+    "@fortawesome/react-fontawesome": ^0.1.15
+    "@types/color": ^3.0.2
+    "@types/jest": ^26.0.24
+    "@types/node": ^14.17.9
+    "@types/react": ^17.0.17
+    "@types/react-dom": ^17.0.9
+    "@types/react-router-dom": ^5.1.8
+    "@types/styled-components": ^5.1.12
     "@typescript-eslint/parser": ^4.29.1
     axios: ^0.21.1
-    axios-retry-after: ^1.0.1
+    axios-retry-after: ^1.0.3
     eslint: ^7.32.0
     eslint-config-prettier: ^8.3.0
     eslint-config-react-app: ^6.0.0
-    eslint-plugin-prettier: ^3.1.4
-    eslint-plugin-react: ^7.20.5
-    eslint-plugin-react-hooks: ^4.0.8
+    eslint-plugin-prettier: ^3.4.0
+    eslint-plugin-react: ^7.24.0
+    eslint-plugin-react-hooks: ^4.2.0
     eslint-plugin-simple-import-sort: ^7.0.0
-    prettier: ^2.0.5
-    react: ^17.0.1
-    react-dom: ^17.0.1
+    prettier: ^2.3.2
+    react: ^17.0.2
+    react-dom: ^17.0.2
     react-is: ^17.0.2
-    react-query: ^3.17.2
-    react-redux: ^7.0.1
-    react-router-dom: ^5.0.0
-    react-router-prop-types: ^1.0.4
-    react-scripts: ^4.0.1
-    rooks: ^5.0.3
-    styled-components: ^5.1.1
-    typescript: ^4.3.4
+    react-query: ^3.19.6
+    react-redux: ^7.2.4
+    react-router-dom: ^5.2.0
+    react-router-prop-types: ^1.0.5
+    react-scripts: ^4.0.3
+    rooks: ^5.4.6
+    styled-components: ^5.3.0
+    typescript: ^4.3.5
   languageName: unknown
   linkType: soft
 
@@ -14174,7 +14185,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"styled-components@npm:^5.1.1":
+"styled-components@npm:^5.3.0":
   version: 5.3.0
   resolution: "styled-components@npm:5.3.0"
   dependencies:
@@ -14742,7 +14753,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-typescript@^4.3.4:
+typescript@^4.3.5:
   version: 4.3.5
   resolution: "typescript@npm:4.3.5"
   bin:
@@ -14752,7 +14763,7 @@ typescript@^4.3.4:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.3.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.3.5#~builtin<compat/typescript>":
   version: 4.3.5
   resolution: "typescript@patch:typescript@npm%3A4.3.5#~builtin<compat/typescript>::version=4.3.5&hash=d8b4e7"
   bin:
