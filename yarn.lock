@@ -2708,7 +2708,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^4.5.0":
+"@typescript-eslint/eslint-plugin@npm:^4.29.1, @typescript-eslint/eslint-plugin@npm:^4.5.0":
   version: 4.29.1
   resolution: "@typescript-eslint/eslint-plugin@npm:4.29.1"
   dependencies:
@@ -6214,7 +6214,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-flowtype@npm:^5.2.0":
+"eslint-plugin-flowtype@npm:^5.2.0, eslint-plugin-flowtype@npm:^5.9.0":
   version: 5.9.0
   resolution: "eslint-plugin-flowtype@npm:5.9.0"
   dependencies:
@@ -6226,7 +6226,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.22.1":
+"eslint-plugin-import@npm:^2.22.1, eslint-plugin-import@npm:^2.24.0":
   version: 2.24.0
   resolution: "eslint-plugin-import@npm:2.24.0"
   dependencies:
@@ -6266,7 +6266,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsx-a11y@npm:^6.3.1":
+"eslint-plugin-jsx-a11y@npm:^6.3.1, eslint-plugin-jsx-a11y@npm:^6.4.1":
   version: 6.4.1
   resolution: "eslint-plugin-jsx-a11y@npm:6.4.1"
   dependencies:
@@ -13788,12 +13788,16 @@ resolve@^2.0.0-next.3:
     "@types/react-dom": ^17.0.9
     "@types/react-router-dom": ^5.1.8
     "@types/styled-components": ^5.1.12
+    "@typescript-eslint/eslint-plugin": ^4.29.1
     "@typescript-eslint/parser": ^4.29.1
     axios: ^0.21.1
     axios-retry-after: ^1.0.3
     eslint: ^7.32.0
     eslint-config-prettier: ^8.3.0
     eslint-config-react-app: ^6.0.0
+    eslint-plugin-flowtype: ^5.9.0
+    eslint-plugin-import: ^2.24.0
+    eslint-plugin-jsx-a11y: ^6.4.1
     eslint-plugin-prettier: ^3.4.0
     eslint-plugin-react: ^7.24.0
     eslint-plugin-react-hooks: ^4.2.0
