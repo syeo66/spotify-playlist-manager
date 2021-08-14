@@ -13111,16 +13111,16 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"rooks@npm:^5.4.6":
-  version: 5.4.6
-  resolution: "rooks@npm:5.4.6"
+"rooks@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "rooks@npm:5.5.0"
   dependencies:
     lodash.debounce: ^4.0.8
     raf: ^3.4.1
   peerDependencies:
     react: ^16.8.0  || ^17.0.0
     react-dom: ^16.8.0  || ^17.0.0
-  checksum: d7186da2cd02cb07d839b24b4c13327fd069a173d481218efd854860d6ce2f973b10ba191873dd8d7321b23ec9dd3f4ba5ba144cbc9501a761af2e8a624c676c
+  checksum: 2fed924e55ac87aa7e7b1839b4c0a61e69421c5c674f75c8bec2cdb23681e06838be5f78ca6b15c95eca9f1a4407add09958750078d7961c52ebcfd06254ec66
   languageName: node
   linkType: hard
 
@@ -13849,7 +13849,7 @@ resolve@^2.0.0-next.3:
     react-router-dom: ^5.2.0
     react-router-prop-types: ^1.0.5
     react-scripts: ^4.0.3
-    rooks: ^5.4.6
+    rooks: ^5.5.0
     styled-components: ^5.3.0
     typescript: ^4.3.5
   languageName: unknown
