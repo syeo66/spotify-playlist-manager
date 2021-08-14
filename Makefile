@@ -6,24 +6,23 @@ help:
 
 SRCFILES=$(shell find src -type f)
 
-build: node_modules $(SRCFILES)
+build: .yarn/cache $(SRCFILES)
 	yarn build
 	touch build
 
-start: node_modules
+start: .yarn/cache
 	yarn start
 
-clean: node_modules
+clean: .yarn/cache
 	rm -rf build
 
 distclean: clean
-	rm -rf node_modules
 
-test: node_modules
+test: .yarn/cache
 	yarn test
 
 ######################################################################
 
-node_modules : yarn.lock package.json
+.yarn/cache : yarn.lock package.json .pnp.cjs
 	yarn
-	touch node_modules
+	touch .yarn/cache
