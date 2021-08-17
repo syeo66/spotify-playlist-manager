@@ -80,17 +80,23 @@ export const ToolHeading = styled.h3`
   border-bottom: 1px solid ${colors.tertiary};
 `
 
-export const PlaylistListDisplayContainer = styled(GenericContainer)`
+interface PlaylistListDisplayContainerProps {
+  height?: number
+}
+export const PlaylistListDisplayContainer = styled(GenericContainer)<PlaylistListDisplayContainerProps>`
   position: relative;
   flex-direction: column;
   padding: 0;
   overflow: auto;
   @media only screen and (min-width: ${breakpoints.sm}) {
-    max-height: calc(100vh - 290px);
+    max-height: ${({ height }) => (height ? `${height}px` : 'calc(100vh - 290px)')};
   }
 `
 
-export const PlaylistAlbumsDisplayContainer = styled(GenericContainer)`
+interface PlaylistAlbumsDisplayContainerProps {
+  height?: number
+}
+export const PlaylistAlbumsDisplayContainer = styled(GenericContainer)<PlaylistAlbumsDisplayContainerProps>`
   display: grid;
   overflow: auto;
   padding: 2rem;
@@ -98,7 +104,7 @@ export const PlaylistAlbumsDisplayContainer = styled(GenericContainer)`
   grid-gap: 2rem;
 
   @media only screen and (min-width: ${breakpoints.sm}) {
-    max-height: calc(100vh - 290px - 4rem);
+    max-height: ${({ height }) => (height ? `calc(${height}px - 4em)` : 'calc(100vh - 290px - 4em)')};
     grid-template-columns: 1fr 1fr 1fr;
   }
   @media only screen and (min-width: ${breakpoints.md}) {
