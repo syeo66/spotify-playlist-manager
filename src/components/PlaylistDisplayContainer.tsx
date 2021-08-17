@@ -8,17 +8,21 @@ interface PlaylistDisplayContainerProps {
 const PlaylistDisplayContainer: React.FC<PlaylistDisplayContainerProps> = ({ children, mode = 'list' }) => {
   const list = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState<number>()
-  // eslint-disable-next-line no-console
-  console.log({ height })
+
+  const resize = () => setHeight(Math.max(window.innerHeight - (list.current?.offsetTop || 212) - 32, 150))
 
   useEffect(() => {
-    const resize = () => setHeight(Math.max(window.innerHeight - (list.current?.offsetTop || 212) - 32, 150))
-
     window.addEventListener('resize', resize)
     resize()
 
     return () => window.removeEventListener('resize', resize)
   }, [])
+
+  useEffect(() => {
+    if (list.current?.offsetTop) {
+      resize()
+    }
+  }, [list.current?.offsetTop])
 
   return mode === 'list' ? (
     <PlaylistListDisplayContainer ref={list} height={height}>
