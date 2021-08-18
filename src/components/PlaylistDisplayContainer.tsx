@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
+import useResize from '../hooks/useResize'
 import { PlaylistAlbumsDisplayContainer, PlaylistListDisplayContainer } from '../styles/components'
 
 interface PlaylistDisplayContainerProps {
@@ -9,20 +10,18 @@ const PlaylistDisplayContainer: React.FC<PlaylistDisplayContainerProps> = ({ chi
   const list = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState<number>()
 
-  const resize = () => setHeight(Math.max(window.innerHeight - (list.current?.offsetTop || 212) - 32, 150))
+  const handleResize = useCallback(
+    () => setHeight(Math.max(window.innerHeight - (list.current?.offsetTop || 212) - 32, 150)),
+    []
+  )
 
-  useEffect(() => {
-    window.addEventListener('resize', resize)
-    resize()
-
-    return () => window.removeEventListener('resize', resize)
-  }, [])
+  useResize({ onResize: handleResize })
 
   useEffect(() => {
     if (list.current?.offsetTop) {
-      resize()
+      handleResize()
     }
-  }, [list.current?.offsetTop])
+  }, [handleResize, list.current?.offsetTop])
 
   return mode === 'list' ? (
     <PlaylistListDisplayContainer ref={list} height={height}>

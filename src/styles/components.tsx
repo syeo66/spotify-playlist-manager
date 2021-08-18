@@ -185,7 +185,10 @@ export const EntryTitle = styled.span`
   text-overflow: ellipsis;
 `
 
-export const PlaylistSelectorContainer = styled.ul`
+interface PlaylistSelectorContainerProps {
+  height?: number
+}
+export const PlaylistSelectorContainer = styled.ul<PlaylistSelectorContainerProps>`
   border: 1px solid ${colors.primary};
   border-radius: 0.5rem;
   box-shadow: 0 0.2rem 0.2rem ${colors.shadow}, 0 0.6rem 0.6rem ${colors.shadowPrimary};
@@ -194,6 +197,10 @@ export const PlaylistSelectorContainer = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 0;
+  @media only screen and (min-width: ${breakpoints.sm}) {
+    ${({ height }) => (height ? `max-height: ${height}px;` : '')}
+    ${({ height }) => (height ? `overflow: auto;` : '')}
+  }
 `
 
 export const ImageBox = styled.div`
