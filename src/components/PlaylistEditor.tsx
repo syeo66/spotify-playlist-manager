@@ -8,7 +8,7 @@ import LibrarySelector from './LibrarySelector'
 import PlaylistList from './PlaylistList'
 
 const MainContainer = styled(Row)`
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 0;
 `
 
 const SideContainer = styled(Column)``
