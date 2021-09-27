@@ -5802,6 +5802,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dexie@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "dexie@npm:3.0.3"
+  checksum: 5419ad5cb81d5a45926886645c30dc77e16e994cc1c67ff626f89ffd70f39253b79b696c79abaae3b891c369f61989ccf95909f2d04877d12fc6855fe97a2256
+  languageName: node
+  linkType: hard
+
 "diff-sequences@npm:^26.6.2":
   version: 26.6.2
   resolution: "diff-sequences@npm:26.6.2"
@@ -14078,6 +14085,7 @@ resolve@^2.0.0-next.3:
     "@typescript-eslint/parser": ^4.31.2
     axios: ^0.21.4
     axios-retry-after: ^1.0.3
+    dexie: ^3.0.3
     eslint: ^7.32.0
     eslint-config-prettier: ^8.3.0
     eslint-config-react-app: ^6.0.0

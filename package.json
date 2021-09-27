@@ -19,6 +19,7 @@
     "@types/styled-components": "^5.1.14",
     "axios": "^0.21.4",
     "axios-retry-after": "^1.0.3",
+    "dexie": "^3.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-is": "^17.0.2",
