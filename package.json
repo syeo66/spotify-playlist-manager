@@ -12,7 +12,7 @@
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@types/color": "^3.0.2",
     "@types/jest": "^27.0.2",
-    "@types/node": "^14.17.18",
+    "@types/node": "^14.17.19",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.3.0",
