@@ -2761,12 +2761,12 @@ axios-retry-after@^1.0.3:
   resolved "https://registry.npmjs.org/axios-retry-after/-/axios-retry-after-1.0.3.tgz#41b4d231487d0f892622ab8f0d5e605146738df8"
   integrity sha512-GO/u5AWvSSWgggHgnXK+hgRa2xsw+/OVFfjllIfVeGmpDELhVqAjg5oI8CsImGGrCeo0jiE5xDUFeDUHRt+8yQ==
 
-axios@^0.21.0:
-  version "0.21.4"
-  resolved "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
-  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
   dependencies:
-    follow-redirects "^1.14.0"
+    follow-redirects "^1.14.4"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -5343,7 +5343,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.0:
+follow-redirects@^1.0.0, follow-redirects@^1.14.4:
   version "1.14.5"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
   integrity sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==
