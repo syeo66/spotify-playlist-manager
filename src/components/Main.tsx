@@ -1,6 +1,6 @@
 import React, { lazy, memo, Suspense, useEffect } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { BrowserRouter, Redirect, Route } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { processAccessToken, signIn } from '../actions'
 import { token } from '../queries'
@@ -38,29 +38,13 @@ const Main: React.FC = () => {
   return (
     <BrowserRouter>
       <Header />
-      <Route
-        path="/:id?"
-        exact
-        render={(props) => (
-          <RouteContainer>
-            <PlaylistEditor {...props} component={PlaylistBrowser} />
-          </RouteContainer>
-        )}
-      />
-      <Route
-        path="/:id/duplicates"
-        exact
-        render={(props) => (
-          <RouteContainer>
-            <PlaylistEditor {...props} component={FindDuplicates} />
-          </RouteContainer>
-        )}
-      />
-      {auth && (
-        <Route path="/" exact>
-          <Redirect to="/tracks" />
-        </Route>
-      )}
+      <RouteContainer>
+        <Routes>
+          <Route path="/:id" element={<PlaylistEditor component={PlaylistBrowser} />} />
+          <Route path="/:id/duplicates" element={<PlaylistEditor component={FindDuplicates} />} />
+          {auth && <Route path="/" element={<Navigate to="/tracks" />} />}
+        </Routes>
+      </RouteContainer>
     </BrowserRouter>
   )
 }

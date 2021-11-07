@@ -2,7 +2,7 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { memo, useCallback } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { signOut } from '../actions'
@@ -11,13 +11,13 @@ import breakpoints from '../styles/breakpoints'
 import { Button } from '../styles/components'
 
 const Signout: React.FC = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
 
   const logoff = useMutation(signOut, {
     onSuccess: () => {
       queryClient.invalidateQueries(token.key)
-      history.push('/')
+      navigate('/')
     },
   })
 

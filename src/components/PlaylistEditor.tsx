@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { useRouteMatch } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import breakpoints from '../styles/breakpoints'
@@ -22,16 +22,18 @@ interface PlaylistEditorProps {
   component: React.ComponentType<{ id: string }>
 }
 const PlaylistEditor: React.FC<PlaylistEditorProps> = ({ component: ToolComponent }) => {
-  const match = useRouteMatch<{ id: string }>()
+  const params = useParams()
+
+  const id = params.id || ''
 
   return (
     <MainContainer>
       <SideContainer sm="2" md="1" lg="2">
-        <LibrarySelector id={match.params.id} />
-        <PlaylistList id={match.params.id} />
+        <LibrarySelector id={id} />
+        <PlaylistList id={id} />
       </SideContainer>
       <ContentContainer sm="3" md="2" lg="5">
-        <ToolComponent id={match.params.id} />
+        <ToolComponent id={id} />
       </ContentContainer>
     </MainContainer>
   )
