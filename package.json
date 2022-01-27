@@ -17,7 +17,7 @@
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.3.1",
     "@types/styled-components": "^5.1.15",
-    "axios": "^0.24.0",
+    "axios": "^0.25.0",
     "axios-retry-after": "^1.0.3",
     "dexie": "^3.0.3",
     "react": "^17.0.2",
