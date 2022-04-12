@@ -20,6 +20,7 @@ const ContentContainer = styled(Column)`
 
 interface PlaylistEditorProps {
   // TODO find a way to properly type this. There seems to be a conflict with style-components
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: React.ComponentType<{ id: string }> | any
 }
 const PlaylistEditor: React.FC<PlaylistEditorProps> = ({ component: ToolComponent }) => {
