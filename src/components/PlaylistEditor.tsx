@@ -19,7 +19,8 @@ const ContentContainer = styled(Column)`
 `
 
 interface PlaylistEditorProps {
-  component: React.ComponentType<{ id: string }>
+  // TODO find a way to properly type this. There seems to be a conflict with style-components
+  component: React.ComponentType<{ id: string }> | any
 }
 const PlaylistEditor: React.FC<PlaylistEditorProps> = ({ component: ToolComponent }) => {
   const params = useParams()
