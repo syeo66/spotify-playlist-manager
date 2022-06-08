@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { memo, PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 
 import { playlists as playlistsQuery, token } from '../queries'
@@ -26,7 +26,7 @@ interface Playlist {
 interface FindDuplicatesProps {
   id: string
 }
-const FindDuplicates: React.FC<FindDuplicatesProps> = ({ id }) => {
+const FindDuplicates: React.FC<PropsWithChildren<FindDuplicatesProps>> = ({ id }) => {
   const isMounted = useRef(true)
 
   const { data: authenticated } = useQuery(token.key, token.query)

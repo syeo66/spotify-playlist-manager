@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react'
 
 import useResize from '../hooks/useResize'
 import { PlaylistAlbumsDisplayContainer, PlaylistListDisplayContainer } from '../styles/components'
@@ -6,7 +6,10 @@ import { PlaylistAlbumsDisplayContainer, PlaylistListDisplayContainer } from '..
 interface PlaylistDisplayContainerProps {
   mode?: 'list' | 'album'
 }
-const PlaylistDisplayContainer: React.FC<PlaylistDisplayContainerProps> = ({ children, mode = 'list' }) => {
+const PlaylistDisplayContainer: React.FC<PropsWithChildren<PlaylistDisplayContainerProps>> = ({
+  children,
+  mode = 'list',
+}) => {
   const list = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState<number>()
 

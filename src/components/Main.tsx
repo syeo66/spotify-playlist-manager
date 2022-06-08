@@ -1,4 +1,4 @@
-import React, { lazy, memo, Suspense, useEffect } from 'react'
+import React, { lazy, memo, PropsWithChildren, Suspense, useEffect } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
@@ -49,7 +49,7 @@ const Main: React.FC = () => {
   )
 }
 
-const RouteContainer: React.FC = ({ children }) => {
+const RouteContainer: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <Authenticated>
       <Suspense fallback={<Loading />}>{children}</Suspense>
