@@ -33,3 +33,5 @@ package-lock.json
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+.vscode/*.log
