@@ -7,11 +7,11 @@ help:
 SRCFILES=$(shell find src -type f)
 
 build: node_modules $(SRCFILES)
-	pnpm build
+	yarn build
 	touch build
 
 start: node_modules
-	pnpm start
+	yarn start
 
 clean: node_modules
 	rm -rf build
@@ -20,10 +20,10 @@ distclean: clean
 	rm -rf node_modules
 
 test: node_modules
-	pnpm test
+	yarn test
 
 ######################################################################
 
-node_modules : pnpm-lock.yaml package.json
-	pnpm install --config.auto-install-peers=true
+node_modules : yarn.lock package.json
+	yarn install 
 	touch node_modules
