@@ -8,6 +8,7 @@ COPY package*.json .
 COPY yarn.lock .
 RUN yarn
 COPY . .
+RUN echo "REACT_APP_CLIENT_ID=$CLIENT_ID"
 RUN echo "REACT_APP_CLIENT_ID=$CLIENT_ID" > .env
 RUN make build
 
