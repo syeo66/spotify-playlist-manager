@@ -57,7 +57,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-simple-import-sort": "^9.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "prettier": "^2.4.1",
     "react-router-prop-types": "^1.0.5"
   }
