@@ -19,11 +19,16 @@ clean: node_modules
 distclean: clean
 	rm -rf node_modules
 
+deploy: node_modules
+	git switch main && git push all && git push
+	git switch stage && git pull && git merge main && git push all && git push
+	git switch main
+
 test: node_modules
 	yarn test
 
 ######################################################################
 
 node_modules : yarn.lock package.json
-	yarn install 
+	yarn install
 	touch node_modules
